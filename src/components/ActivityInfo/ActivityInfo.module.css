@@ -1,0 +1,12 @@
+.activity {
+  display: flex;
+  justify-content: space-between;
+  max-width: 600px;
+  margin-bottom: 24px;
+  margin-right: 24px;
+}
+
+.activityElement {
+  display: flex;
+  gap: 16px;
+}
