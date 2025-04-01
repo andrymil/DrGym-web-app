@@ -10,7 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import WorkoutForm from '@/components/WorkoutForm';
 import WorkoutInfo from '@/components/WorkoutInfo';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { formatDate, formatRelativeTime } from '@/utils/dateUtils';
@@ -48,7 +48,7 @@ export default function WorkoutCard({
   const deleteWorkout = async () => {
     try {
       setLoading(true);
-      await axiosInstance.delete(`/api/workouts/${workout.id}`);
+      await api.delete(`/api/workouts/${workout.id}`);
       showAppMessage({
         status: true,
         text: 'Workout deleted successfully',

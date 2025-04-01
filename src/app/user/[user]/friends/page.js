@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import UserHeader from '@/components/UserHeader';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import CardHeader from '@mui/material/CardHeader';
@@ -27,7 +27,7 @@ const Friends = ({ showAppMessage }) => {
     const fetchFriends = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(
+        const response = await api.get(
           `/api/friends/friendsinfo/${getUsername()}`
         );
         setFriends(response.data.friends);
@@ -50,7 +50,7 @@ const Friends = ({ showAppMessage }) => {
 
   const handleAcceptRequest = async (id, username, avatar) => {
     try {
-      await axiosInstance.post(`/api/friends/acceptRequest?invitationId=${id}`);
+      await api.post(`/api/friends/acceptRequest?invitationId=${id}`);
       showAppMessage({
         status: true,
         text: `Accepted friend request from ${username}`,
@@ -72,7 +72,7 @@ const Friends = ({ showAppMessage }) => {
 
   const handleDeclineRequest = async (id, username) => {
     try {
-      await axiosInstance.post(`/api/friends/rejectRequest?invitationId=${id}`);
+      await api.post(`/api/friends/rejectRequest?invitationId=${id}`);
       showAppMessage({
         status: true,
         text: `Declined friend request from ${username}`,
@@ -92,7 +92,7 @@ const Friends = ({ showAppMessage }) => {
 
   const handleDeleteFriend = async (username) => {
     try {
-      await axiosInstance.delete(`/api/friends/removeFriend`, {
+      await api.delete(`/api/friends/removeFriend`, {
         data: {
           user1: getUsername(),
           user2: username,

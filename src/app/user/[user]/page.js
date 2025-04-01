@@ -10,7 +10,7 @@ import Skeleton from '@mui/material/Skeleton';
 import CardHeader from '@mui/material/CardHeader';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import PostList from '@/components/PostList';
 import { getUsername } from '@/utils/localStorage';
 import { withSnackbar } from '@/utils/snackbarProvider';
@@ -28,7 +28,7 @@ const User = ({ params, showAppMessage }) => {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(`/api/users/${user}`);
+        const response = await api.get(`/api/users/${user}`);
         setUserData({
           name: response.data?.name,
           surname: response.data?.surname,
@@ -53,7 +53,7 @@ const User = ({ params, showAppMessage }) => {
           router.replace(`/user/${user}/account`);
           return;
         }
-        const response = await axiosInstance.get(
+        const response = await api.get(
           `/api/friends/isFriend/${username}/${user}`
         );
         if (response.data) {
@@ -76,7 +76,7 @@ const User = ({ params, showAppMessage }) => {
 
   const handleDeleteFriend = async (username) => {
     try {
-      await axiosInstance.delete(`/api/friends/removeFriend`, {
+      await api.delete(`/api/friends/removeFriend`, {
         data: {
           user1: getUsername(),
           user2: username,

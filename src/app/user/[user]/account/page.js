@@ -11,7 +11,7 @@ import {
   AccountSchema,
   AccountDefaultValues,
 } from '@/utils/schemas/AccountSchema';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import { getUsername, getAvatar } from '@/utils/localStorage';
 import { signOut } from 'next-auth/react';
 import { removeUserData } from '@/utils/localStorage';
@@ -41,7 +41,7 @@ const AccountPage = ({ showAppMessage }) => {
       try {
         setLoading(true);
 
-        const userResponse = await axiosInstance.get(`/api/users/${username}`);
+        const userResponse = await api.get(`/api/users/${username}`);
         setUserData({
           ...userResponse.data,
           firstName: userResponse.data.name,
@@ -49,7 +49,7 @@ const AccountPage = ({ showAppMessage }) => {
         const userAvatar = userResponse.data.avatar || stringToColor(username);
         setColor(userAvatar);
         localStorage.setItem('avatar', userAvatar);
-        const exercisesResponse = await axiosInstance.get(
+        const exercisesResponse = await api.get(
           '/api/exercises/by-type'
         );
         const exerciseData = [
@@ -84,7 +84,7 @@ const AccountPage = ({ showAppMessage }) => {
 
   const handleUpdateAccount = async (formData) => {
     try {
-      const respone = await axiosInstance.put(`/api/users/update`, {
+      const respone = await api.put(`/api/users/update`, {
         ...formData,
         name: formData.firstName,
         favoriteExercise: formData.exercise?.id,
@@ -111,7 +111,7 @@ const AccountPage = ({ showAppMessage }) => {
   const handleDeleteAccount = async () => {
     try {
       setDeleting(true);
-      await axiosInstance.delete(`/api/users/${username}`);
+      await api.delete(`/api/users/${username}`);
       removeUserData();
       signOut();
     } catch (err) {

@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import MonitorHeartOutlinedIcon from '@mui/icons-material/MonitorHeartOutlined';
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import { useMediaQuery } from '@mui/material';
 
 const HomePage = () => {
@@ -30,8 +30,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get('/api/exercises/by-type');
-        setExerciseData(response.data);
+        const res = await api.get('/api/exercises');
+        setExerciseData(res.data);
       } catch (err) {
         setError('Failed to fetch exercises');
       }

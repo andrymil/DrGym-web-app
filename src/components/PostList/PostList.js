@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Post from '@/components/Post';
 import SkeletonCard from '@/components/SkeletonCard';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 
 const PostList = ({ username, onlyThisUser, actions, showAppMessage }) => {
   const [postsData, setPostsData] = useState([]);
@@ -15,10 +15,10 @@ const PostList = ({ username, onlyThisUser, actions, showAppMessage }) => {
       setLoading(true);
       let response;
       if (onlyThisUser) {
-        response = await axiosInstance.get(`/api/posts/user/${username}`);
+        response = await api.get(`/api/posts/user/${username}`);
         setPostsData(response.data);
       } else {
-        response = await axiosInstance.get(`/api/posts/friends/${username}`);
+        response = await api.get(`/api/posts/friends/${username}`);
         setPostsData(response.data);
       }
     } catch (err) {

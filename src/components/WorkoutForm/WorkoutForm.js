@@ -26,7 +26,7 @@ import { useTheme } from '@mui/material/styles';
 import { DateTimePicker, TimeField } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -63,7 +63,7 @@ export default function WorkoutForm({
   useEffect(() => {
     const fetchExercises = async () => {
       try {
-        const response = await axiosInstance.get(`/api/exercises/by-type`);
+        const response = await api.get(`/api/exercises/by-type`);
         setExercises(response.data);
       } catch (error) {
         togglePopup();
@@ -170,7 +170,7 @@ export default function WorkoutForm({
         activities = activityList.map(({ id, ...activity }) => activity);
       }
 
-      const response = await axiosInstance.post(`/api/workouts/create`, {
+      const response = await api.post(`/api/workouts/create`, {
         username: username,
         description: values.description,
         startDate: values.startDate.toISOString(),
@@ -210,7 +210,7 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      const response = await axiosInstance.put(`/api/workouts/update`, {
+      const response = await api.put(`/api/workouts/update`, {
         id: workout.id,
         username: username,
         description: values.description,

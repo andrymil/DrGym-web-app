@@ -12,7 +12,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import FriendDialogTitle from './FriendDialogTitle';
 import CustomInput from '@/components/CustomInput';
 import {
@@ -43,7 +43,7 @@ export default function FriendDialog({
         return;
       }
       setLoading(true);
-      const response = await axiosInstance.post(`/api/friends/sendRequest`, {
+      const response = await api.post(`/api/friends/sendRequest`, {
         sender: username,
         receiver: formData.username,
       });

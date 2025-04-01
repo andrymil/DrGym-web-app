@@ -10,7 +10,7 @@ import { IconButton, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import PostDialog from '@/components/PostDialog';
 
 export default function Post({ post, actions, onChanges, showAppMessage }) {
@@ -23,7 +23,7 @@ export default function Post({ post, actions, onChanges, showAppMessage }) {
   const handleDeletePost = async () => {
     try {
       setDeleting(true);
-      await axiosInstance.delete(`/api/posts/${post.id}`);
+      await api.delete(`/api/posts/${post.id}`);
       onChanges();
       showAppMessage({
         status: true,

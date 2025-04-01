@@ -19,7 +19,7 @@ import { formatDate, getDiffInHoursAndMinutes } from '@/utils/dateUtils';
 import style from './WorkoutInfo.module.css';
 import Grid from '@mui/material/Grid2';
 import { getUsername } from '@/utils/localStorage';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -57,7 +57,7 @@ export default function WorkoutCard({ workout, isPost, post, showAppMessage }) {
 
   const handleAddLike = async () => {
     try {
-      await axiosInstance.post(
+      await api.post(
         `/api/posts/${post.id}/reactions?username=${username}`
       );
       setLikeCount((prev) => prev + 1);
@@ -73,7 +73,7 @@ export default function WorkoutCard({ workout, isPost, post, showAppMessage }) {
 
   const handleRemoveLike = async () => {
     try {
-      await axiosInstance.delete(
+      await api.delete(
         `/api/posts/${post.id}/reactions?username=${username}`
       );
       setLikeCount((prev) => {

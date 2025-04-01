@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import Model from 'react-body-highlighter';
 import { bodyData as mockData } from '@/utils/mockData';
 
@@ -23,7 +23,7 @@ const BodyHighlighter = ({ username }) => {
     const fetchBodyData = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(
+        const response = await api.get(
           `/api/users/${username}/exercises?startDate=2024-01-16&endDate=2025-01-16`
         );
         setBodyData(response.data);

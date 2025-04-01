@@ -14,7 +14,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
 import { Formik, Form } from 'formik';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import WorkoutCard from '@/components/WorkoutCard';
 import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
@@ -41,7 +41,7 @@ export default function PostDialog({
     const fetchWorkouts = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(`/api/workouts/private`);
+        const response = await api.get(`/api/workouts/private`);
         const fetchedWorkouts = response.data;
 
         if (type === 'edit' && post?.training) {
@@ -72,7 +72,7 @@ export default function PostDialog({
   const handleAddPost = async (values, actions) => {
     try {
       actions.setSubmitting(true);
-      const response = await axiosInstance.post('/api/posts/create', {
+      const response = await api.post('/api/posts/create', {
         username: username,
         title: values.title,
         content: values.description,
@@ -100,7 +100,7 @@ export default function PostDialog({
   const handleEditPost = async (values, actions) => {
     try {
       actions.setSubmitting(true);
-      const response = await axiosInstance.put(`/api/posts/update`, {
+      const response = await api.put(`/api/posts/update`, {
         id: post.id,
         title: values.title,
         content: values.description,

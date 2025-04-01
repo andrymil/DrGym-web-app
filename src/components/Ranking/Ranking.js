@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import {
   Autocomplete,
   Avatar,
@@ -35,7 +35,7 @@ export default function Ranking({ username, showAppMessage }) {
     const fetchExercises = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(`/api/exercises/with-ranking`);
+        const response = await api.get(`/api/exercises/with-ranking`);
         setExercisesNames(response.data);
       } catch (err) {
         setError('Failed to fetch exercises');
@@ -55,7 +55,7 @@ export default function Ranking({ username, showAppMessage }) {
     const fetchRanking = async (exercise) => {
       try {
         setLoadingRanking(true);
-        const response = await axiosInstance.get(
+        const response = await api.get(
           `/api/users/${username}/ranking?exerciseId=${exercise.id}`
         );
         setRanking(response.data);

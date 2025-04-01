@@ -3,7 +3,7 @@ import { ActivityCalendar } from 'react-activity-calendar';
 import { Tooltip, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { calendarData as mockData } from '@/utils/mockData';
-import axiosInstance from '@/utils/axiosInstance';
+import api from '@/utils/axiosInstance';
 import { formatDate } from '@/utils/dateUtils';
 
 const Calendar = ({ username }) => {
@@ -39,7 +39,7 @@ const Calendar = ({ username }) => {
         //   );
         //   setLoading(false);
         // }, 1000);
-        const response = await axiosInstance.get(
+        const response = await api.get(
           `/api/users/${username}/daily-exercise-count?startDate=${oneYearAgoDate}&endDate=${currentDate}`
         );
         setCalendarData(
