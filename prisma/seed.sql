@@ -1,3 +1,4 @@
+DELETE FROM EXERCISES;
 Insert into EXERCISES (TYPE, KCAL_BURNED, NAME, VIDEO_ID) VALUES ('S', 0, 'barbell bench press', 'EeE3f4VWFDo');
 Insert into EXERCISES (TYPE, KCAL_BURNED, NAME, VIDEO_ID) VALUES ('S', 0, 'dumbbell bench press', 'YQ2s_Y7g5Qk');
 Insert into EXERCISES (TYPE, KCAL_BURNED, NAME, VIDEO_ID) VALUES ('S', 0, 'barbell shoulder press', 'EeE3f4VWFDo');
