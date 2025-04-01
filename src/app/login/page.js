@@ -22,10 +22,8 @@ import { LoginSchema, LoginDefaultValues } from '@/utils/schemas/LoginSchema';
 import Link from 'next/link';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import { signIn } from 'next-auth/react';
-import axios from 'axios';
-import { string } from 'yup';
 import { stringToColor } from '@/utils/avatar';
+import { signIn, getSession } from 'next-auth/react';
 
 const Root = styled('div')(({ theme }) => ({
   width: '100%',
@@ -67,51 +65,43 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
   const handleLogin = async (formData, form) => {
     try {
       setLoading(true);
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
-        {
-          identifier:
-            loginType === 'username' ? formData.username : formData.email,
-          password: formData.password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-        }
-      );
 
-      const { username, avatar } = await res.data;
-      if (!username) {
-        throw new Error('Missing username');
-      }
-
-      localStorage.setItem('username', username);
-      localStorage.setItem('avatar', avatar ? avatar : stringToColor(username));
-
-      await signIn('credentials', {
-        username: username,
-        avatar: avatar || null,
-        callbackUrl: `/user/${username}/posts?message=Logged in successfully&type=success`,
-        redirect: true,
+      const res = await signIn('credentials', {
+        identifierType: loginType,
+        identifier:
+          loginType === 'username' ? formData.username : formData.email,
+        password: formData.password,
+        redirect: false,
       });
-    } catch (err) {
-      form.setValues({ ...formData, password: '' });
-      form.setTouched({});
-      if (err.response?.status === 401) {
+
+      if (res?.error) {
         showAppMessage({
           status: true,
-          text: `${err.response.data}`,
+          text: `${res?.error}`,
           type: 'error',
         });
-      } else {
-        showAppMessage({
-          status: true,
-          text: 'Something went wrong. Please try again later.',
-          type: 'error',
-        });
+
+        form.setValues({ ...formData, password: '' });
+        form.setTouched({});
+      } else if (res?.ok) {
+        const session = await getSession();
+        const { username, avatar } = session?.user;
+        if (!username) {
+          throw new Error('Missing username');
+        }
+        // localStorage.setItem('username', username);
+        // localStorage.setItem('avatar', avatar ? avatar : stringToColor(username));
+        router.push(
+          `/user/${username}/posts?message=Logged in successfully&type=success`
+        );
       }
+    } catch (err) {
+      console.error('Unexpected login error:', err);
+      showAppMessage({
+        status: true,
+        text: 'Something went wrong. Please try again later.',
+        type: 'error',
+      });
     } finally {
       setLoading(false);
     }

@@ -44,12 +44,6 @@ export default function CustomAppBar() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/logout`,
-        {
-          withCredentials: true,
-        }
-      );
       removeUserData();
       signOut({
         callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/login?message=You have been signed out&type=info`,
