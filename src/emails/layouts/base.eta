@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= it.subject %></title>
+  </head>
+  <body style="font-family: sans-serif; padding: 20px; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto;">
+      <header style="text-align: center;">
+        <img src="https://res.cloudinary.com/dvk25zwhj/image/upload/v1744391654/logo-text_snpdw9.png" alt="DrGym" height="70" />
+      </header>
+
+      <main>
+        <%~ it.body %>
+      </main>
+
+      <footer style="text-align: center; font-size: 12px; margin-top: 40px;">
+        <p>&copy; 2025 DrGym. All rights reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>

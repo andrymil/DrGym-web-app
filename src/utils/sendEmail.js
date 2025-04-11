@@ -12,8 +12,13 @@ const eta = new Eta({
 const testAccount = await nodemailer.createTestAccount();
 
 export default async function sendEmail({ to, templateName, templateData }) {
-  const html = eta.render(`${templateName}.eta`, templateData);
-  const text = eta.render(`${templateName}.txt.eta`, templateData);
+  const body = eta.render(`${templateName}.eta`, templateData);
+  const html = eta.render('layouts/base.eta', { ...templateData, body });
+  const textBody = eta.render(`${templateName}.txt.eta`, templateData);
+  const text = eta.render('layouts/base.txt.eta', {
+    ...templateData,
+    body: textBody,
+  });
 
   const transporter = nodemailer.createTransport({
     host: testAccount.smtp.host,
@@ -44,20 +49,6 @@ export default async function sendEmail({ to, templateName, templateData }) {
   }
 }
 
-// 'use server';
-
-// import nodemailer from 'nodemailer';
-// import { Eta } from 'eta';
-// import path from 'path';
-
-// const eta = new Eta({
-//   views: path.join(process.cwd(), 'src', 'emails'),
-// });
-
-// export default async function sendEmail({ to, templateName, templateData }) {
-//   const html = eta.render(`${templateName}.eta`, templateData);
-//   const text = eta.render(`${templateName}.txt.eta`, templateData);
-
 //   const transporter = nodemailer.createTransport({
 //     host: testAccount.smtp.host,
 //     port: testAccount.smtp.port,
@@ -67,17 +58,3 @@ export default async function sendEmail({ to, templateName, templateData }) {
 //       pass: testAccount.pass,
 //     },
 //   });
-
-//   const mailOptions = {
-//     from: '"DrGym" <support@drgym.com>',
-//     to,
-//     subject: templateData.subject,
-//     html,
-//     text,
-//   };
-
-//   transporter.sendMail(mailOptions, (err, info) => {
-//     if (err) return console.error(err);
-//     console.log('Message sent:', info.messageId);
-//   });
-// }
