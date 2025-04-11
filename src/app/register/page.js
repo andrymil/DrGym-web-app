@@ -49,7 +49,6 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
     try {
       await sendEmail({
         to: 'milosz@vveb.name',
-        subject: 'Hello',
         templateName: 'welcome',
         templateData: { name: 'Milosz' },
       });
