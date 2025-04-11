@@ -1,0 +1,5 @@
+<% it.subject = "Welcome to DrGym!" %>
+
+Hello <%= it.name %>,
+
+Thanks for signing up 💪
