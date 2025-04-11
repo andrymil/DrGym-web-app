@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline, Container } from '@mui/material';
+import Head from 'next/head';
 import CustomAppBar from '@/components/CustomAppBar';
 import theme from '@/styles/theme';
 import '@/app/globals.css';
@@ -11,6 +12,10 @@ import { SessionProvider } from 'next-auth/react';
 export default function RootLayout({ children, session }) {
   return (
     <html lang="en">
+      <Head>
+        <title>DrGym</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <body>
         <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
