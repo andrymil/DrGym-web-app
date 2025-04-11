@@ -16,6 +16,7 @@ import { CircularProgress } from '@mui/material';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import axios from 'axios';
+import sendEmail from '@/utils/sendEmail';
 
 const Root = styled('div')(({ theme }) => ({
   width: '100%',
@@ -46,40 +47,50 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
 
   const handleRegister = async (formData, form) => {
     try {
-      setLoading(true);
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/register`,
-        {
-          name: formData.firstName,
-          surname: formData.lastName,
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }
-      );
-      router.replace('/auth/verification?account=welcome');
-    } catch (error) {
-      const message = error.response?.data;
-      if (message === 'E-mail is already taken') {
-        form.setFieldError('email', 'already taken');
-      } else if (message === 'Username is already taken') {
-        form.setFieldError('username', 'already taken');
-      } else {
-        showAppMessage({
-          status: true,
-          text: 'Something went wrong. Please try again later.',
-          type: 'error',
-        });
-        return;
-      }
-      showAppMessage({
-        status: true,
-        text: message,
-        type: 'error',
+      await sendEmail({
+        to: 'milosz@vveb.name',
+        subject: 'Hello',
+        templateName: 'welcome',
+        templateData: { name: 'Milosz' },
       });
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Email error', err);
     }
+    // try {
+    //   setLoading(true);
+    //   const response = await axios.post(
+    //     `${process.env.NEXT_PUBLIC_API_URL}/api/register`,
+    //     {
+    //       name: formData.firstName,
+    //       surname: formData.lastName,
+    //       username: formData.username,
+    //       email: formData.email,
+    //       password: formData.password,
+    //     }
+    //   );
+    //   router.replace('/auth/verification?account=welcome');
+    // } catch (error) {
+    //   const message = error.response?.data;
+    //   if (message === 'E-mail is already taken') {
+    //     form.setFieldError('email', 'already taken');
+    //   } else if (message === 'Username is already taken') {
+    //     form.setFieldError('username', 'already taken');
+    //   } else {
+    //     showAppMessage({
+    //       status: true,
+    //       text: 'Something went wrong. Please try again later.',
+    //       type: 'error',
+    //     });
+    //     return;
+    //   }
+    //   showAppMessage({
+    //     status: true,
+    //     text: message,
+    //     type: 'error',
+    //   });
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
