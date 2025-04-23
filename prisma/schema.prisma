@@ -20,7 +20,7 @@ model activities {
 
 model exercises {
   exercise_id       Int                 @id @default(autoincrement())
-  type              String?             @default("S") @db.Char(1)
+  type              String?             @default("S") @db.VarChar(10)
   kcal_burned       Int?                @default(0)
   name              String              @db.VarChar(40)
   video_id          String?             @db.VarChar(11)
@@ -97,14 +97,6 @@ model posts {
   workouts        workouts?        @relation(fields: [workout_id], references: [workout_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout_id")
 }
 
-model token {
-  email              String    @id @db.VarChar(255)
-  verification_token String?   @db.VarChar(255)
-  reset_token        String?   @db.VarChar(255)
-  reset_expiry       DateTime? @db.Timestamp(6)
-  users              users     @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: NoAction, map: "email_fk")
-}
-
 model users {
   username                                                                  String                   @id @db.VarChar(50)
   name                                                                      String                   @db.VarChar(50)
@@ -123,7 +115,7 @@ model users {
   post_comments                                                             post_comments[]
   post_reactions                                                            post_reactions[]
   posts                                                                     posts[]
-  token                                                                     token?
+  tokens                                                                    tokens?
   workouts                                                                  workouts[]
 }
 
@@ -139,4 +131,12 @@ model workouts {
   activities       activities[]
   posts            posts[]
   users            users        @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_workouts_username")
+}
+
+model tokens {
+  email              String    @id(map: "token_pkey") @db.VarChar(255)
+  verification_token String?   @db.VarChar(255)
+  reset_token        String?   @db.VarChar(255)
+  reset_expiry       DateTime? @db.Timestamp(6)
+  users              users     @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: NoAction, map: "email_fk")
 }
