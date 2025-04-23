@@ -3,3 +3,5 @@
 Hello <%= it.name %>,
 
 Thanks for signing up 💪
+Please follow the link below to verify your account.
+<%= it.verifyUrl %>
