@@ -6,7 +6,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const { name, surname, username, password } = body;
-    const email = body.email.toLowerCase().trim();
+    const email = body.email?.toLowerCase().trim();
 
     if (!username || !email || !password) {
       return new Response(
@@ -23,10 +23,13 @@ export async function POST(req) {
     });
 
     if (existingUser) {
-      return new Response(JSON.stringify({ error: 'Email is already taken' }), {
-        status: 409,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: 'E-mail is already taken' }),
+        {
+          status: 409,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     existingUser = await prisma.users.findUnique({
