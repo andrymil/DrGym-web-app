@@ -12,9 +12,9 @@ const eta = new Eta({
 const testAccount = await nodemailer.createTestAccount();
 
 export default async function sendEmail({ to, templateName, templateData }) {
-  const body = eta.render(`${templateName}.eta`, templateData);
+  const body = eta.render(`${templateName}/template.eta`, templateData);
   const html = eta.render('layouts/base.eta', { ...templateData, body });
-  const textBody = eta.render(`${templateName}.txt.eta`, templateData);
+  const textBody = eta.render(`${templateName}/template.txt.eta`, templateData);
   const text = eta.render('layouts/base.txt.eta', {
     ...templateData,
     body: textBody,

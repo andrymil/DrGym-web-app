@@ -13,7 +13,7 @@ import {
 } from '@/utils/schemas/ForgotPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import axios from 'axios';
+import api from '@/utils/axiosInstance';
 
 const ForgotPassword = ({ csrfToken, showAppMessage }) => {
   const [loading, setLoading] = useState(false);
@@ -24,12 +24,9 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
   const handleForgotPassword = async (formData, form) => {
     try {
       setLoading(true);
-      const respone = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/forgot-password`,
-        {
-          email: formData.email,
-        }
-      );
+      const respone = await api.post('/api/forgot-password', {
+        email: formData.email,
+      });
       showAppMessage({
         status: true,
         text: 'Request successfully sent.',
@@ -39,12 +36,19 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
         'We have sent you a link. Please check your inbox and follow the instructions.'
       );
     } catch (error) {
-      if (error.response?.data == 'User does not exist') {
+      if (error.response?.status === 404) {
         form.setFieldError('email', 'no account found');
         showAppMessage({
           status: true,
           text: 'There is no account associated with this e-mail.',
           type: 'error',
+        });
+      } else if (error.response?.status === 403) {
+        form.setFieldError('email', 'not verified');
+        showAppMessage({
+          status: true,
+          text: error.response?.data?.error,
+          type: 'info',
         });
       } else {
         showAppMessage({
