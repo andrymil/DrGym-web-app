@@ -1,10 +1,10 @@
 <% it.subject = "Reset your DrGym password" %>
 
-Hi <%= it.username %>,
+Hi <%~ it.username %>,
 
 We received a request to reset your password for your DrGym account.
 
 Click the link below to set a new password:
-<%= it.resetUrl %>
+<%~ it.resetUrl %>
 
 This link will expire in 1 hour. If you didn’t request this, you can ignore this email.
