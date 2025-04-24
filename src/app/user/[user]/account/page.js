@@ -49,9 +49,7 @@ const AccountPage = ({ showAppMessage }) => {
         const userAvatar = userResponse.data.avatar || stringToColor(username);
         setColor(userAvatar);
         localStorage.setItem('avatar', userAvatar);
-        const exercisesResponse = await api.get(
-          '/api/exercises/by-type'
-        );
+        const exercisesResponse = await api.get('/api/exercises/by-type');
         const exerciseData = [
           ...exercisesResponse.data.strength,
           ...exercisesResponse.data.cardio,

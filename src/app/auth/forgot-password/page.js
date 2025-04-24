@@ -109,7 +109,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                       defaultValue={csrfToken}
                     />
                     <Grid container direction="column" gap={2}>
-                      <Grid xs={12}>
+                      <Grid size={12}>
                         <CustomInput
                           label="E-mail address"
                           name="email"
@@ -136,7 +136,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                           }
                         />
                       </Grid>
-                      <Grid xs={12}>
+                      <Grid size={12}>
                         <Button
                           fullWidth
                           onClick={handleSubmit}

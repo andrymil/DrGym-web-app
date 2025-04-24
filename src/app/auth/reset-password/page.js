@@ -130,7 +130,7 @@ const ResetPasswordContent = ({ showAppMessage }) => {
               }) => (
                 <Form>
                   <Grid container direction="column" gap={2}>
-                    <Grid xs={12}>
+                    <Grid size={12}>
                       <CustomInput
                         label="Password"
                         name="password"
@@ -159,7 +159,7 @@ const ResetPasswordContent = ({ showAppMessage }) => {
                         }
                       />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid size={12}>
                       <CustomInput
                         label="Confirm Password"
                         name="confirmPassword"
@@ -188,7 +188,7 @@ const ResetPasswordContent = ({ showAppMessage }) => {
                         }
                       />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid size={12}>
                       <Button
                         fullWidth
                         onClick={handleSubmit}

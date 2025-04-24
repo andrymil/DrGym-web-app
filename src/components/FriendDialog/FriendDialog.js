@@ -118,7 +118,7 @@ export default function FriendDialog({
             <Form>
               <DialogContent sx={{ p: 3, pt: 1 }}>
                 <Grid container direction="column" gap={2}>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="Username"
                       name="username"
@@ -145,7 +145,7 @@ export default function FriendDialog({
                       }
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <Button
                       fullWidth
                       onClick={handleSubmit}

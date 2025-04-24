@@ -145,7 +145,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                   defaultValue={csrfToken}
                 />
                 <Grid container direction="column" gap={2}>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <FormControl fullWidth>
                       <FormLabel focused component="legend">
                         Login with
@@ -173,7 +173,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                       </RadioGroup>
                     </FormControl>
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     {loginType === 'username' ? (
                       <CustomInput
                         label="Username"
@@ -200,7 +200,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                       />
                     )}
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="Password"
                       name="password"
@@ -226,7 +226,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                       }
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <Button
                       fullWidth
                       type="submit"

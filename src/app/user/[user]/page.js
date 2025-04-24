@@ -143,7 +143,7 @@ const User = ({ params, showAppMessage }) => {
                 {Object.entries(userData).map(
                   ([key, value]) =>
                     key !== 'username' && (
-                      <Grid xs={12} key={key}>
+                      <Grid key={key} size={12}>
                         <Typography variant="body1" color="textSecondary">
                           {key.charAt(0).toUpperCase() + key.slice(1)}:
                         </Typography>

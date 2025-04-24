@@ -25,9 +25,7 @@ const Workouts = ({ showAppMessage }) => {
   const fetchWorkouts = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await api.get(
-        `/api/users/${username}/workouts`
-      );
+      const response = await api.get(`/api/users/${username}/workouts`);
       setAllWorkouts(response.data);
       setFromFuture(true);
       setWorkoutsData([...response.data.futureWorkouts].reverse());

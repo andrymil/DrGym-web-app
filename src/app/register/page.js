@@ -109,7 +109,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                   defaultValue={csrfToken}
                 />
                 <Grid container direction="column" gap={2}>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="First name"
                       name="firstName"
@@ -121,7 +121,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       tabIndex={1}
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="Last name"
                       name="lastName"
@@ -133,7 +133,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       tabIndex={2}
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="Username"
                       name="username"
@@ -145,7 +145,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       tabIndex={3}
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="E-mail address"
                       name="email"
@@ -158,7 +158,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       tabIndex={4}
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="Password"
                       name="password"
@@ -184,7 +184,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       }
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <CustomInput
                       label="Confirm password"
                       name="confirmPassword"
@@ -214,7 +214,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       }
                     />
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <Button
                       fullWidth
                       type="submit"

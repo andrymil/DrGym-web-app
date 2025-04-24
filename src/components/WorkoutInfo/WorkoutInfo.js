@@ -57,9 +57,7 @@ export default function WorkoutCard({ workout, isPost, post, showAppMessage }) {
 
   const handleAddLike = async () => {
     try {
-      await api.post(
-        `/api/posts/${post.id}/reactions?username=${username}`
-      );
+      await api.post(`/api/posts/${post.id}/reactions?username=${username}`);
       setLikeCount((prev) => prev + 1);
     } catch (error) {
       setLiked(false);
@@ -73,9 +71,7 @@ export default function WorkoutCard({ workout, isPost, post, showAppMessage }) {
 
   const handleRemoveLike = async () => {
     try {
-      await api.delete(
-        `/api/posts/${post.id}/reactions?username=${username}`
-      );
+      await api.delete(`/api/posts/${post.id}/reactions?username=${username}`);
       setLikeCount((prev) => {
         if (prev > 0) {
           return prev - 1;
