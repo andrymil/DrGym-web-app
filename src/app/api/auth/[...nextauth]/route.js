@@ -22,13 +22,20 @@ export const authOptions = {
           where: { [credentials.identifierType]: credentials.identifier },
         });
 
-        if (!user) throw new Error('Invalid credentials');
+        if (!user) {
+          throw new Error('Invalid credentials');
+        }
 
         const isValid = await bcrypt.compare(
           credentials.password,
           user.password
         );
-        if (!isValid) throw new Error('Invalid credentials');
+        if (!isValid) {
+          throw new Error('Invalid credentials');
+        }
+        if (!user.verified) {
+          throw new Error('You have to verify your e-mail address first');
+        }
 
         return user;
       },
