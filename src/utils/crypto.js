@@ -17,8 +17,6 @@ export const generateToken = () => {
 };
 
 export const verifyToken = (token, hash) => {
-  console.log('token', token);
-  console.log('hash', hash);
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
   return tokenHash === hash;
 };

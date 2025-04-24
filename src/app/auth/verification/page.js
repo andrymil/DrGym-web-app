@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography, CircularProgress } from '@mui/material';
-import axios from 'axios';
+import api from '@/utils/axiosInstance';
 
 const VerificationPageContent = ({ showAppMessage }) => {
   const searchParams = useSearchParams();
@@ -22,19 +22,16 @@ const VerificationPageContent = ({ showAppMessage }) => {
       try {
         setLoading(true);
         setMessage('Verifying your account...');
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/verification?email=${email}&token=${token}`
-        );
-        setTimeout(() => {
-          router.replace(
-            '/login?message=Account has been verified&type=success'
-          );
-        }, 5000);
+        const res = await api.post(`/api/verification`, {
+          email,
+          token,
+        });
+        router.replace('/login?message=Account has been verified&type=success');
       } catch (error) {
-        const errMessage = error.response?.data;
-        if (errMessage === 'User does not exist') {
+        const errMessage = error.response?.data?.error;
+        if (error.response?.status === 404) {
           router.replace(`/login?message=${errMessage}&type=error`);
-        } else if (errMessage === 'User is already verified') {
+        } else if (error.response?.status === 409) {
           router.replace(
             `/login?message=Your account has been already verified&type=info`
           );
