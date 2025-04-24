@@ -1,6 +1,6 @@
 <% it.subject = "Welcome to DrGym!" %>
 
-Hello <%= it.name %>,
+Hello <%= it.username %>,
 
 Thanks for signing up 💪
 Please follow the link below to verify your account.
