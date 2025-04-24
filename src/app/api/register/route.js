@@ -1,4 +1,5 @@
 import prisma from '@prisma';
+import { NextResponse } from 'next/server';
 import sendEmail from '@/utils/sendEmail';
 import { hashPassword, generateToken } from '@/utils/crypto';
 
@@ -9,12 +10,9 @@ export async function POST(req) {
     const email = body.email?.toLowerCase().trim();
 
     if (!username || !email || !password) {
-      return new Response(
-        JSON.stringify({ error: 'Username, email and password are required' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        }
+      return NextResponse.json(
+        { error: 'Username, email and password are required' },
+        { status: 400 }
       );
     }
 
@@ -23,12 +21,9 @@ export async function POST(req) {
     });
 
     if (existingUser) {
-      return new Response(
-        JSON.stringify({ error: 'E-mail is already taken' }),
-        {
-          status: 409,
-          headers: { 'Content-Type': 'application/json' },
-        }
+      return NextResponse.json(
+        { error: 'E-mail is already taken' },
+        { status: 409 }
       );
     }
 
@@ -37,12 +32,9 @@ export async function POST(req) {
     });
 
     if (existingUser) {
-      return new Response(
-        JSON.stringify({ error: 'Username is already taken' }),
-        {
-          status: 409,
-          headers: { 'Content-Type': 'application/json' },
-        }
+      return NextResponse.json(
+        { error: 'Username is already taken' },
+        { status: 409 }
       );
     }
 
@@ -65,7 +57,7 @@ export async function POST(req) {
       create: { email, verification_token: hashedToken },
     });
 
-    const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify?email=${encodeURIComponent(email)}&token=${token}`;
+    const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verification?email=${encodeURIComponent(email)}&token=${token}`;
 
     await sendEmail({
       to: email,
@@ -73,18 +65,15 @@ export async function POST(req) {
       templateData: { username, verifyUrl },
     });
 
-    return new Response(
-      JSON.stringify({ message: 'Account created successfully' }),
-      {
-        status: 201,
-        headers: { 'Content-Type': 'application/json' },
-      }
+    return NextResponse.json(
+      { message: 'Account has been created successfully' },
+      { status: 201 }
     );
   } catch (err) {
     console.error('Registration error:', err);
-    return new Response(JSON.stringify({ error: 'Something went wrong.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return NextResponse.json(
+      { error: 'Something went wrong' },
+      { status: 500 }
+    );
   }
 }
