@@ -18,7 +18,7 @@ import {
 } from '@/utils/schemas/ResetPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import axios from 'axios';
+import api from '@/utils/axiosInstance';
 
 const ResetPasswordContent = ({ showAppMessage }) => {
   const searchParams = useSearchParams();
@@ -45,38 +45,27 @@ const ResetPasswordContent = ({ showAppMessage }) => {
     } else {
       setMessage('');
     }
-  }, [router, email, token, showAppMessage]);
+  }, [email, token, showAppMessage]);
 
   const handleResetPassword = async (formData, form) => {
     try {
       setLoading(true);
       setMessage('');
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/reset-password`,
-        {
-          email,
-          token,
-          newPassword: formData.password,
-        }
-      );
+      const res = await api.post('/api/reset-password', {
+        email,
+        token,
+        password: formData.password,
+      });
       router.push(
         '/login?message=Your password has been successfully changed.&type=success'
       );
     } catch (error) {
-      const errMessage = error.response?.data;
-      if (typeof errMessage === 'string') {
-        showAppMessage({
-          status: true,
-          text: 'Invalid token. Please try again or request a new link.',
-          type: 'error',
-        });
-      } else {
-        showAppMessage({
-          status: true,
-          text: 'Something went wrong.',
-          type: 'error',
-        });
-      }
+      const errMessage = error.response?.data?.error;
+      showAppMessage({
+        status: true,
+        text: errMessage,
+        type: 'error',
+      });
     } finally {
       setLoading(false);
     }
