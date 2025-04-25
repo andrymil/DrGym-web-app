@@ -1,0 +1,9 @@
+<% it.subject = "Your DrGym password was changed" %>
+
+Hi <%~ it.username %>,
+
+This is a confirmation that your DrGym account password was recently changed.
+
+If you made this change, no further action is needed.
+
+If you didn’t change your password, please reset it immediately or contact our support team.
