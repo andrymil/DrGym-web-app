@@ -41,21 +41,22 @@ export async function POST(req) {
     const hashedPassword = await hashPassword(password);
     const { token, hashedToken } = generateToken();
 
-    await prisma.users.create({
-      data: {
-        name,
-        surname,
-        username,
-        email,
-        password: hashedPassword,
-      },
-    });
-
-    await prisma.tokens.upsert({
-      where: { email },
-      update: { verification_token: hashedToken },
-      create: { email, verification_token: hashedToken },
-    });
+    await prisma.$transaction([
+      prisma.users.create({
+        data: {
+          name,
+          surname,
+          username,
+          email,
+          password: hashedPassword,
+        },
+      }),
+      prisma.tokens.upsert({
+        where: { email },
+        update: { verification_token: hashedToken },
+        create: { email, verification_token: hashedToken },
+      }),
+    ]);
 
     const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verification?email=${encodeURIComponent(email)}&token=${token}`;
 
