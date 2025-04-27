@@ -16,7 +16,7 @@ export async function POST(req) {
       );
     }
 
-    let existingUser = await prisma.users.findUnique({
+    let existingUser = await prisma.user.findUnique({
       where: { email },
     });
 
@@ -27,7 +27,7 @@ export async function POST(req) {
       );
     }
 
-    existingUser = await prisma.users.findUnique({
+    existingUser = await prisma.user.findUnique({
       where: { username },
     });
 
@@ -42,7 +42,7 @@ export async function POST(req) {
     const { token, hashedToken } = generateToken();
 
     await prisma.$transaction([
-      prisma.users.create({
+      prisma.user.create({
         data: {
           name,
           surname,
@@ -51,7 +51,7 @@ export async function POST(req) {
           password: hashedPassword,
         },
       }),
-      prisma.tokens.upsert({
+      prisma.token.upsert({
         where: { email },
         update: { verification_token: hashedToken },
         create: { email, verification_token: hashedToken },

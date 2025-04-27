@@ -2,7 +2,7 @@ import prisma from '@prisma';
 
 export async function GET() {
   try {
-    const allExercises = await prisma.exercises.findMany({
+    const allExercises = await prisma.exercise.findMany({
       select: {
         name: true,
         video_id: true,

@@ -17,7 +17,7 @@ const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = await prisma.users.findUnique({
+        const user = await prisma.user.findUnique({
           where: { [credentials.identifierType]: credentials.identifier },
         });
 

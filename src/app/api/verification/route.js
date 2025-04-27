@@ -14,11 +14,11 @@ export async function POST(req) {
       );
     }
 
-    const user = await prisma.users.findUnique({
+    const user = await prisma.user.findUnique({
       where: { email },
       select: {
         verified: true,
-        tokens: {
+        token: {
           select: { verification_token: true },
         },
       },
@@ -38,14 +38,14 @@ export async function POST(req) {
       );
     }
 
-    if (!user.tokens?.verification_token) {
+    if (!user.token?.verification_token) {
       return NextResponse.json(
         { error: 'No verification token found' },
         { status: 404 }
       );
     }
 
-    if (!verifyToken(token, user.tokens.verification_token)) {
+    if (!verifyToken(token, user.token.verification_token)) {
       return NextResponse.json(
         { error: 'Invalid verification token' },
         { status: 403 }
@@ -53,11 +53,11 @@ export async function POST(req) {
     }
 
     await prisma.$transaction([
-      prisma.users.update({
+      prisma.user.update({
         where: { email },
         data: { verified: 1 },
       }),
-      prisma.tokens.update({
+      prisma.token.update({
         where: { email },
         data: { verification_token: null },
       }),

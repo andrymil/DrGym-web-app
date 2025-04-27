@@ -12,7 +12,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const user = await prisma.users.findUnique({
+    const user = await prisma.user.findUnique({
       where: { email },
       select: {
         username: true,
@@ -40,7 +40,7 @@ export async function POST(req) {
       reset_expiry: new Date(Date.now() + 1000 * 60 * 60),
     };
 
-    await prisma.tokens.upsert({
+    await prisma.token.upsert({
       where: { email },
       update: tableContent,
       create: {

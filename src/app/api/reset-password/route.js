@@ -23,12 +23,12 @@ export async function POST(req) {
       );
     }
 
-    const user = await prisma.users.findUnique({
+    const user = await prisma.user.findUnique({
       where: { email },
       select: {
         username: true,
         verified: true,
-        tokens: {
+        token: {
           select: {
             reset_token: true,
             reset_expiry: true,
@@ -44,7 +44,7 @@ export async function POST(req) {
       );
     }
 
-    const { tokens } = user;
+    const { token: tokens } = user;
 
     if (!tokens?.reset_token) {
       return NextResponse.json(
@@ -77,11 +77,11 @@ export async function POST(req) {
     const hashedPassword = await hashPassword(password);
 
     await prisma.$transaction([
-      prisma.users.update({
+      prisma.user.update({
         where: { email },
         data: { password: hashedPassword },
       }),
-      prisma.tokens.update({
+      prisma.token.update({
         where: { email },
         data: {
           reset_token: null,
