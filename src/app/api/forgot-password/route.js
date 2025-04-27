@@ -36,8 +36,8 @@ export async function POST(req) {
 
     const { token, hashedToken } = generateToken();
     const tableContent = {
-      reset_token: hashedToken,
-      reset_expiry: new Date(Date.now() + 1000 * 60 * 60),
+      resetToken: hashedToken,
+      resetExpiry: new Date(Date.now() + 1000 * 60 * 60),
     };
 
     await prisma.token.upsert({

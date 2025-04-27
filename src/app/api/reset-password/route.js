@@ -28,10 +28,10 @@ export async function POST(req) {
       select: {
         username: true,
         verified: true,
-        token: {
+        tokens: {
           select: {
-            reset_token: true,
-            reset_expiry: true,
+            resetToken: true,
+            resetExpiry: true,
           },
         },
       },
@@ -44,9 +44,9 @@ export async function POST(req) {
       );
     }
 
-    const { token: tokens } = user;
+    const { tokens } = user;
 
-    if (!tokens?.reset_token) {
+    if (!tokens?.resetToken) {
       return NextResponse.json(
         { error: 'No active password reset request found for this account' },
         { status: 404 }
@@ -60,14 +60,14 @@ export async function POST(req) {
       );
     }
 
-    if (!tokens.reset_expiry || new Date() > tokens.reset_expiry) {
+    if (!tokens.resetExpiry || new Date() > tokens.resetExpiry) {
       return NextResponse.json(
         { error: 'Reset password token has expired' },
         { status: 400 }
       );
     }
 
-    if (!verifyToken(token, tokens.reset_token)) {
+    if (!verifyToken(token, tokens.resetToken)) {
       return NextResponse.json(
         { error: 'Invalid reset password token' },
         { status: 403 }
@@ -84,8 +84,8 @@ export async function POST(req) {
       prisma.token.update({
         where: { email },
         data: {
-          reset_token: null,
-          reset_expiry: null,
+          resetToken: null,
+          resetExpiry: null,
         },
       }),
     ]);

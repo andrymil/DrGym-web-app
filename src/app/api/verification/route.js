@@ -18,8 +18,8 @@ export async function POST(req) {
       where: { email },
       select: {
         verified: true,
-        token: {
-          select: { verification_token: true },
+        tokens: {
+          select: { verificationToken: true },
         },
       },
     });
@@ -38,14 +38,14 @@ export async function POST(req) {
       );
     }
 
-    if (!user.token?.verification_token) {
+    if (!user.tokens?.verificationToken) {
       return NextResponse.json(
         { error: 'No verification token found' },
         { status: 404 }
       );
     }
 
-    if (!verifyToken(token, user.token.verification_token)) {
+    if (!verifyToken(token, user.tokens.verificationToken)) {
       return NextResponse.json(
         { error: 'Invalid verification token' },
         { status: 403 }
@@ -59,7 +59,7 @@ export async function POST(req) {
       }),
       prisma.token.update({
         where: { email },
-        data: { verification_token: null },
+        data: { verificationToken: null },
       }),
     ]);
 

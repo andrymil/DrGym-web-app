@@ -53,8 +53,8 @@ export async function POST(req) {
       }),
       prisma.token.upsert({
         where: { email },
-        update: { verification_token: hashedToken },
-        create: { email, verification_token: hashedToken },
+        update: { verificationToken: hashedToken },
+        create: { email, verificationToken: hashedToken },
       }),
     ]);
 
