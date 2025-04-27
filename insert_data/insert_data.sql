@@ -1,651 +1,5 @@
---- INSERTING into ACTIVITIES
+--- INSERTING into EXERCISES
 
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '309',
-           '7',
-           '12',
-           '12',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '97' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '304',
-           '7',
-           '123',
-           '132',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '90' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '247',
-           '73',
-           '0',
-           '0',
-           to_timestamp('25/01/16 02:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '70' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '248',
-           '72',
-           '0',
-           '0',
-           to_timestamp('25/01/16 01:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '70' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '249',
-           '20',
-           '40',
-           '60',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '70' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '250',
-           '14',
-           '30',
-           '40',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '70' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '251',
-           '39',
-           '30',
-           '20',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '70' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '252',
-           '54',
-           '20',
-           '200',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '253',
-           '261',
-           '0',
-           '50',
-           to_timestamp('25/01/16 00:10:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '254',
-           '262',
-           '0',
-           '100',
-           to_timestamp('25/01/16 00:30:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '72' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '255',
-           '1',
-           '12',
-           '60',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '72' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '256',
-           '1',
-           '12',
-           '60',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '72' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '257',
-           '1',
-           '12',
-           '60',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '72' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '258',
-           '8',
-           '10',
-           '50',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '72' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '259',
-           '8',
-           '10',
-           '55',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '72' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '260',
-           '6',
-           '12',
-           '40',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '2' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '261',
-           '64',
-           '15',
-           '50',
-           to_timestamp('25/01/16 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '6' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '310',
-           '66',
-           '0',
-           '0',
-           to_timestamp('25/01/19 12:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '97' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '302',
-           '73',
-           '0',
-           '0',
-           to_timestamp('25/01/18 12:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '82' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '307',
-           '7',
-           '12',
-           '12',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '96' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '265',
-           '21',
-           '20',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '266',
-           '21',
-           '16',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '267',
-           '21',
-           '12',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '268',
-           '21',
-           '8',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '269',
-           '21',
-           '5',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '270',
-           '23',
-           '12',
-           '15',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '271',
-           '23',
-           '10',
-           '15',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '71' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '308',
-           '66',
-           '0',
-           '0',
-           to_timestamp('25/01/19 12:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '96' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '311',
-           '66',
-           '0',
-           '0',
-           to_timestamp('25/01/19 12:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '98' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '312',
-           '173',
-           '0',
-           '234234',
-           to_timestamp('25/01/19 23:42:34,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '98' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '31',
-           '21',
-           '20',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '32',
-           '21',
-           '16',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '33',
-           '21',
-           '12',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '34',
-           '21',
-           '8',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '35',
-           '21',
-           '5',
-           '40',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '36',
-           '23',
-           '12',
-           '15',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '37',
-           '23',
-           '10',
-           '15',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '38',
-           '23',
-           '8',
-           '15',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '39',
-           '29',
-           '10',
-           '0',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '40',
-           '29',
-           '8',
-           '0',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '41',
-           '29',
-           '2',
-           '15',
-           to_timestamp('24/12/01 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '3' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '313',
-           '1',
-           '123',
-           '24342',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '54' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '234',
-           '73',
-           '0',
-           '0',
-           to_timestamp('25/01/16 23:42:02,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '54' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '314',
-           '173',
-           '0',
-           '234',
-           to_timestamp('25/01/19 23:42:43,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '54' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '196',
-           '66',
-           '0',
-           '0',
-           to_timestamp('25/01/15 04:12:24,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '48' );
-insert into activities (
-   activity_id,
-   exercise_id,
-   reps,
-   weight,
-   duration,
-   workout_id
-) values ( '243',
-           '168',
-           '0',
-           '0',
-           to_timestamp('25/01/16 12:31:01,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '68' );
-REM INSERTING into EXERCISES
-   SET DEFINE OFF;
 insert into exercises (
    exercise_id,
    type,
@@ -653,7 +7,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 1,
-           'S',
+           'strength',
            0,
            'barbell bench press',
            'EeE3f4VWFDo' );
@@ -664,7 +18,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 2,
-           'S',
+           'strength',
            0,
            'dumbbell bench press',
            'YQ2s_Y7g5Qk' );
@@ -675,7 +29,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 3,
-           'S',
+           'strength',
            0,
            'barbell shoulder press',
            'EeE3f4VWFDo' );
@@ -686,7 +40,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 4,
-           'S',
+           'strength',
            0,
            'dumbbell shoulder press',
            'HzIiNhHhhtA' );
@@ -697,7 +51,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 5,
-           'S',
+           'strength',
            0,
            'dumbbell lateral raise',
            'OuG1smZTsQQ' );
@@ -708,7 +62,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 6,
-           'S',
+           'strength',
            0,
            'dumbbell chest fly',
            'JFm8KbhjibM' );
@@ -719,7 +73,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 7,
-           'S',
+           'strength',
            0,
            'dip',
            '4LA1kF7yCGo' );
@@ -730,7 +84,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 8,
-           'S',
+           'strength',
            0,
            'cable tricep pushdown',
            '6Fzep104f0s' );
@@ -741,7 +95,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 9,
-           'S',
+           'strength',
            0,
            'dumbbell frontal raise',
            'hRJ6tR5-if0' );
@@ -752,7 +106,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 10,
-           'S',
+           'strength',
            0,
            'dumbbell skull crushers',
            'jPjhQ2hsAds' );
@@ -763,7 +117,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 11,
-           'S',
+           'strength',
            0,
            'machine chest press',
            'NwzUje3z0qY' );
@@ -774,7 +128,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 12,
-           'S',
+           'strength',
            0,
            'machine shoulder press',
            'WvLMauqrnK8' );
@@ -785,7 +139,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 13,
-           'S',
+           'strength',
            0,
            'machine lateral raise',
            '0o07iGKUarI' );
@@ -796,7 +150,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 14,
-           'S',
+           'strength',
            0,
            'machine tricep extension',
            'Bx8ga1BLHLE' );
@@ -807,7 +161,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 15,
-           'S',
+           'strength',
            0,
            'push up',
            'mm6_WcoCVTA' );
@@ -818,7 +172,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 16,
-           'S',
+           'strength',
            0,
            'incline barbell bench press',
            'lJ2o89kcnxY' );
@@ -829,7 +183,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 17,
-           'S',
+           'strength',
            0,
            'incline dumbbell bench press',
            '5CECBjd7HLQ' );
@@ -840,7 +194,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 18,
-           'S',
+           'strength',
            0,
            'decline barbell bench press',
            'UH3w618WAAc' );
@@ -851,7 +205,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 19,
-           'S',
+           'strength',
            0,
            'decline dumbbell bench press',
            '4R_GwRhG0rY' );
@@ -862,7 +216,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 20,
-           'S',
+           'strength',
            0,
            'machine chest fly',
            'FDay9wFe5uE' );
@@ -873,7 +227,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 21,
-           'S',
+           'strength',
            0,
            'barbell bicep curl',
            'JnLFSFurrqQ' );
@@ -884,7 +238,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 22,
-           'S',
+           'strength',
            0,
            'dumbbell bicep  curl',
            'iixND1P2lik' );
@@ -895,7 +249,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 23,
-           'S',
+           'strength',
            0,
            'bicep hammer curl',
            'XOEL4MgekYE' );
@@ -906,7 +260,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 24,
-           'S',
+           'strength',
            0,
            'machine bicep curl',
            'Ja6ZlIDONac' );
@@ -917,7 +271,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 25,
-           'S',
+           'strength',
            0,
            'machine bicep hammer curl',
            'Ja6ZlIDONac' );
@@ -928,7 +282,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 26,
-           'S',
+           'strength',
            0,
            'barbell row',
            '6FZHJGzMFEc' );
@@ -939,7 +293,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 27,
-           'S',
+           'strength',
            0,
            'dumbbell row',
            'DMo3HJoawrU' );
@@ -950,7 +304,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 28,
-           'S',
+           'strength',
            0,
            'cable row',
            'UCXxvVItLoM' );
@@ -961,7 +315,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 29,
-           'S',
+           'strength',
            0,
            'pull up',
            'GRgWPT9XSQQ' );
@@ -972,7 +326,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 30,
-           'S',
+           'strength',
            0,
            'cable face pull',
            '-MODnZdnmAQ' );
@@ -983,7 +337,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 31,
-           'S',
+           'strength',
            0,
            'chin up',
            '9JC1EwqezGY' );
@@ -994,7 +348,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 32,
-           'S',
+           'strength',
            0,
            'dumbbell wrist curl',
            '2wPpcJBe03o' );
@@ -1005,7 +359,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 33,
-           'S',
+           'strength',
            0,
            'barbell wrist curl',
            'lfQR7oVS8eo' );
@@ -1016,7 +370,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 34,
-           'S',
+           'strength',
            0,
            'dumbbell wrist extension',
            'la-0c4ubkvs' );
@@ -1027,7 +381,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 35,
-           'S',
+           'strength',
            0,
            'barbell wrist extension',
            'PMdkUNXrB9Q' );
@@ -1038,7 +392,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 36,
-           'S',
+           'strength',
            0,
            'barbell reverse curl',
            'TUX58GM5fRQ' );
@@ -1049,7 +403,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 37,
-           'S',
+           'strength',
            0,
            'dumbbell reverse curl',
            'hUA-fIpM7nA' );
@@ -1060,7 +414,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 38,
-           'S',
+           'strength',
            0,
            'back extension',
            '5_ejbGfdAQE' );
@@ -1071,7 +425,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 39,
-           'S',
+           'strength',
            0,
            'barbell squat',
            'i7J5h7BJ07g' );
@@ -1082,7 +436,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 40,
-           'S',
+           'strength',
            0,
            'machine leg press',
            'yZmx_Ac3880' );
@@ -1093,7 +447,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 41,
-           'S',
+           'strength',
            0,
            'machine horizontal leg press',
            'ccTiGvrsUUY' );
@@ -1104,7 +458,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 42,
-           'S',
+           'strength',
            0,
            'hack squat',
            'rYgNArpwE7E' );
@@ -1115,7 +469,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 43,
-           'S',
+           'strength',
            0,
            'machine leg extension',
            'm0FOpMEgero' );
@@ -1126,7 +480,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 44,
-           'S',
+           'strength',
            0,
            'machine leg curl',
            'Orxowest56U' );
@@ -1137,7 +491,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 45,
-           'S',
+           'strength',
            0,
            'barbell standing calf raises',
            'hh5516HCu4k' );
@@ -1148,7 +502,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 46,
-           'S',
+           'strength',
            0,
            'machine calf raises',
            'N3awlEyTY98' );
@@ -1159,7 +513,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 47,
-           'S',
+           'strength',
            0,
            'dumbbell lunges',
            'eFWCn5iEbTU' );
@@ -1170,7 +524,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 48,
-           'S',
+           'strength',
            0,
            'barbell lunges',
            '_meXEWq5MOQ' );
@@ -1181,7 +535,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 49,
-           'S',
+           'strength',
            0,
            'hip thrust',
            'EF7jXP17DPE' );
@@ -1192,7 +546,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 50,
-           'S',
+           'strength',
            0,
            'barbell bulgarian split squat',
            'jNihW0WDIL4' );
@@ -1203,7 +557,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 51,
-           'S',
+           'strength',
            0,
            'barbell front squat',
            'HHxNbhP16UE' );
@@ -1214,7 +568,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 52,
-           'S',
+           'strength',
            0,
            'deadlift',
            'AweC3UaM14o' );
@@ -1225,7 +579,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 53,
-           'S',
+           'strength',
            0,
            'romanian deadlift',
            'bT5OOBgY4bc' );
@@ -1236,7 +590,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 54,
-           'S',
+           'strength',
            0,
            'sumo deadlift',
            'pfSMst14EFk' );
@@ -1247,7 +601,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 55,
-           'F',
+           'crossfit',
            0,
            'farmer walk',
            'dX0itH_wXBQ' );
@@ -1258,7 +612,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 56,
-           'S',
+           'strength',
            0,
            'shrugs',
            '_t3lrPI6Ns4' );
@@ -1269,7 +623,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 57,
-           'S',
+           'strength',
            0,
            'sit ups',
            'pXg8qppif7I' );
@@ -1280,7 +634,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 58,
-           'S',
+           'strength',
            0,
            'decline sit ups',
            'DAnTf16NcT0' );
@@ -1291,7 +645,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 59,
-           'S',
+           'strength',
            0,
            'crunches',
            '0t4t3IpiEao' );
@@ -1302,7 +656,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 60,
-           'S',
+           'strength',
            0,
            'decline crunches',
            'dVO_yOfvp3A' );
@@ -1313,7 +667,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 61,
-           'S',
+           'strength',
            0,
            'russian twists',
            'pzMWYoeSCzw' );
@@ -1324,7 +678,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 62,
-           'S',
+           'strength',
            0,
            'neck curl',
            'WSfy5wpU_Io' );
@@ -1335,7 +689,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 63,
-           'S',
+           'strength',
            0,
            'neck extensions',
            'Z6rZ8oRyFAk' );
@@ -1346,7 +700,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 64,
-           'S',
+           'strength',
            0,
            'machine reverse fly',
            '5YK4bgzXDp0' );
@@ -1357,7 +711,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 65,
-           'S',
+           'strength',
            0,
            'dumbbell reverse fly',
            'hf7jnF45N_I' );
@@ -1368,7 +722,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 66,
-           'C',
+           'cardio',
            2,
            'plank',
            'EPiXN2bkLoQ' );
@@ -1379,7 +733,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 67,
-           'S',
+           'strength',
            0,
            'leg raises',
            'q0JVBRHoLz4' );
@@ -1390,7 +744,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 68,
-           'C',
+           'cardio',
            5,
            'walking',
            null );
@@ -1401,7 +755,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 69,
-           'C',
+           'cardio',
            10,
            'jogging',
            null );
@@ -1412,7 +766,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 70,
-           'C',
+           'cardio',
            15,
            'running',
            null );
@@ -1423,7 +777,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 71,
-           'C',
+           'cardio',
            20,
            'sprinting',
            null );
@@ -1434,7 +788,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 72,
-           'C',
+           'cardio',
            12,
            'swimming',
            null );
@@ -1445,7 +799,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 73,
-           'C',
+           'cardio',
            10,
            'cycling',
            null );
@@ -1456,7 +810,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 74,
-           'C',
+           'cardio',
            8,
            'jumping jacks',
            'uLVt6u15L98' );
@@ -1467,7 +821,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 75,
-           'S',
+           'strength',
            0,
            'machine leg abduction',
            'G_8LItOiZ0Q' );
@@ -1478,7 +832,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 76,
-           'S',
+           'strength',
            0,
            'machine leg adduction',
            'CjAVezAggkI' );
@@ -1489,7 +843,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 77,
-           'S',
+           'strength',
            0,
            'machine lat pulldown',
            'EUIri47Epcg' );
@@ -1500,7 +854,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 168,
-           'C',
+           'cardio',
            8,
            'incline walking',
            null );
@@ -1511,7 +865,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 173,
-           'F',
+           'crossfit',
            10,
            'trap bar farmer''s walk',
            'ivqzKhwOpvI' );
@@ -1522,7 +876,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 169,
-           'C',
+           'cardio',
            12,
            'stepper',
            null );
@@ -1533,7 +887,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 170,
-           'C',
+           'cardio',
            18,
            'burpees',
            'TU8QYVW0gDU' );
@@ -1544,7 +898,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 171,
-           'C',
+           'cardio',
            14,
            'rope skipping',
            null );
@@ -1555,7 +909,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 172,
-           'F',
+           'crossfit',
            10,
            'dumbbell farmer''s walk',
            '8OtwXwrJizk' );
@@ -1566,7 +920,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 174,
-           'F',
+           'crossfit',
            12,
            'battle ropes alternating waves',
            'ZujykKeVZpM' );
@@ -1577,7 +931,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 175,
-           'F',
+           'crossfit',
            12,
            'battle ropes side waves',
            'tDCgANYoO3Q' );
@@ -1588,7 +942,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 176,
-           'F',
+           'crossfit',
            12,
            'battle ropes inside circles',
            'ycYOpuuqnLw' );
@@ -1599,7 +953,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 177,
-           'F',
+           'crossfit',
            12,
            'battle ropes outside circles',
            'bIeB-Ut8YJM' );
@@ -1610,7 +964,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 178,
-           'F',
+           'crossfit',
            10,
            'battle ropes uppercuts',
            'HIZI3TkbJjs' );
@@ -1621,7 +975,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 179,
-           'F',
+           'crossfit',
            20,
            'battle ropes jumping jacks',
            'r7Ndi0YYZ-0' );
@@ -1632,7 +986,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 180,
-           'F',
+           'crossfit',
            14,
            'battle ropes slams',
            '7wDx6mZDxA8' );
@@ -1643,7 +997,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 301,
-           'F',
+           'crossfit',
            100,
            'kidmaker',
            'I-u4F-E5yJ0' );
@@ -1654,7 +1008,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 302,
-           'S',
+           'strength',
            0,
            'dumbbell bulgarian split squat',
            'Fmjj7wFJWRE' );
@@ -1665,7 +1019,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 259,
-           'F',
+           'crossfit',
            10,
            'weighted wall sit',
            '8e42dL8MeMw' );
@@ -1676,7 +1030,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 260,
-           'F',
+           'crossfit',
            12,
            'rowing',
            null );
@@ -1687,7 +1041,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 261,
-           'F',
+           'crossfit',
            14,
            'weighted running',
            null );
@@ -1698,7 +1052,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 262,
-           'F',
+           'crossfit',
            10,
            'weighted walking',
            null );
@@ -1709,7 +1063,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 263,
-           'F',
+           'crossfit',
            11,
            'weighted incline walking',
            null );
@@ -1720,7 +1074,7 @@ insert into exercises (
    name,
    video_id
 ) values ( 264,
-           'F',
+           'crossfit',
            12,
            'weighted jumping jacks',
            null );
@@ -1731,12 +1085,558 @@ insert into exercises (
    name,
    video_id
 ) values ( 265,
-           'F',
+           'crossfit',
            10,
            'weighted rope skipping',
            null );
-REM INSERTING into EXERCISES_MUSCLES
-   SET DEFINE OFF;
+
+--- INSERTING into USERS
+
+insert into users (
+   username,
+   name,
+   surname,
+   email,
+   password,
+   weight,
+   height,
+   verified,
+   favorite_exercise,
+   avatar
+) values ( 'pedziwiatr',
+           'Michał',
+           'Pędziwiatr',
+           'michalpedziwiatrr@gmail.com',
+           '$2a$10$WZYQkbAlzYG6RZ5WOR6E8unZeJOiRj4IWqWQdXJ0man2wXT82gWJy',
+           90.00,
+           192.00,
+           1,
+           4,
+           null );
+
+insert into users (
+   username,
+   name,
+   surname,
+   email,
+   password,
+   weight,
+   height,
+   verified,
+   favorite_exercise,
+   avatar
+) values ( 'skuter',
+           'Kacper',
+           'Siemionek',
+           'siemionek.kacper22@gmail.com',
+           '$2a$10$L7nm0NNb4RXhwmjF1agaTONPolIfuKqnt7LphbKYFriLUTLYUN1VW',
+           75.00,
+           175.00,
+           1,
+           12,
+           '#4b7fc4' );
+
+insert into users (
+   username,
+   name,
+   surname,
+   email,
+   password,
+   weight,
+   height,
+   verified,
+   favorite_exercise,
+   avatar
+) values ( 'mandrysz',
+           'Milosz',
+           'Andry',
+           'milosz@vveb.name',
+           '$2a$10$MrU2p.phXHz7EIwbDMj21.uMdUj2EsRQPUL7F6WKU9frYbPuER2JW',
+           null,
+           null,
+           1,
+           null,
+           null );
+
+insert into users (
+   username,
+   name,
+   surname,
+   email,
+   password,
+   weight,
+   height,
+   verified,
+   favorite_exercise,
+   avatar
+) values ( 'milosz',
+           'Milosz',
+           'Andry',
+           'mandryszczuk2005@gmail.com',
+           '$2a$10$2ortaiqJbaNMwQDQleRWLuraWJp3SusxO80SY/JUA0geLW7zf9s/S',
+           80.00,
+           190.00,
+           1,
+           null,
+           '#4b7fc4' );
+
+
+--- INSERTING into TOKEN
+
+insert into token (
+   email,
+   verification_token,
+   reset_token,
+   reset_expiry
+) values ( 'siemionek.kacper22@gmail.com',
+           null,
+           null,
+           null );
+insert into token (
+   email,
+   verification_token,
+   reset_token,
+   reset_expiry
+) values ( 'milosz@vveb.name',
+           null,
+           null,
+           null );
+insert into token (
+   email,
+   verification_token,
+   reset_token,
+   reset_expiry
+) values ( 'mandryszczuk2005@gmail.com',
+           null,
+           null,
+           null );
+insert into token (
+   email,
+   verification_token,
+   reset_token,
+   reset_expiry
+) values ( 'michalpedziwiatrr@gmail.com',
+           null,
+           null,
+           null );
+
+
+--- INSERTING into WORKOUTS
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 71,
+           to_timestamp('24/12/04 23:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'skuter',
+           to_timestamp('24/12/05 16:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'harder better faster stronger',
+           to_timestamp('25/01/16 17:06:58.538735',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 2,
+           to_timestamp('24/01/31 23:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'pedziwiatr',
+           to_timestamp('24/12/06 23:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'ugabuga',
+           to_timestamp('24/12/03 15:28:00.012175',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 3,
+           to_timestamp('24/11/30 17:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'pedziwiatr',
+           to_timestamp('24/11/30 18:30:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'amazing push day',
+           to_timestamp('24/12/04 01:20:56.984848',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 6,
+           to_timestamp('24/07/15 08:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'pedziwiatr',
+           to_timestamp('24/07/15 10:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'growing out wings',
+           to_timestamp('24/12/04 17:42:11.194051',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           1,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 72,
+           to_timestamp('24/12/11 23:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'skuter',
+           to_timestamp('24/12/12 14:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'sigma workout',
+           to_timestamp('25/01/16 17:13:38.250215',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           1,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 98,
+           to_timestamp('25/01/19 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'mandrysz',
+           to_timestamp('25/01/19 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'New3',
+           to_timestamp('25/01/19 01:48:06.695187',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           1,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 54,
+           to_timestamp('25/01/15 03:14:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'milosz',
+           to_timestamp('25/01/15 07:34:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'more kgs',
+           to_timestamp('25/01/16 00:14:57.212164',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 82,
+           to_timestamp('24/01/20 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'skuter',
+           to_timestamp('24/01/20 02:10:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           null,
+           to_timestamp('25/01/18 15:43:58.597965',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 97,
+           to_timestamp('25/01/19 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'mandrysz',
+           to_timestamp('25/01/19 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'New3',
+           to_timestamp('25/01/19 01:44:26.468488',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 90,
+           to_timestamp('25/01/17 03:15:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'skuter',
+           to_timestamp('25/01/18 03:14:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'copied',
+           to_timestamp('25/01/19 01:13:27.124846',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 48,
+           to_timestamp('24/01/15 03:14:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'milosz',
+           to_timestamp('24/01/15 10:26:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'testing new exercises',
+           to_timestamp('25/01/15 22:21:23.827406',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           1,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 96,
+           to_timestamp('25/01/19 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'mandrysz',
+           to_timestamp('25/01/19 00:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'New2',
+           to_timestamp('25/01/19 01:43:25.125303',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 68,
+           to_timestamp('25/01/08 03:15:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'milosz',
+           to_timestamp('25/01/16 08:38:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'gym is my passion',
+           to_timestamp('25/01/16 14:34:05.511273',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           1,
+           0 );
+
+insert into workouts (
+   workout_id,
+   start_datetime,
+   username,
+   end_datetime,
+   description,
+   created_datetime,
+   is_posted,
+   schedule
+) values ( 70,
+           to_timestamp('24/12/01 22:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'skuter',
+           to_timestamp('24/12/01 23:00:00.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           'first workout in decemberr',
+           to_timestamp('25/01/16 16:58:42.641339',
+                        'DD/MM/YY HH24:MI:SS.US'),
+           0,
+           0 );
+
+
+--- INSERTING into MUSCLES
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 1,
+           'trapezius' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 2,
+           'upper-back' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 3,
+           'lower-back' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 4,
+           'chest' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 5,
+           'biceps' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 6,
+           'triceps' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 7,
+           'forearm' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 8,
+           'back-deltoids' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 9,
+           'front-deltoids' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 10,
+           'abs' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 11,
+           'obliques' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 12,
+           'adductor' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 13,
+           'hamstring' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 14,
+           'quadriceps' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 15,
+           'abductors' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 16,
+           'calves' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 17,
+           'gluteal' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 18,
+           'head' );
+
+insert into muscles (
+   muscle_id,
+   muscle_name
+) values ( 19,
+           'neck' );
+
+
+--- INSERTING into EXERCISES_MUSCLES
+
 insert into exercises_muscles (
    id,
    exercise_id,
@@ -3725,7 +3625,10 @@ insert into exercises_muscles (
 ) values ( 408,
            302,
            17 );
-REM INSERTING into FRIENDSHIPS
+
+
+--- INSERTING into FRIENDSHIPS
+
    SET DEFINE OFF;
 insert into friendships (
    id,
@@ -3747,135 +3650,10 @@ insert into friendships (
            'milosz',
            to_timestamp('25/01/16 14:24:40,000000000',
                         'RR/MM/DD HH24:MI:SSXFF') );
-REM INSERTING into MUSCLES
-   SET DEFINE OFF;
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '1',
-           'trapezius' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '2',
-           'upper-back' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '3',
-           'lower-back' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '4',
-           'chest' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '5',
-           'biceps' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '6',
-           'triceps' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '7',
-           'forearm' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '8',
-           'back-deltoids' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '9',
-           'front-deltoids' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '10',
-           'abs' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '11',
-           'obliques' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '12',
-           'adductor' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '13',
-           'hamstring' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '14',
-           'quadriceps' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '15',
-           'abductors' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '16',
-           'calves' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '17',
-           'gluteal' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '18',
-           'head' );
-insert into muscles (
-   muscle_id,
-   muscle_name
-) values ( '19',
-           'neck' );
-REM INSERTING into POST_REACTIONS
-   SET DEFINE OFF;
-insert into post_reactions (
-   post_reaction_id,
-   post_id,
-   author_username
-) values ( '67',
-           '28',
-           'skuter' );
-insert into post_reactions (
-   post_reaction_id,
-   post_id,
-   author_username
-) values ( '59',
-           '28',
-           'milosz' );
-insert into post_reactions (
-   post_reaction_id,
-   post_id,
-   author_username
-) values ( '60',
-           '53',
-           'pedziwiatr' );
-insert into post_reactions (
-   post_reaction_id,
-   post_id,
-   author_username
-) values ( '65',
-           '55',
-           'skuter' );
-REM INSERTING into POSTS
-   SET DEFINE OFF;
+
+
+--- INSERTING into POSTS
+
 insert into posts (
    post_id,
    author_username,
@@ -3883,13 +3661,14 @@ insert into posts (
    title,
    workout_id,
    content
-) values ( '56',
+) values ( 56,
            'milosz',
-           to_timestamp('25/01/16 19:13:38,958759000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
+           to_timestamp('25/01/16 19:13:38.958759',
+                        'DD/MM/YY HH24:MI:SS.US'),
            'Moj trening',
-           '68',
+           68,
            'asddasd' );
+
 insert into posts (
    post_id,
    author_username,
@@ -3897,13 +3676,14 @@ insert into posts (
    title,
    workout_id,
    content
-) values ( '55',
+) values ( 55,
            'skuter',
-           to_timestamp('25/01/16 17:28:42,306883000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
+           to_timestamp('25/01/16 17:28:42.306883',
+                        'DD/MM/YY HH24:MI:SS.US'),
            'very funny workout',
-           '72',
+           72,
            'im sigma' );
+
 insert into posts (
    post_id,
    author_username,
@@ -3911,13 +3691,14 @@ insert into posts (
    title,
    workout_id,
    content
-) values ( '61',
+) values ( 61,
            'mandrysz',
-           to_timestamp('25/01/19 16:09:58,668659000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
+           to_timestamp('25/01/19 16:09:58.668659',
+                        'DD/MM/YY HH24:MI:SS.US'),
            'Trening elo',
-           '98',
+           98,
            'pozdro' );
+
 insert into posts (
    post_id,
    author_username,
@@ -3925,13 +3706,14 @@ insert into posts (
    title,
    workout_id,
    content
-) values ( '28',
+) values ( 28,
            'pedziwiatr',
-           to_timestamp('14/01/03 21:16:06,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
+           to_timestamp('14/01/03 21:16:06.000000',
+                        'DD/MM/YY HH24:MI:SS.US'),
            'Trening pleców',
-           '6',
+           6,
            'przetrenowane plecki pyk pyk cyk myk pyk' );
+
 insert into posts (
    post_id,
    author_username,
@@ -3939,421 +3721,52 @@ insert into posts (
    title,
    workout_id,
    content
-) values ( '53',
+) values ( 53,
            'milosz',
-           to_timestamp('25/01/16 05:17:07,414611000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
+           to_timestamp('25/01/16 05:17:07.414611',
+                        'DD/MM/YY HH24:MI:SS.US'),
            'Pierwszy trening',
-           '48',
+           48,
            'pozdro' );
-REM INSERTING into TOKEN
-   SET DEFINE OFF;
-insert into token (
-   email,
-   verification_token,
-   reset_token,
-   reset_expiry
-) values ( 'siemionek.kacper22@gmail.com',
-           null,
-           null,
-           null );
-insert into token (
-   email,
-   verification_token,
-   reset_token,
-   reset_expiry
-) values ( 'milosz@vveb.name',
-           null,
-           null,
-           null );
-insert into token (
-   email,
-   verification_token,
-   reset_token,
-   reset_expiry
-) values ( 'mandryszczuk2005@gmail.com',
-           null,
-           null,
-           null );
-insert into token (
-   email,
-   verification_token,
-   reset_token,
-   reset_expiry
-) values ( 'michalpedziwiatrr@gmail.com',
-           null,
-           null,
-           null );
-REM INSERTING into USERS
-   SET DEFINE OFF;
-insert into users (
-   username,
-   name,
-   surname,
-   email,
-   password,
-   weight,
-   height,
-   verified,
-   favorite_exercise,
-   avatar
-) values ( 'pedziwiatr',
-           'Michał',
-           'Pędziwiatr',
-           'michalpedziwiatrr@gmail.com',
-           '$2a$10$WZYQkbAlzYG6RZ5WOR6E8unZeJOiRj4IWqWQdXJ0man2wXT82gWJy',
-           '90',
-           '192',
-           '1',
-           '4',
-           null );
-insert into users (
-   username,
-   name,
-   surname,
-   email,
-   password,
-   weight,
-   height,
-   verified,
-   favorite_exercise,
-   avatar
-) values ( 'skuter',
-           'Kacper',
-           'Siemionek',
-           'siemionek.kacper22@gmail.com',
-           '$2a$10$L7nm0NNb4RXhwmjF1agaTONPolIfuKqnt7LphbKYFriLUTLYUN1VW',
-           '75',
-           '175',
-           '1',
-           '12',
-           '#4b7fc4' );
-insert into users (
-   username,
-   name,
-   surname,
-   email,
-   password,
-   weight,
-   height,
-   verified,
-   favorite_exercise,
-   avatar
-) values ( 'mandrysz',
-           'Milosz',
-           'Andry',
-           'milosz@vveb.name',
-           '$2a$10$MrU2p.phXHz7EIwbDMj21.uMdUj2EsRQPUL7F6WKU9frYbPuER2JW',
-           null,
-           null,
-           '1',
-           null,
-           null );
-insert into users (
-   username,
-   name,
-   surname,
-   email,
-   password,
-   weight,
-   height,
-   verified,
-   favorite_exercise,
-   avatar
-) values ( 'milosz',
-           'Milosz',
-           'Andry',
-           'mandryszczuk2005@gmail.com',
-           '$2a$10$2ortaiqJbaNMwQDQleRWLuraWJp3SusxO80SY/JUA0geLW7zf9s/S',
-           '80',
-           '190',
-           '1',
-           null,
-           '#4b7fc4' );
-REM INSERTING into WORKOUTS
-   SET DEFINE OFF;
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '71',
-           to_timestamp('24/12/04 23:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'skuter',
-           to_timestamp('24/12/05 16:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'harder better faster stronger',
-           to_timestamp('25/01/16 17:06:58,538735000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '2',
-           to_timestamp('24/01/31 23:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'pedziwiatr',
-           to_timestamp('24/12/06 23:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'ugabuga',
-           to_timestamp('24/12/03 15:28:00,012175000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '3',
-           to_timestamp('24/11/30 17:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'pedziwiatr',
-           to_timestamp('24/11/30 18:30:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'amazing push day',
-           to_timestamp('24/12/04 01:20:56,984848000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '6',
-           to_timestamp('24/07/15 08:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'pedziwiatr',
-           to_timestamp('24/07/15 10:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'growing out wings',
-           to_timestamp('24/12/04 17:42:11,194051000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '1',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '72',
-           to_timestamp('24/12/11 23:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'skuter',
-           to_timestamp('24/12/12 14:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'sigma workout',
-           to_timestamp('25/01/16 17:13:38,250215000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '1',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '98',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'mandrysz',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'New3',
-           to_timestamp('25/01/19 01:48:06,695187000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '1',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '54',
-           to_timestamp('25/01/15 03:14:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'milosz',
-           to_timestamp('25/01/15 07:34:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'more kgs',
-           to_timestamp('25/01/16 00:14:57,212164000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '82',
-           to_timestamp('24/01/20 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'skuter',
-           to_timestamp('24/01/20 02:10:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           null,
-           to_timestamp('25/01/18 15:43:58,597965000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '97',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'mandrysz',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'New3',
-           to_timestamp('25/01/19 01:44:26,468488000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '90',
-           to_timestamp('25/01/17 03:15:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'skuter',
-           to_timestamp('25/01/18 03:14:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'copied',
-           to_timestamp('25/01/19 01:13:27,124846000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '48',
-           to_timestamp('24/01/15 03:14:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'milosz',
-           to_timestamp('24/01/15 10:26:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'testing new exercises',
-           to_timestamp('25/01/15 22:21:23,827406000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '1',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '96',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'mandrysz',
-           to_timestamp('25/01/19 00:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'New2',
-           to_timestamp('25/01/19 01:43:25,125303000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '68',
-           to_timestamp('25/01/08 03:15:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'milosz',
-           to_timestamp('25/01/16 08:38:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'gym is my passion',
-           to_timestamp('25/01/16 14:34:05,511273000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '1',
-           0 );
-insert into workouts (
-   workout_id,
-   start_datetime,
-   username,
-   end_datetime,
-   description,
-   created_datetime,
-   is_posted,
-   schedule
-) values ( '70',
-           to_timestamp('24/12/01 22:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'skuter',
-           to_timestamp('24/12/01 23:00:00,000000000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           'first workout in decemberr',
-           to_timestamp('25/01/16 16:58:42,641339000',
-                        'RR/MM/DD HH24:MI:SSXFF'),
-           '0',
-           0 );
-REM INSERTING into POST_COMMENTS
-   SET DEFINE OFF;
+
+
+--- INSERTING into POST_REACTIONS
+
+insert into post_reactions (
+   post_reaction_id,
+   post_id,
+   author_username
+) values ( 67,
+           28,
+           'skuter' );
+
+insert into post_reactions (
+   post_reaction_id,
+   post_id,
+   author_username
+) values ( 59,
+           28,
+           'milosz' );
+
+insert into post_reactions (
+   post_reaction_id,
+   post_id,
+   author_username
+) values ( 60,
+           53,
+           'pedziwiatr' );
+
+insert into post_reactions (
+   post_reaction_id,
+   post_id,
+   author_username
+) values ( 65,
+           55,
+           'skuter' );
+
+
+--- INSERTING into POST_COMMENTS
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4365,6 +3778,7 @@ insert into post_comments (
            'pedziwiatr',
            'Niezła robota brachu',
            timestamp '2025-01-22 19:33:21.000000' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4376,6 +3790,7 @@ insert into post_comments (
            'skuter',
            'Haha jeszcze troche podbij ciężaru i będzie jak moja rozgrzewka',
            timestamp '2025-01-22 18:49:31.843426' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4387,6 +3802,7 @@ insert into post_comments (
            'pedziwiatr',
            'No i na co ci to? 100kg bierze a opony nawet nie potrafi wymienić. Od dobrobytu się w głowie poprzewracało!!!',
            timestamp '2025-01-22 18:49:31.850721' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4398,6 +3814,7 @@ insert into post_comments (
            'mandrysz',
            'Graty',
            timestamp '2025-01-22 18:49:31.858182' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4409,6 +3826,7 @@ insert into post_comments (
            'milosz',
            'Jest ok ',
            timestamp '2025-01-10 18:49:31.866001' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4420,6 +3838,7 @@ insert into post_comments (
            'pedziwiatr',
            'Kto pl pisze 123',
            timestamp '2025-01-22 18:50:24.404032' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4431,6 +3850,7 @@ insert into post_comments (
            'skuter',
            '123',
            timestamp '2025-01-22 18:49:31.882454' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4442,6 +3862,7 @@ insert into post_comments (
            'mandrysz',
            'Moze byc',
            timestamp '2025-01-22 18:49:31.893948' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4453,6 +3874,7 @@ insert into post_comments (
            'skuter',
            'Super ci poszlo pozdrawiam',
            timestamp '2025-01-22 18:49:31.901964' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4464,6 +3886,7 @@ insert into post_comments (
            'milosz',
            'Ale syf',
            timestamp '2024-02-22 18:49:31.910000' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4475,6 +3898,7 @@ insert into post_comments (
            'pedziwiatr',
            ':)',
            timestamp '2025-01-22 18:49:31.917941' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4486,6 +3910,7 @@ insert into post_comments (
            'skuter',
            'Wbijajcie na moj kanal nazwa xXSkuter2013Xx',
            timestamp '2024-01-22 18:49:31.925873' );
+
 insert into post_comments (
    post_comment_id,
    post_id,
@@ -4497,3 +3922,650 @@ insert into post_comments (
            'mandrysz',
            'Pozdrawiam',
            timestamp '2025-01-20 18:49:31.933907' );
+
+
+-- --- INSERTING into ACTIVITIES
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 309,
+--            7,
+--            12,
+--            12,
+--            null,
+--            97 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 304,
+--            7,
+--            123,
+--            132,
+--            null,
+--            90 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 247,
+--            73,
+--            null,
+--            null,
+--            interval '2 hours',
+--            70 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 248,
+--            72,
+--            null,
+--            null,
+--            interval '1 hour',
+--            70 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 249,
+--            20,
+--            40,
+--            60,
+--            null,
+--            70 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 250,
+--            14,
+--            30,
+--            40,
+--            null,
+--            70 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 251,
+--            39,
+--            30,
+--            20,
+--            null,
+--            70 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 252,
+--            54,
+--            20,
+--            200,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 253,
+--            261,
+--            0,
+--            50,
+--            interval '10 minutes',
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 254,
+--            262,
+--            0,
+--            100,
+--            interval '30 minutes',
+--            72 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 255,
+--            1,
+--            12,
+--            60,
+--            null,
+--            72 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 256,
+--            1,
+--            12,
+--            60,
+--            null,
+--            72 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 257,
+--            1,
+--            12,
+--            60,
+--            null,
+--            72 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 258,
+--            8,
+--            10,
+--            50,
+--            null,
+--            72 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 259,
+--            8,
+--            10,
+--            55,
+--            null,
+--            72 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 260,
+--            6,
+--            12,
+--            40,
+--            null,
+--            2 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 261,
+--            64,
+--            15,
+--            50,
+--            null,
+--            6 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 310,
+--            66,
+--            null,
+--            null,
+--            interval '12 hours',
+--            97 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 302,
+--            73,
+--            null,
+--            null,
+--            interval '12 hours',
+--            82 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 307,
+--            7,
+--            12,
+--            12,
+--            null,
+--            96 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 265,
+--            21,
+--            20,
+--            40,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 266,
+--            21,
+--            16,
+--            40,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 267,
+--            21,
+--            12,
+--            40,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 268,
+--            21,
+--            8,
+--            40,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 269,
+--            21,
+--            5,
+--            40,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 270,
+--            23,
+--            12,
+--            15,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 271,
+--            23,
+--            10,
+--            15,
+--            null,
+--            71 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 308,
+--            66,
+--            null,
+--            null,
+--            interval '12 hours',
+--            96 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 311,
+--            66,
+--            null,
+--            null,
+--            interval '12 hours',
+--            98 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 312,
+--            173,
+--            0,
+--            234234,
+--            interval '12 hours 30 minutes 10 seconds',
+--            98 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 31,
+--            21,
+--            20,
+--            40,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 32,
+--            21,
+--            16,
+--            40,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 33,
+--            21,
+--            12,
+--            40,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 34,
+--            21,
+--            8,
+--            40,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 35,
+--            21,
+--            5,
+--            40,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 36,
+--            23,
+--            12,
+--            15,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 37,
+--            23,
+--            10,
+--            15,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 38,
+--            23,
+--            8,
+--            15,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 39,
+--            29,
+--            11,
+--            0,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 40,
+--            29,
+--            8,
+--            0,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 41,
+--            29,
+--            2,
+--            15,
+--            null,
+--            3 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 313,
+--            1,
+--            123,
+--            24342,
+--            null,
+--            54 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 234,
+--            73,
+--            null,
+--            null,
+--            interval '12 hours',
+--            54 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 314,
+--            173,
+--            0,
+--            234,
+--            interval '12 hours 30 minutes 10 seconds',
+--            54 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 196,
+--            66,
+--            null,
+--            null,
+--            interval '4 hours 10 minutes 45 seconds',
+--            48 );
+
+-- insert into activities (
+--    activity_id,
+--    exercise_id,
+--    reps,
+--    weight,
+--    duration,
+--    workout_id
+-- ) values ( 243,
+--            168,
+--            null,
+--            null,
+--            interval '12 hours 30 minutes 10 seconds',
+--            68 );
