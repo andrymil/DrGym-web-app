@@ -25,12 +25,12 @@ const Workouts = ({ showAppMessage }) => {
   const fetchWorkouts = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/api/users/${username}/workouts`);
+      const response = await api.get('/api/me/workouts');
       setAllWorkouts(response.data);
       setFromFuture(true);
       setWorkoutsData([...response.data.futureWorkouts].reverse());
     } catch (err) {
-      setError('fetch worokuts', err.message);
+      setError('fetch workouts', err.message);
       showAppMessage({
         status: true,
         text: 'Error fetching workouts',
@@ -39,7 +39,7 @@ const Workouts = ({ showAppMessage }) => {
     } finally {
       setLoading(false);
     }
-  }, [username, showAppMessage]);
+  }, [showAppMessage]);
 
   useEffect(() => {
     fetchWorkouts();
