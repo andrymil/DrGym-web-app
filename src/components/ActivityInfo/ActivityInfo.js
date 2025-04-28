@@ -8,27 +8,28 @@ import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import Grid from '@mui/material/Grid2';
 import style from './ActivityInfo.module.css';
+import { formatDuration } from '@/utils/dateUtils';
 
 export default function ActivityInfo({ activity }) {
-  const type = activity.exerciseType;
+  const type = activity.exercise.type;
 
   const typeMapping = {
-    C: {
+    cardio: {
       title: 'Cardio exercise',
       icon: <MonitorHeartOutlinedIcon />,
     },
-    S: {
+    strength: {
       title: 'Strength exercise',
       icon: <FitnessCenterIcon />,
     },
-    F: {
+    crossfit: {
       title: 'Crossfit exercise',
       icon: <SportsGymnasticsIcon />,
     },
   };
 
   const firstBox =
-    type === 'S' ? (
+    type === 'strength' ? (
       <>
         <Tooltip title="Number of reps">
           <LoopIcon />
@@ -40,12 +41,12 @@ export default function ActivityInfo({ activity }) {
         <Tooltip title="Duration">
           <TimerOutlinedIcon />
         </Tooltip>
-        {activity.duration}
+        {formatDuration(activity.duration)}
       </>
     );
 
   const secondBox =
-    type === 'C' ? (
+    type === 'cardio' ? (
       <></>
     ) : (
       <>
@@ -74,7 +75,7 @@ export default function ActivityInfo({ activity }) {
         className={style.activityElement}
       >
         <Tooltip title={title}>{icon}</Tooltip>
-        {activity.exerciseName}
+        {activity.exercise.name}
       </Box>
 
       <Box

@@ -5,7 +5,7 @@ export async function GET() {
     const allExercises = await prisma.exercise.findMany({
       select: {
         name: true,
-        video_id: true,
+        videoId: true,
         type: true,
       },
     });
@@ -20,7 +20,7 @@ export async function GET() {
       if (grouped[exercise.type]) {
         grouped[exercise.type].push({
           name: exercise.name,
-          videoId: exercise.video_id,
+          videoId: exercise.videoId,
         });
       }
     });
