@@ -2,7 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@prisma": ["./prisma/client.js"]
+      "@prisma": ["./prisma/client.ts"]
     },
     "target": "ES2017",
     "lib": [
