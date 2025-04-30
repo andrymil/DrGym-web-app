@@ -12,25 +12,30 @@ import Grid from '@mui/material/Grid2';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { getUsername } from '@/utils/localStorage';
+import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
 
 const Workouts = ({ showAppMessage }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [workoutsData, setWorkoutsData] = useState([]);
-  const [allWorkouts, setAllWorkouts] = useState([]);
+  const [workoutsData, setWorkoutsData] = useState<Workout[]>([]);
+  const [allWorkouts, setAllWorkouts] = useState<FuturePastWorkouts>({
+    futureWorkouts: [],
+    pastWorkouts: [],
+  });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [fromFuture, setFromFuture] = useState(true);
   const username = getUsername();
 
   const fetchWorkouts = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await api.get('/api/me/workouts');
-      setAllWorkouts(response.data);
+      const response = await api.get<FuturePastWorkouts>('/api/me/workouts');
+      const data = response.data;
+      setAllWorkouts(data);
       setFromFuture(true);
-      setWorkoutsData([...response.data.futureWorkouts].reverse());
+      setWorkoutsData([...data.futureWorkouts].reverse());
     } catch (err) {
-      setError('fetch workouts', err.message);
+      setError('Failed to fetch workouts. Please try again later.');
       showAppMessage({
         status: true,
         text: 'Error fetching workouts',
