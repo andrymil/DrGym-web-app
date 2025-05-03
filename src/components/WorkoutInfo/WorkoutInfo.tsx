@@ -20,6 +20,9 @@ import style from './WorkoutInfo.module.css';
 import Grid from '@mui/material/Grid2';
 import { getUsername } from '@/utils/localStorage';
 import api from '@/utils/axiosInstance';
+import type { Workout } from '@/types/api/workout';
+import type { Post } from '@/types/api/post';
+import type { ShowAppMessage } from '@/types/general';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -45,7 +48,19 @@ const ExpandMore = styled((props) => {
   ],
 }));
 
-export default function WorkoutCard({ workout, isPost, post, showAppMessage }) {
+type WorkoutInfoProps = {
+  workout: Workout;
+  isPost?: boolean;
+  post?: Post;
+  showAppMessage: ShowAppMessage;
+};
+
+export default function WorkoutInfo({
+  workout,
+  isPost,
+  post,
+  showAppMessage,
+}: WorkoutInfoProps) {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(post?.userReaction || false);
   const [likeCount, setLikeCount] = useState(post?.reactionCount || 0);

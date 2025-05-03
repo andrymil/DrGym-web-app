@@ -12,12 +12,26 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
 import api from '@/utils/axiosInstance';
 import PostDialog from '@/components/PostDialog';
+import type { ShowAppMessage } from '@/types/general';
+import type { Post } from '@/types/api/post';
 
-export default function Post({ post, actions, onChanges, showAppMessage }) {
+type PostProps = {
+  post: Post;
+  actions: boolean;
+  onChanges: () => Promise<void>;
+  showAppMessage: ShowAppMessage;
+};
+
+export default function Post({
+  post,
+  actions,
+  onChanges,
+  showAppMessage,
+}: PostProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const workout = post.training;
+  const workout = post.workout;
   const realitveStartDate = formatRelativeTime(post.date);
 
   const handleDeletePost = async () => {

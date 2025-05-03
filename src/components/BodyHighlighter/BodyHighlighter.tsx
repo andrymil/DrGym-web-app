@@ -13,7 +13,11 @@ import api from '@/utils/axiosInstance';
 import Model from 'react-body-highlighter';
 import { bodyData as mockData } from '@/utils/mockData';
 
-const BodyHighlighter = ({ username }) => {
+type BodyHighlighterProps = {
+  username: string;
+};
+
+const BodyHighlighter = ({ username }: BodyHighlighterProps) => {
   const [bodyData, setBodyData] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState(null);
   const [loading, setLoading] = useState(true);

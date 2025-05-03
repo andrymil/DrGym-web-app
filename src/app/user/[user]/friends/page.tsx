@@ -143,7 +143,7 @@ const Friends = ({ showAppMessage }) => {
                 <UserHeader
                   id={request.id}
                   username={request.sender}
-                  avater={request.avatar}
+                  avatar={request.avatar}
                   actions="request"
                   onAccept={handleAcceptRequest}
                   onDecline={handleDeclineRequest}

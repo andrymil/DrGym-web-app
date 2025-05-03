@@ -24,7 +24,6 @@ const Workouts = ({ showAppMessage }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [fromFuture, setFromFuture] = useState(true);
-  const username = getUsername();
 
   const fetchWorkouts = useCallback(async () => {
     try {
@@ -62,6 +61,10 @@ const Workouts = ({ showAppMessage }) => {
       setWorkoutsData(allWorkouts.pastWorkouts);
       setFromFuture(false);
     }
+  };
+
+  const togglePopup = () => {
+    setDialogOpen((old) => !old);
   };
 
   if (error) return <Typography>Error: {error}</Typography>;
@@ -119,7 +122,7 @@ const Workouts = ({ showAppMessage }) => {
         dialogTitle="Add workout"
         popupType="new"
         popupStatus={dialogOpen}
-        togglePopup={setDialogOpen}
+        togglePopup={togglePopup}
         onAddWorkout={fetchWorkouts}
         showAppMessage={showAppMessage}
       />

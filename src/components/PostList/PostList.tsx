@@ -4,8 +4,21 @@ import Grid from '@mui/material/Grid2';
 import Post from '@/components/Post';
 import SkeletonCard from '@/components/SkeletonCard';
 import api from '@/utils/axiosInstance';
+import type { ShowAppMessage } from '@/types/general';
 
-const PostList = ({ username, onlyThisUser, actions, showAppMessage }) => {
+type PostListProps = {
+  username: string;
+  onlyThisUser?: boolean;
+  actions?: boolean;
+  showAppMessage: ShowAppMessage;
+};
+
+const PostList = ({
+  username,
+  onlyThisUser,
+  actions,
+  showAppMessage,
+}: PostListProps) => {
   const [postsData, setPostsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

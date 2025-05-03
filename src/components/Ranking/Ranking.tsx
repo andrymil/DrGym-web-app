@@ -21,8 +21,14 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
+import { ShowAppMessage } from '@/types/general';
 
-export default function Ranking({ username, showAppMessage }) {
+type RankingProps = {
+  username: string;
+  showAppMessage: ShowAppMessage;
+};
+
+export default function Ranking({ username, showAppMessage }: RankingProps) {
   const [loading, setLoading] = useState(true);
   const [loadingRanking, setLoadingRanking] = useState(true);
   const [error, setError] = useState(null);

@@ -109,14 +109,7 @@ const ResetPasswordContent = ({ showAppMessage }) => {
               validationSchema={ResetPasswordSchema()}
               onSubmit={handleResetPassword}
             >
-              {({
-                errors,
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                touched,
-                values,
-              }) => (
+              {({ errors, handleBlur, handleChange, touched, values }) => (
                 <Form>
                   <Grid container direction="column" gap={2}>
                     <Grid size={12}>
@@ -180,10 +173,12 @@ const ResetPasswordContent = ({ showAppMessage }) => {
                     <Grid size={12}>
                       <Button
                         fullWidth
-                        onClick={handleSubmit}
+                        type="submit"
                         variant="contained"
+                        sx={{ mt: 2, mb: 4, lineHeight: '40px' }}
                         color="primary"
                         disabled={loading}
+                        size="large"
                         endIcon={
                           loading && (
                             <CircularProgress color="primary" size={18} />

@@ -1,16 +1,19 @@
-import { forwardRef } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './DeleteConfirmation.module.css';
 
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+type DeleteConfirmationProps = {
+  title?: string;
+  message: string;
+  open: boolean;
+  loading: boolean;
+  onConfirm: () => void;
+  onClose: () => void;
+};
 
 export default function DeleteConfirmation({
   title = 'Warning!',
@@ -19,13 +22,17 @@ export default function DeleteConfirmation({
   loading,
   onConfirm,
   onClose,
-}) {
+}: DeleteConfirmationProps) {
   return (
     <>
       <Dialog
         open={open}
         onClose={loading ? null : onClose}
-        TransitionComponent={Transition}
+        slotProps={{
+          transition: {
+            direction: 'up',
+          },
+        }}
         aria-labelledby="delete-confirmation"
       >
         <DialogTitle id="delete-confirmation" className={style.dialogTitle}>

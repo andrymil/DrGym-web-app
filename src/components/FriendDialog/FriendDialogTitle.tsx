@@ -2,8 +2,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
+import type { ReactNode } from 'react';
+import type { DialogTitleProps } from '@mui/material/DialogTitle';
 
-const FriendDialogTitle = ({ children, onClose, ...other }) => {
+type FriendDialogTitleProps = DialogTitleProps & {
+  children: ReactNode;
+  onClose: () => void;
+};
+
+const FriendDialogTitle = ({
+  children,
+  onClose,
+  ...other
+}: FriendDialogTitleProps) => {
   return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}

@@ -98,7 +98,6 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                 errors,
                 handleBlur,
                 handleChange,
-                handleSubmit,
                 isValid,
                 setFieldError,
                 setFieldValue,
@@ -143,9 +142,11 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                       <Grid size={12}>
                         <Button
                           fullWidth
-                          onClick={handleSubmit}
+                          type="submit"
                           variant="contained"
                           color="primary"
+                          sx={{ mt: 2, lineHeight: '40px' }}
+                          size="large"
                           disabled={loading}
                           endIcon={
                             loading && (

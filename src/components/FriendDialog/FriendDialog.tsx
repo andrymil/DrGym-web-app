@@ -20,12 +20,19 @@ import {
   UsernameDefaultValues,
 } from '@/utils/schemas/UsernameSchema';
 import { getUsername } from '@/utils/localStorage';
+import type { ShowAppMessage, SetState } from '@/types/general';
+
+type FriendDialogProps = {
+  popupStatus: boolean;
+  togglePopup: SetState<boolean>;
+  showAppMessage: ShowAppMessage;
+};
 
 export default function FriendDialog({
   popupStatus,
   togglePopup,
   showAppMessage,
-}) {
+}: FriendDialogProps) {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));

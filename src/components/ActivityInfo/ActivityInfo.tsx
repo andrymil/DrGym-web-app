@@ -9,8 +9,13 @@ import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import Grid from '@mui/material/Grid2';
 import style from './ActivityInfo.module.css';
 import { formatDuration } from '@/utils/dateUtils';
+import type { Activity } from '@/types/api/activity';
 
-export default function ActivityInfo({ activity }) {
+type ActivityInfoProps = {
+  activity: Activity;
+};
+
+export default function ActivityInfo({ activity }: ActivityInfoProps) {
   const type = activity.exercise.type;
 
   const typeMapping = {

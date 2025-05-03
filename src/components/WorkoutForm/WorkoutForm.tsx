@@ -41,17 +41,30 @@ import {
 import { formatDate } from '@/utils/dateUtils';
 import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
+import type { Workout } from '@/types/api/workout';
+import type { ShowAppMessage } from '@/types/general';
+
+type WorkoutFormProps = {
+  dialogTitle: string;
+  popupType: string;
+  popupStatus: boolean;
+  togglePopup: () => void;
+  workout?: Workout;
+  onAddWorkout?: () => Promise<void>;
+  onEditWorkout?: () => Promise<void>;
+  showAppMessage: ShowAppMessage;
+};
 
 export default function WorkoutForm({
   dialogTitle,
   popupType,
   popupStatus,
   togglePopup,
-  workout = {},
+  workout,
   onAddWorkout,
   onEditWorkout,
   showAppMessage,
-}) {
+}: WorkoutFormProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [activityList, setActivityList] = useState([]);
@@ -75,7 +88,7 @@ export default function WorkoutForm({
       }
     };
 
-    if (popupType !== 'new' && workout.activities) {
+    if (popupType !== 'new' && workout?.activities) {
       setRegular(workout.schedule > 0);
       setActivityList(workout.activities);
     } else {
@@ -87,8 +100,8 @@ export default function WorkoutForm({
     }
   }, [
     popupType,
-    workout.activities,
-    workout.schedule,
+    workout?.activities,
+    workout?.schedule,
     popupStatus,
     togglePopup,
     showAppMessage,
@@ -258,7 +271,7 @@ export default function WorkoutForm({
   };
 
   const handleClose = () => {
-    togglePopup(false);
+    togglePopup();
   };
 
   return (
@@ -269,7 +282,7 @@ export default function WorkoutForm({
       open={popupStatus}
       aria-labelledby="new-workout-dialog"
     >
-      <WorkoutFormTitle id="new-workout-dialog" onClose={handleClose}>
+      <WorkoutFormTitle id="new-workout-dialog" onClose={togglePopup}>
         {dialogTitle}
       </WorkoutFormTitle>
       <Formik

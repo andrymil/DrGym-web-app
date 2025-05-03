@@ -6,7 +6,11 @@ import { calendarData as mockData } from '@/utils/mockData';
 import api from '@/utils/axiosInstance';
 import { formatDate } from '@/utils/dateUtils';
 
-const Calendar = ({ username }) => {
+type CalendarProps = {
+  username: string;
+};
+
+const Calendar = ({ username }: CalendarProps) => {
   const [calendarData, setCalendarData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -5,7 +5,11 @@ import YouTube from 'react-youtube';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 
-const YouTubePlayer = ({ videoId }) => {
+type YouTubePlayerProps = {
+  videoId: string;
+};
+
+const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
   const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const containerRef = useRef(null);

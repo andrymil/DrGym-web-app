@@ -5,7 +5,11 @@ import CardContent from '@mui/material/CardContent';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 
-export default function SkeletonCard({ type }) {
+type SkeletonCardProps = {
+  type?: string;
+};
+
+export default function SkeletonCard({ type }: SkeletonCardProps) {
   return (
     <Box sx={{ width: '100%', maxWidth: '1000px', margin: '0 auto', py: 2 }}>
       <Card sx={{ maxWidth: '100%' }}>

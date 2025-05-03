@@ -16,6 +16,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
 import CustomAvatar from '@/components/CustomAvatar';
 
+type UserHeaderProps = {
+  username: string;
+  avatar: string;
+  subheader?: string;
+  id?: number;
+  actions?: string;
+  onDelete?: (username: string) => Promise<void>;
+  onAccept?: (id: number, username: string, avatar: string) => Promise<void>;
+  onDecline?: (id: number, username: string) => Promise<void>;
+};
+
 export default function UserHeader({
   username,
   avatar,
@@ -25,7 +36,7 @@ export default function UserHeader({
   onDelete,
   onAccept,
   onDecline,
-}) {
+}: UserHeaderProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);

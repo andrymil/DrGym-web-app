@@ -19,7 +19,17 @@ import { getAvatar } from '@/utils/localStorage';
 import { Typography } from '@mui/material';
 import CustomAvatar from '@/components/CustomAvatar';
 
-export default function CustomDrawer({ handleLogout, username, status }) {
+type CustomDrawerProps = {
+  handleLogout: () => void;
+  username: string;
+  status: string;
+};
+
+export default function CustomDrawer({
+  handleLogout,
+  username,
+  status,
+}: CustomDrawerProps) {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {

@@ -18,6 +18,16 @@ import Grid from '@mui/material/Grid2';
 import { Typography } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { useMediaQuery } from '@mui/material';
+import type { Workout } from '@/types/api/workout';
+import type { ShowAppMessage } from '@/types/general';
+
+type WorkoutCardProps = {
+  workout: Workout;
+  disableActions?: boolean;
+  onDelete?: (id: number) => void;
+  onEditWorkout?: () => Promise<void>;
+  showAppMessage?: ShowAppMessage;
+};
 
 export default function WorkoutCard({
   workout,
@@ -25,10 +35,10 @@ export default function WorkoutCard({
   onEditWorkout,
   disableActions,
   showAppMessage,
-}) {
+}: WorkoutCardProps) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [popupType, setPopupType] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -43,6 +53,10 @@ export default function WorkoutCard({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const togglePopup = () => {
+    setDialogOpen((old) => !old);
   };
 
   const deleteWorkout = async () => {
@@ -140,7 +154,7 @@ export default function WorkoutCard({
             <MenuItem
               onClick={() => {
                 setPopupType('edit');
-                setOpenDialog(true);
+                setDialogOpen(true);
               }}
             >
               <EditIcon sx={{ mr: 1 }} />
@@ -149,7 +163,7 @@ export default function WorkoutCard({
             <MenuItem
               onClick={() => {
                 setPopupType('copy');
-                setOpenDialog(true);
+                setDialogOpen(true);
               }}
             >
               <ContentCopyIcon sx={{ mr: 1 }} />
@@ -176,8 +190,8 @@ export default function WorkoutCard({
         <WorkoutForm
           dialogTitle={popupType === 'edit' ? 'Edit workout' : 'Copy workout'}
           popupType={popupType}
-          popupStatus={openDialog}
-          togglePopup={setOpenDialog}
+          popupStatus={dialogOpen}
+          togglePopup={togglePopup}
           workout={workout}
           onEditWorkout={onEditWorkout}
           showAppMessage={showAppMessage}

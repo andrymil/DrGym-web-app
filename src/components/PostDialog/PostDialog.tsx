@@ -20,6 +20,18 @@ import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
 import { PostSchema, PostDefaultValues } from '@/utils/schemas/PostSchema';
 import { useMediaQuery } from '@mui/material';
+import type { Post } from '@/types/api/post';
+import type { ShowAppMessage } from '@/types/general';
+
+type PostDialogProps = {
+  title: string;
+  type: string;
+  post?: Post;
+  open: boolean;
+  onClose: () => void;
+  onChange: () => Promise<void> | void;
+  showAppMessage: ShowAppMessage;
+};
 
 export default function PostDialog({
   title,
@@ -29,7 +41,7 @@ export default function PostDialog({
   onClose,
   onChange,
   showAppMessage,
-}) {
+}: PostDialogProps) {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
@@ -44,9 +56,9 @@ export default function PostDialog({
         const response = await api.get(`/api/workouts/private`);
         const fetchedWorkouts = response.data;
 
-        if (type === 'edit' && post?.training) {
-          setSelectedWorkout(post.training);
-          setWorkouts(fetchedWorkouts.filter((w) => w.id !== post.training.id));
+        if (type === 'edit' && post?.workout) {
+          setSelectedWorkout(post.workout);
+          setWorkouts(fetchedWorkouts.filter((w) => w.id !== post.workout.id));
         } else {
           setWorkouts(fetchedWorkouts);
           setSelectedWorkout(null);
@@ -67,7 +79,7 @@ export default function PostDialog({
     if (open) {
       fetchWorkouts();
     }
-  }, [open, username, type, post?.training, showAppMessage, onClose]);
+  }, [open, username, type, post?.workout, showAppMessage, onClose]);
 
   const handleAddPost = async (values, actions) => {
     try {

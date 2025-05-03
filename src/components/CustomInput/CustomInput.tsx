@@ -1,5 +1,20 @@
 import React from 'react';
-import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  OutlinedInputProps,
+} from '@mui/material';
+import type { ReactNode } from 'react';
+
+type CustomInputProps = OutlinedInputProps & {
+  label: string;
+  name: string;
+  error?: string;
+  touched?: boolean;
+  tabIndex?: number;
+  endAdornment?: ReactNode;
+};
 
 const CustomInput = ({
   label,
