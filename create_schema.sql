@@ -62,7 +62,7 @@ create table activities (
    exercise_id integer not null,
    reps        integer,
    weight      integer,
-   duration    integer,
+   duration    varchar(40),
    workout_id  integer not null,
    constraint fk_workout foreign key ( workout_id )
       references workouts ( workout_id )
