@@ -12,7 +12,7 @@ type YouTubePlayerProps = {
 const YouTubePlayer = ({ videoId }: YouTubePlayerProps) => {
   const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const containerElement = containerRef.current;

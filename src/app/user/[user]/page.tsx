@@ -25,10 +25,10 @@ type UserPageProps = {
 };
 
 const User = ({ params, showAppMessage }: UserPageProps) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const { user } = React.use(params);
   const [userData, setUserData] = useState<UserData>(null);
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState<string>(null);
   const router = useRouter();
   const username = getUsername();
 
@@ -36,14 +36,8 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await api.get(`/api/users/${user}`);
-        setUserData({
-          name: response.data?.name,
-          surname: response.data?.surname,
-          weight: response.data?.weight,
-          height: response.data?.height,
-          favouriteExercise: response.data?.favoriteExerciseName,
-        });
+        const response = await api.get<UserData>(`/api/users/${user}`);
+        setUserData(response?.data);
         setAvatar(response.data?.avatar || null);
       } catch (err) {
         console.error('Error fetching user data', err);
@@ -66,7 +60,7 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
           `/api/friends/isFriend/${username}/${user}`
         );
         if (response.data) {
-          fetchUserData();
+          void fetchUserData();
           setLoading(false);
         } else {
           router.replace(
@@ -80,10 +74,10 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
       }
     };
 
-    checkFriendStatus();
+    void checkFriendStatus();
   }, [router, user, username, showAppMessage]);
 
-  const handleDeleteFriend = async (username) => {
+  const handleDeleteFriend = async (username: string) => {
     try {
       await api.delete(`/api/friends/removeFriend`, {
         data: {

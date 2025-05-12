@@ -16,18 +16,18 @@ export const formatDuration = (seconds) => {
   return `${hrs}:${mins}:${secs}`;
 };
 
-export const parseDuration = (durationString) => {
+export const parseDuration = (durationString: string) => {
   const [hours, minutes, seconds] = durationString.split(':').map(Number);
   return hours * 3600 + minutes * 60 + seconds;
 };
 
-export const formatDate = (date, pattern = 'MMMM d, yyyy h:mm a') =>
+export const formatDate = (date: string, pattern = 'MMMM d, yyyy h:mm a') =>
   format(parseISO(date), pattern);
 
-export const formatRelativeTime = (date) =>
+export const formatRelativeTime = (date: string) =>
   formatDistanceToNow(parseISO(date), { addSuffix: true });
 
-export const getDiffInHoursAndMinutes = (startISO, endISO) => {
+export const getDiffInHoursAndMinutes = (startISO: string, endISO: string) => {
   const startDate = parseISO(startISO);
   const endDate = parseISO(endISO);
 

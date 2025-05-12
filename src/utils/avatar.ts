@@ -1,6 +1,6 @@
-export const stringToColor = (string) => {
+export const stringToColor = (string: string) => {
   let hash = 0;
-  let i;
+  let i: number;
 
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);

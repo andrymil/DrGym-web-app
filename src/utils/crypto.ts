@@ -1,12 +1,15 @@
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 
-export const hashPassword = async (password) => {
-  return await bcrypt.hash(password, 12);
+export const hashPassword = (password: string): Promise<string> => {
+  return bcrypt.hash(password, 12);
 };
 
-export const verifyPassword = async (password, hash) => {
-  return await bcrypt.compare(password, hash);
+export const verifyPassword = (
+  password: string,
+  hash: string
+): Promise<boolean> => {
+  return bcrypt.compare(password, hash);
 };
 
 export const generateToken = () => {
@@ -16,7 +19,7 @@ export const generateToken = () => {
   return { token, hashedToken };
 };
 
-export const verifyToken = (token, hash) => {
+export const verifyToken = (token: string, hash: string) => {
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
   return tokenHash === hash;
 };
