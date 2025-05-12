@@ -45,6 +45,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/node": "22.15.3",
+    "@types/nodemailer": "^6.4.17",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "eslint": "^8.57.1",
