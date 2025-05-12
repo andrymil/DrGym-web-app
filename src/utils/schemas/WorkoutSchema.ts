@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const schema = (isRegular) =>
+const schema = (isRegular: boolean) =>
   yup.object().shape({
     startDate: yup
       .date()

@@ -1,24 +1,36 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ComponentType } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-export const withSnackbar = (WrappedComponent) => {
-  const WithSnackbar = (props) => {
-    const [appMessage, setAppMessageState] = useState({
+type Message = {
+  status: boolean;
+  text: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+};
+
+type WithSnackbarProps = {
+  showAppMessage: (message: Message) => void;
+};
+
+export function withSnackbar<P extends object>(
+  WrappedComponent: ComponentType<P & WithSnackbarProps>
+): React.FC<P> {
+  const WithSnackbar: React.FC<P> = (props) => {
+    const [appMessage, setAppMessageState] = useState<Message>({
       status: false,
-      text: null,
-      type: null,
+      text: '',
+      type: 'info',
     });
 
-    const setAppMessage = useCallback((message) => {
+    const setAppMessage = useCallback((message: Message) => {
       setAppMessageState(message);
     }, []);
 
-    const handleCloseSnackbar = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-
+    const handleCloseSnackbar = (
+      _event?: React.SyntheticEvent | Event,
+      reason?: string
+    ) => {
+      if (reason === 'clickaway') return;
       setAppMessage({ status: false, text: '', type: appMessage.type });
     };
 
@@ -26,17 +38,17 @@ export const withSnackbar = (WrappedComponent) => {
       <>
         <WrappedComponent {...props} showAppMessage={setAppMessage} />
         <Snackbar
-          open={appMessage?.status}
+          open={appMessage.status}
           autoHideDuration={6000}
           onClose={handleCloseSnackbar}
         >
           <Alert
             onClose={(event) => handleCloseSnackbar(event, 'closeButton')}
-            severity={appMessage?.type}
+            severity={appMessage.type}
             variant="filled"
             sx={{ width: '100%' }}
           >
-            {appMessage?.text}
+            {appMessage.text}
           </Alert>
         </Snackbar>
       </>
@@ -48,4 +60,4 @@ export const withSnackbar = (WrappedComponent) => {
   })`;
 
   return WithSnackbar;
-};
+}
