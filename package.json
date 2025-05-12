@@ -8,10 +8,9 @@
     "start": "next start",
     "migrate": "npx prisma migrate dev --name init",
     "seed": "node prisma/seed.js",
-    "lint": "next lint",
-    "lint-fix": "next lint --fix",
-    "ts-check": "npx tsc --noEmit",
-    "eslint": "npx eslint ./src"
+    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings=0",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "ts-check": "tsc --noEmit"
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
@@ -44,15 +43,15 @@
     "yup-password": "^0.4.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.26.0",
     "@types/node": "22.15.3",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.4.1",
     "prisma": "^6.5.0",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.1"
+    "typescript": "^5.8.3"
   }
 }
