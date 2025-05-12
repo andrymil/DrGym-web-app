@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Formik, Form, FormikProps } from 'formik';
+import { Formik, Form, FormikProps, FormikHelpers } from 'formik';
 import {
   Autocomplete,
   Box,
@@ -44,6 +44,8 @@ import CustomInput from '@/components/CustomInput';
 import type { Workout } from '@/types/api/workout';
 import type { ShowAppMessage } from '@/types/general';
 import type { Exercise } from '@/types/api/exercise';
+import type { Activity } from '@/types/api/activity';
+import { ValidationError } from 'yup';
 
 type WorkoutFormProps = {
   dialogTitle: string;
@@ -87,8 +89,8 @@ export default function WorkoutForm({
 }: WorkoutFormProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [activityList, setActivityList] = useState([]);
-  const [activitiesToDelete, setActivitiesToDelete] = useState([]);
+  const [activityList, setActivityList] = useState<Activity[]>([]);
+  const [activitiesToDelete, setActivitiesToDelete] = useState<number[]>([]);
   const [exercises, setExercises] = useState<Exercises>({
     strength: [],
     cardio: [],
@@ -99,7 +101,7 @@ export default function WorkoutForm({
   useEffect(() => {
     const fetchExercises = async () => {
       try {
-        const response = await api.get(`/api/exercises/by-type`);
+        const response = await api.get<Exercises>(`/api/exercises/by-type`);
         setExercises(response.data);
       } catch (err) {
         console.error('Error fetching exercises', err);
@@ -118,7 +120,7 @@ export default function WorkoutForm({
       setActivityList([]);
     }
     if (popupStatus) {
-      fetchExercises();
+      void fetchExercises();
     }
   }, [
     popupType,
@@ -129,7 +131,11 @@ export default function WorkoutForm({
     showAppMessage,
   ]);
 
-  const handleAddActivity = (values, setFieldValue, setErrors) => {
+  const handleAddActivity = (
+    values: WorkoutFormValues,
+    setFieldValue: FormikHelpers<WorkoutFormValues>['setFieldValue'],
+    setErrors: FormikHelpers<WorkoutFormValues>['setErrors']
+  ) => {
     const activitySchema =
       values.exerciseType === 'strength'
         ? strengthActivitySchema
@@ -146,28 +152,23 @@ export default function WorkoutForm({
         { abortEarly: false }
       )
       .then(() => {
-        const newActivity = {
-          exerciseId: values.exercise.id,
-          exerciseName: values.exercise.name,
+        const newActivity: Activity = {
+          exercise: values.exercise,
           reps: values.reps || 0,
           weight: values.weight || 0,
           duration: values.duration
             ? formatDate(values.duration.toISOString(), 'HH:mm:ss')
             : '00:00:00',
-          exerciseType:
-            values.exerciseType === 'crossfit'
-              ? 'F'
-              : values.exerciseType.charAt(0).toUpperCase(),
         };
         setActivityList((prev) => [...prev, newActivity]);
-        setFieldValue('exerciseType', '');
-        setFieldValue('exercise', '');
-        setFieldValue('reps', '');
-        setFieldValue('weight', '');
-        setFieldValue('duration', null);
+        void setFieldValue('exerciseType', '');
+        void setFieldValue('exercise', '');
+        void setFieldValue('reps', '');
+        void setFieldValue('weight', '');
+        void setFieldValue('duration', null);
         setErrors({});
       })
-      .catch((validationErrors) => {
+      .catch((validationErrors: ValidationError) => {
         const errors = validationErrors.inner.reduce(
           (acc, err) => ({
             ...acc,
@@ -179,14 +180,17 @@ export default function WorkoutForm({
       });
   };
 
-  const handleDeleteActivity = (activityId, index) => {
+  const handleDeleteActivity = (activityId: number, index: number) => {
     setActivityList((prev) => prev.filter((_, i) => i !== index));
     if (activityId) {
       setActivitiesToDelete((prev) => [...prev, activityId]);
     }
   };
 
-  const handleAddWorkout = async (values, actions) => {
+  const handleAddWorkout = async (
+    values: WorkoutFormValues,
+    actions: FormikHelpers<WorkoutFormValues>
+  ) => {
     if (!activityList.length) {
       showAppMessage({
         status: true,
@@ -198,7 +202,7 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      let activities;
+      let activities: Activity[];
       if (popupType === 'new') {
         activities = activityList;
       } else {
@@ -215,9 +219,9 @@ export default function WorkoutForm({
       });
 
       if (popupType === 'new') {
-        onAddWorkout();
+        void onAddWorkout();
       } else {
-        onEditWorkout();
+        void onEditWorkout();
       }
       handleClose();
       showAppMessage({
@@ -237,7 +241,10 @@ export default function WorkoutForm({
     }
   };
 
-  const handleEditWorkout = async (values, actions) => {
+  const handleEditWorkout = async (
+    values: WorkoutFormValues,
+    actions: FormikHelpers<WorkoutFormValues>
+  ) => {
     if (!activityList.length) {
       showAppMessage({
         status: true,
@@ -260,7 +267,7 @@ export default function WorkoutForm({
         activitiesToRemove: activitiesToDelete,
       });
 
-      onEditWorkout();
+      void onEditWorkout();
       handleClose();
       showAppMessage({
         status: true,
@@ -279,22 +286,25 @@ export default function WorkoutForm({
     }
   };
 
-  const handleRegularChange = (values, setFieldValue) => {
+  const handleRegularChange = (
+    values: WorkoutFormValues,
+    setFieldValue: FormikHelpers<WorkoutFormValues>['setFieldValue']
+  ) => {
     if (
       !values.isRegular &&
       (values.startDate || values.endDate) &&
       (values.startDate < new Date() || values.endDate < new Date())
     ) {
-      setFieldValue('startDate', null);
-      setFieldValue('endDate', null);
+      void setFieldValue('startDate', null);
+      void setFieldValue('endDate', null);
       showAppMessage({
         status: true,
         text: 'Please select start and end date from the future',
         type: 'info',
       });
     }
-    setFieldValue('interval', '');
-    setFieldValue('isRegular', !values.isRegular);
+    void setFieldValue('interval', '');
+    void setFieldValue('isRegular', !values.isRegular);
   };
 
   const handleClose = () => {
@@ -309,9 +319,7 @@ export default function WorkoutForm({
       open={popupStatus}
       aria-labelledby="new-workout-dialog"
     >
-      <WorkoutFormTitle id="new-workout-dialog" onClose={togglePopup}>
-        {dialogTitle}
-      </WorkoutFormTitle>
+      <WorkoutFormTitle onClose={togglePopup}>{dialogTitle}</WorkoutFormTitle>
       <Formik<WorkoutFormValues>
         initialValues={
           popupType === 'new'
@@ -345,7 +353,7 @@ export default function WorkoutForm({
             ? handleEditWorkout(values, actions)
             : handleAddWorkout(values, actions)
         }
-        validationSchema={schema(isRegular)}
+        validationSchema={schema}
       >
         {({
           values,
@@ -409,7 +417,7 @@ export default function WorkoutForm({
                     maxDateTime={values.endDate || undefined}
                     disablePast={values.isRegular}
                     onChange={(newValue) => {
-                      setFieldValue('startDate', newValue);
+                      void setFieldValue('startDate', newValue);
                     }}
                     label={
                       typeof errors.startDate === 'string' &&
@@ -438,7 +446,7 @@ export default function WorkoutForm({
                     minDateTime={values.startDate || undefined}
                     disablePast={values.isRegular}
                     onChange={(newValue) => {
-                      setFieldValue('endDate', newValue);
+                      void setFieldValue('endDate', newValue);
                     }}
                     label={
                       typeof errors.endDate === 'string' &&
@@ -489,11 +497,11 @@ export default function WorkoutForm({
                   name="exerciseType"
                   value={values.exerciseType}
                   onChange={(e) => {
-                    setFieldValue('exerciseType', e.target.value);
-                    setFieldValue('exercise', '');
-                    setFieldValue('reps', '');
-                    setFieldValue('weight', '');
-                    setFieldValue('duration', null);
+                    void setFieldValue('exerciseType', e.target.value);
+                    void setFieldValue('exercise', '');
+                    void setFieldValue('reps', '');
+                    void setFieldValue('weight', '');
+                    void setFieldValue('duration', null);
                   }}
                 >
                   <FormControlLabel
@@ -583,7 +591,7 @@ export default function WorkoutForm({
                       format="HH:mm:ss"
                       value={values.duration}
                       onChange={(newValue) =>
-                        setFieldValue('duration', newValue)
+                        void setFieldValue('duration', newValue)
                       }
                       label={
                         (typeof errors.duration === 'string' &&
@@ -629,7 +637,7 @@ export default function WorkoutForm({
                   </Typography>
                 </>
               )}
-              {activityList.map(({ exerciseId: _, ...activity }, index) => (
+              {activityList.map((activity, index) => (
                 <Box key={index}>
                   <Box
                     sx={{

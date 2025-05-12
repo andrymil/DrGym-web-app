@@ -111,9 +111,9 @@ export default function WorkoutInfo({
 
   const handleLikeClick = () => {
     if (liked) {
-      handleRemoveLike();
+      void handleRemoveLike();
     } else {
-      handleAddLike();
+      void handleAddLike();
     }
     setLiked(!liked);
   };
