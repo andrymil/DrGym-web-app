@@ -1,27 +1,26 @@
 import * as yup from 'yup';
 
-const schema = (isRegular: boolean) =>
-  yup.object().shape({
-    startDate: yup
-      .date()
-      .required('Start Date is required')
-      .typeError('Invalid date'),
-    endDate: yup
-      .date()
-      .required('End Date is required')
-      .typeError('Invalid date'),
-    description: yup.string().max(50, "it's too long (max 50 chars)"),
-    interval: yup
-      .number()
-      .typeError('Interval must be a number')
-      .min(1, 'Interval must be at least 1')
-      .max(99, 'Interval must be less than 100')
-      .when([], {
-        is: () => isRegular,
-        then: (schema) => schema.required('Interval is required'),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-  });
+const schema = yup.object().shape({
+  startDate: yup
+    .date()
+    .required('Start Date is required')
+    .typeError('Invalid date'),
+  endDate: yup
+    .date()
+    .required('End Date is required')
+    .typeError('Invalid date'),
+  description: yup.string().max(50, "it's too long (max 50 chars)"),
+  interval: yup
+    .number()
+    .typeError('Interval must be a number')
+    .min(1, 'Interval must be at least 1')
+    .max(99, 'Interval must be less than 100')
+    .when('isRegular', {
+      is: true,
+      then: (schema) => schema.required('Interval is required'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+});
 
 const strengthActivitySchema = yup.object().shape({
   exerciseType: yup.string().required('Exercise Type is required'),

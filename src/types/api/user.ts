@@ -1,7 +1,9 @@
 export type UserData = {
+  username: string;
   name: string;
   surname: string;
   weight: number;
   height: number;
-  favouriteExercise: string;
+  exercise: string;
+  avatar?: string;
 };

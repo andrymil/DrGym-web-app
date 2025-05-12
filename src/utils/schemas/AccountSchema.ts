@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import type { UserData } from '@/types/api/user';
 
 const AccountSchema = () => {
   return yup.object().shape({
@@ -7,7 +8,7 @@ const AccountSchema = () => {
       .max(20, 'maximum 20 characters')
       .min(2, 'minimum 2 characters')
       .required("it's required"),
-    firstName: yup
+    name: yup
       .string()
       .max(20, 'maximum 20 characters')
       .min(2, 'minimum 2 characters')
@@ -28,14 +29,14 @@ const AccountSchema = () => {
   });
 };
 
-const AccountDefaultValues = (userData) => {
+const AccountDefaultValues = (userData: UserData): UserData => {
   return {
     username: userData.username || '',
-    firstName: userData.firstName || '',
+    name: userData.name || '',
     surname: userData.surname || '',
-    weight: userData.weight || '',
-    height: userData.height || '',
-    exercise: userData.favoriteExercise,
+    weight: userData.weight || null,
+    height: userData.height || null,
+    exercise: userData.exercise || null,
   };
 };
 

@@ -23,9 +23,10 @@ import { HexColorPicker } from 'react-colorful';
 import CustomAvatar from '@/components/CustomAvatar';
 import { stringToColor } from '@/utils/avatar';
 import { useRouter } from 'next/navigation';
+import type { UserData } from '@/types/api/user';
 
 const AccountPage = ({ showAppMessage }) => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData>(null);
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState(getAvatar() || '#b01919');
   const [submitting, setSubmitting] = useState(false);
@@ -43,10 +44,7 @@ const AccountPage = ({ showAppMessage }) => {
         setLoading(true);
 
         const userResponse = await api.get(`/api/users/${username}`);
-        setUserData({
-          ...userResponse.data,
-          firstName: userResponse.data.name,
-        });
+        setUserData(userResponse.data);
         const userAvatar = userResponse.data.avatar || stringToColor(username);
         setColor(userAvatar);
         localStorage.setItem('avatar', userAvatar);
@@ -56,8 +54,8 @@ const AccountPage = ({ showAppMessage }) => {
           ...exercisesResponse.data.cardio,
           ...exercisesResponse.data.crossfit,
         ];
-        userResponse.data.favoriteExercise = exerciseData.find(
-          (exercise) => exercise.id === userResponse.data.favoriteExercise
+        userResponse.data.exercise = exerciseData.find(
+          (exercise) => exercise.id === userResponse.data.exercise
         );
         setExercises(exerciseData);
       } catch (err) {
@@ -87,8 +85,7 @@ const AccountPage = ({ showAppMessage }) => {
       setSubmitting(true);
       await api.put(`/api/users/update`, {
         ...formData,
-        name: formData.firstName,
-        favoriteExercise: formData.exercise?.id,
+        exercise: formData.exercise?.id,
         avatar: color,
       });
       localStorage.setItem('avatar', color);
@@ -227,10 +224,10 @@ const AccountPage = ({ showAppMessage }) => {
                 >
                   <CustomInput
                     label="First Name"
-                    name="firstName"
-                    value={values.firstName}
-                    errorStr={errors.firstName}
-                    touched={!!touched.firstName}
+                    name="name"
+                    value={values.name}
+                    errorStr={errors.name}
+                    touched={!!touched.name}
                     onBlur={handleBlur}
                     onChange={(e) => {
                       handleChange(e);
