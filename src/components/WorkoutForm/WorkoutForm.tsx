@@ -60,6 +60,7 @@ type WorkoutFormValues = {
   startDate: Date | null;
   endDate: Date | null;
   description: string;
+  isRegular: boolean;
   interval: number;
   exerciseType: string;
   exercise: Exercise;
@@ -112,10 +113,8 @@ export default function WorkoutForm({
     };
 
     if (popupType !== 'new' && workout?.activities) {
-      setRegular(workout.schedule > 0);
       setActivityList(workout.activities);
     } else {
-      setRegular(false);
       setActivityList([]);
     }
     if (popupStatus) {
@@ -212,7 +211,7 @@ export default function WorkoutForm({
         startDate: values.startDate.toISOString(),
         endDate: values.endDate.toISOString(),
         activities: activities,
-        schedule: isRegular ? values.interval : 0,
+        schedule: values.isRegular ? values.interval : 0,
       });
 
       popupType === 'new' ? onAddWorkout() : onEditWorkout();
@@ -252,7 +251,7 @@ export default function WorkoutForm({
         description: values.description,
         startDate: values.startDate.toISOString(),
         endDate: values.endDate.toISOString(),
-        schedule: isRegular ? values.interval : 0,
+        schedule: values.isRegular ? values.interval : 0,
         activitiesToAdd: activityList.filter((activity) => !activity.id),
         activitiesToRemove: activitiesToDelete,
       });
@@ -278,7 +277,8 @@ export default function WorkoutForm({
 
   const handleRegularChange = (values, setFieldValue) => {
     if (
-      !isRegular &&
+      !values.isRegular &&
+      (values.startDate || values.endDate) &&
       (values.startDate < new Date() || values.endDate < new Date())
     ) {
       setFieldValue('startDate', null);
@@ -290,7 +290,7 @@ export default function WorkoutForm({
       });
     }
     setFieldValue('interval', '');
-    setRegular(!isRegular);
+    setFieldValue('isRegular', !values.isRegular);
   };
 
   const handleClose = () => {
@@ -315,6 +315,7 @@ export default function WorkoutForm({
                 startDate: null,
                 endDate: null,
                 description: '',
+                isRegular: false,
                 interval: null,
                 exerciseType: '',
                 exercise: null,
@@ -326,6 +327,7 @@ export default function WorkoutForm({
                 startDate: new Date(workout.startDate),
                 endDate: new Date(workout.endDate),
                 description: workout.description || '',
+                isRegular: workout.schedule > 0,
                 interval: workout.schedule > 0 ? workout.schedule : null,
                 exerciseType: '',
                 exercise: null,
@@ -357,7 +359,7 @@ export default function WorkoutForm({
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={isRegular}
+                      checked={values.isRegular}
                       onChange={() =>
                         handleRegularChange(values, setFieldValue)
                       }
@@ -367,38 +369,21 @@ export default function WorkoutForm({
                   }
                   label="Repeat this workout"
                 />
-                {isRegular && (
+                {values.isRegular && (
                   <Box sx={{ mt: 2 }}>
-                    <TextField
+                    <NumberField
                       label={errors.interval || 'Interval (days)'}
                       name="interval"
                       type="number"
                       value={values.interval}
                       onBlur={handleBlur}
                       error={!!errors.interval}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        const value = e.target.value;
-                        if (!value || parseInt(value, 10) >= 0) {
-                          handleChange(e);
-                        }
-                      }}
-                      slotProps={{
-                        htmlInput: {
-                          min: 0,
-                          onKeyDown: (
-                            e: React.KeyboardEvent<HTMLInputElement>
-                          ) => {
-                            if (e.key === '-' || e.key === 'e') {
-                              e.preventDefault();
-                            }
-                          },
-                        },
-                      }}
+                      handleChange={handleChange}
                     />
                   </Box>
                 )}
               </Box>
-              {isRegular && (
+              {values.isRegular && (
                 <Typography
                   color="textSecondary"
                   variant="body2"
@@ -418,7 +403,7 @@ export default function WorkoutForm({
                     name="startDate"
                     value={values.startDate}
                     maxDateTime={values.endDate || undefined}
-                    disablePast={isRegular}
+                    disablePast={values.isRegular}
                     onChange={(newValue) => {
                       setFieldValue('startDate', newValue);
                     }}
@@ -447,7 +432,7 @@ export default function WorkoutForm({
                     name="endDate"
                     value={values.endDate}
                     minDateTime={values.startDate || undefined}
-                    disablePast={isRegular}
+                    disablePast={values.isRegular}
                     onChange={(newValue) => {
                       setFieldValue('endDate', newValue);
                     }}
@@ -587,31 +572,7 @@ export default function WorkoutForm({
                 </Box>
               )}
 
-              {values.exerciseType === 'cardio' && (
-                <Box sx={{ mt: 2 }}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <TimeField
-                      format="HH:mm:ss"
-                      value={values.duration}
-                      onChange={(newValue) =>
-                        setFieldValue('duration', newValue)
-                      }
-                      label={
-                        (typeof errors.duration === 'string' &&
-                          errors.duration) ||
-                        'Duration'
-                      }
-                      slotProps={{
-                        textField: {
-                          error: !!errors.duration,
-                        },
-                      }}
-                    />
-                  </LocalizationProvider>
-                </Box>
-              )}
-
-              {values.exerciseType === 'crossfit' && (
+              {values.exerciseType !== 'strength' && (
                 <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimeField
@@ -632,15 +593,17 @@ export default function WorkoutForm({
                       }}
                     />
                   </LocalizationProvider>
-                  <NumberField
-                    label={errors.weight || 'Weight (kg)'}
-                    name="weight"
-                    type="number"
-                    value={values.weight}
-                    onBlur={handleBlur}
-                    error={!!errors.weight}
-                    handleChange={handleChange}
-                  />
+                  {values.exerciseType === 'crossfit' && (
+                    <NumberField
+                      label={errors.weight || 'Weight (kg)'}
+                      name="weight"
+                      type="number"
+                      value={values.weight}
+                      onBlur={handleBlur}
+                      error={!!errors.weight}
+                      handleChange={handleChange}
+                    />
+                  )}
                 </Box>
               )}
 
