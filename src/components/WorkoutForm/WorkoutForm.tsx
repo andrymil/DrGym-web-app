@@ -32,6 +32,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import WorkoutFormTitle from './WorkoutFormTitle';
 import ActivityInfo from '@/components/ActivityInfo';
+import NumberField from '@/components/NumberField';
 import {
   schema,
   strengthActivitySchema,
@@ -87,8 +88,12 @@ export default function WorkoutForm({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [activityList, setActivityList] = useState([]);
   const [activitiesToDelete, setActivitiesToDelete] = useState([]);
-  const [exercises, setExercises] = useState<Exercises>();
   const [isRegular, setRegular] = useState(false);
+  const [exercises, setExercises] = useState<Exercises>({
+    strength: [],
+    cardio: [],
+    crossfit: [],
+  });
   const username = getUsername();
 
   useEffect(() => {
@@ -561,57 +566,23 @@ export default function WorkoutForm({
 
               {values.exerciseType === 'strength' && (
                 <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-                  <TextField
+                  <NumberField
                     label={errors.reps || 'Reps'}
                     name="reps"
                     type="number"
                     value={values.reps}
                     onBlur={handleBlur}
                     error={!!errors.reps}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = e.target.value;
-                      if (!value || parseInt(value, 10) >= 0) {
-                        handleChange(e);
-                      }
-                    }}
-                    slotProps={{
-                      htmlInput: {
-                        min: 0,
-                        onKeyDown: (
-                          e: React.KeyboardEvent<HTMLInputElement>
-                        ) => {
-                          if (e.key === '-' || e.key === 'e') {
-                            e.preventDefault();
-                          }
-                        },
-                      },
-                    }}
+                    handleChange={handleChange}
                   />
-                  <TextField
+                  <NumberField
                     label={errors.weight || 'Weight (kg)'}
                     name="weight"
                     type="number"
                     value={values.weight}
                     onBlur={handleBlur}
                     error={!!errors.weight}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = e.target.value;
-                      if (!value || parseInt(value, 10) >= 0) {
-                        handleChange(e);
-                      }
-                    }}
-                    slotProps={{
-                      htmlInput: {
-                        min: 0,
-                        onKeyDown: (
-                          e: React.KeyboardEvent<HTMLInputElement>
-                        ) => {
-                          if (e.key === '-' || e.key === 'e') {
-                            e.preventDefault();
-                          }
-                        },
-                      },
-                    }}
+                    handleChange={handleChange}
                   />
                 </Box>
               )}
@@ -661,31 +632,14 @@ export default function WorkoutForm({
                       }}
                     />
                   </LocalizationProvider>
-                  <TextField
+                  <NumberField
                     label={errors.weight || 'Weight (kg)'}
                     name="weight"
                     type="number"
                     value={values.weight}
                     onBlur={handleBlur}
                     error={!!errors.weight}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = e.target.value;
-                      if (!value || parseInt(value, 10) >= 0) {
-                        handleChange(e);
-                      }
-                    }}
-                    slotProps={{
-                      htmlInput: {
-                        min: 0,
-                        onKeyDown: (
-                          e: React.KeyboardEvent<HTMLInputElement>
-                        ) => {
-                          if (e.key === '-' || e.key === 'e') {
-                            e.preventDefault();
-                          }
-                        },
-                      },
-                    }}
+                    handleChange={handleChange}
                   />
                 </Box>
               )}

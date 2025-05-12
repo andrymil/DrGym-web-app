@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid2';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
+import NumberField from '@/components/NumberField';
 import {
   AccountSchema,
   AccountDefaultValues,
@@ -246,7 +247,7 @@ const AccountPage = ({ showAppMessage }) => {
                     }}
                     tabIndex={4}
                   />
-                  <TextField
+                  <NumberField
                     label={
                       errors.weight ? 'Weight - ' + errors.weight : 'Weight'
                     }
@@ -256,27 +257,10 @@ const AccountPage = ({ showAppMessage }) => {
                     onBlur={handleBlur}
                     error={!!errors.weight}
                     sx={{ width: '100%' }}
-                    onChange={(e) => {
-                      setHasChanges(true);
-                      const value = e.target.value;
-                      if (!value || parseInt(value, 10) >= 0) {
-                        handleChange(e);
-                      }
-                    }}
-                    slotProps={{
-                      htmlInput: {
-                        min: 0,
-                        onKeyDown: (
-                          e: React.KeyboardEvent<HTMLInputElement>
-                        ) => {
-                          if (e.key === '-' || e.key === 'e') {
-                            e.preventDefault();
-                          }
-                        },
-                      },
-                    }}
+                    handleChange={handleChange}
+                    setHasChanges={setHasChanges}
                   />
-                  <TextField
+                  <NumberField
                     label={
                       errors.height ? 'Height - ' + errors.height : 'Height'
                     }
@@ -286,25 +270,8 @@ const AccountPage = ({ showAppMessage }) => {
                     onBlur={handleBlur}
                     error={!!errors.height}
                     sx={{ width: '100%' }}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setHasChanges(true);
-                      const value = e.target.value;
-                      if (!value || parseInt(value, 10) >= 0) {
-                        handleChange(e);
-                      }
-                    }}
-                    slotProps={{
-                      htmlInput: {
-                        min: 0,
-                        onKeyDown: (
-                          e: React.KeyboardEvent<HTMLInputElement>
-                        ) => {
-                          if (e.key === '-' || e.key === 'e') {
-                            e.preventDefault();
-                          }
-                        },
-                      },
-                    }}
+                    handleChange={handleChange}
+                    setHasChanges={setHasChanges}
                   />
                   <FormControl fullWidth>
                     <Autocomplete
