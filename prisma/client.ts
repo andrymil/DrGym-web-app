@@ -1,6 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 
-let prisma;
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined;
+}
+
+let prisma: PrismaClient | undefined;
 
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient();

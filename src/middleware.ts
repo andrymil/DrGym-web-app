@@ -1,12 +1,12 @@
 import { getToken } from 'next-auth/jwt';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function middleware(req) {
+export async function middleware(req: NextRequest) {
   const token = await getToken({ req });
   const { pathname } = req.nextUrl;
 
   const userMatch = pathname.match(/^\/user\/([^/]+)(\/.*)?$/);
-  const requestedUser = userMatch ? userMatch[1] : null;
+  const requestedUser = userMatch?.[1] ?? null;
 
   if (
     token &&
@@ -14,7 +14,7 @@ export async function middleware(req) {
       pathname === '/register' ||
       pathname.startsWith('/auth'))
   ) {
-    const username = token?.username;
+    const username = token.username;
     return NextResponse.redirect(
       new URL(
         `/user/${username}/posts?message=You are already signed in`,
@@ -34,8 +34,7 @@ export async function middleware(req) {
     requestedUser &&
     pathname.startsWith(`/user/${requestedUser}/`)
   ) {
-    const username = token?.username;
-
+    const username = token.username;
     if (username !== requestedUser) {
       return NextResponse.redirect(
         new URL(
