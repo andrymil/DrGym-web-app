@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import {
   Autocomplete,
   Box,
@@ -20,7 +20,6 @@ import {
   Tooltip,
   Typography,
   Switch,
-  InputAdornment,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { DateTimePicker, TimeField } from '@mui/x-date-pickers';
@@ -43,6 +42,7 @@ import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
 import type { Workout } from '@/types/api/workout';
 import type { ShowAppMessage } from '@/types/general';
+import type { Exercise } from '@/types/api/exercise';
 
 type WorkoutFormProps = {
   dialogTitle: string;
@@ -53,6 +53,24 @@ type WorkoutFormProps = {
   onAddWorkout?: () => Promise<void>;
   onEditWorkout?: () => Promise<void>;
   showAppMessage: ShowAppMessage;
+};
+
+type WorkoutFormValues = {
+  startDate: Date | null;
+  endDate: Date | null;
+  description: string;
+  interval: number;
+  exerciseType: string;
+  exercise: Exercise;
+  reps: number;
+  weight: number;
+  duration: Date;
+};
+
+type Exercises = {
+  strength: Exercise[];
+  cardio: Exercise[];
+  crossfit: Exercise[];
 };
 
 export default function WorkoutForm({
@@ -69,7 +87,7 @@ export default function WorkoutForm({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [activityList, setActivityList] = useState([]);
   const [activitiesToDelete, setActivitiesToDelete] = useState([]);
-  const [exercises, setExercises] = useState([]);
+  const [exercises, setExercises] = useState<Exercises>();
   const [isRegular, setRegular] = useState(false);
   const username = getUsername();
 
@@ -285,30 +303,30 @@ export default function WorkoutForm({
       <WorkoutFormTitle id="new-workout-dialog" onClose={togglePopup}>
         {dialogTitle}
       </WorkoutFormTitle>
-      <Formik
+      <Formik<WorkoutFormValues>
         initialValues={
           popupType === 'new'
             ? {
                 startDate: null,
                 endDate: null,
                 description: '',
-                interval: '',
+                interval: null,
                 exerciseType: '',
-                exercise: '',
-                reps: '',
-                weight: '',
-                duration: '',
+                exercise: null,
+                reps: null,
+                weight: null,
+                duration: null,
               }
             : {
                 startDate: new Date(workout.startDate),
                 endDate: new Date(workout.endDate),
                 description: workout.description || '',
-                interval: workout.schedule > 0 ? workout.schedule : '',
+                interval: workout.schedule > 0 ? workout.schedule : null,
                 exerciseType: '',
-                exercise: '',
-                reps: '',
-                weight: '',
-                duration: '',
+                exercise: null,
+                reps: null,
+                weight: null,
+                duration: null,
               }
         }
         onSubmit={(values, actions) =>
@@ -327,7 +345,7 @@ export default function WorkoutForm({
           setFieldValue,
           isSubmitting,
           setErrors,
-        }) => (
+        }: FormikProps<WorkoutFormValues>) => (
           <Form>
             <DialogContent sx={{ p: 3 }}>
               <Box sx={{ mt: -2, mb: 2 }}>
@@ -353,16 +371,18 @@ export default function WorkoutForm({
                       value={values.interval}
                       onBlur={handleBlur}
                       error={!!errors.interval}
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const value = e.target.value;
                         if (!value || parseInt(value, 10) >= 0) {
                           handleChange(e);
                         }
                       }}
                       slotProps={{
-                        input: {
+                        htmlInput: {
                           min: 0,
-                          onKeyDown: (e) => {
+                          onKeyDown: (
+                            e: React.KeyboardEvent<HTMLInputElement>
+                          ) => {
                             if (e.key === '-' || e.key === 'e') {
                               e.preventDefault();
                             }
@@ -397,8 +417,8 @@ export default function WorkoutForm({
                     onChange={(newValue) => {
                       setFieldValue('startDate', newValue);
                     }}
-                    onBlur={handleBlur}
                     label={
+                      typeof errors.startDate === 'string' &&
                       !!errors.startDate &&
                       (!!touched.startDate || !!values.startDate)
                         ? errors.startDate
@@ -406,6 +426,7 @@ export default function WorkoutForm({
                     }
                     slotProps={{
                       textField: {
+                        onBlur: handleBlur,
                         error:
                           !!errors.startDate &&
                           (!!touched.startDate || !!values.startDate),
@@ -425,8 +446,8 @@ export default function WorkoutForm({
                     onChange={(newValue) => {
                       setFieldValue('endDate', newValue);
                     }}
-                    onBlur={handleBlur}
                     label={
+                      typeof errors.endDate === 'string' &&
                       !!errors.endDate &&
                       (!!touched.endDate || !!values.endDate)
                         ? errors.endDate
@@ -434,6 +455,7 @@ export default function WorkoutForm({
                     }
                     slotProps={{
                       textField: {
+                        onBlur: handleBlur,
                         error:
                           !!errors.endDate &&
                           (!!touched.endDate || !!values.endDate),
@@ -448,8 +470,8 @@ export default function WorkoutForm({
                   name="description"
                   type="text"
                   value={values.description}
-                  error={errors.description}
-                  touched={touched.description}
+                  errorStr={errors.description}
+                  touched={!!touched.description}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   tabIndex={3}
@@ -524,7 +546,11 @@ export default function WorkoutForm({
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label={errors.exercise || 'Exercise'}
+                      label={
+                        (typeof errors.exercise === 'string' &&
+                          errors.exercise) ||
+                        'Exercise'
+                      }
                       error={!!errors.exercise}
                       name="exercise"
                       onBlur={handleBlur}
@@ -542,16 +568,18 @@ export default function WorkoutForm({
                     value={values.reps}
                     onBlur={handleBlur}
                     error={!!errors.reps}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const value = e.target.value;
                       if (!value || parseInt(value, 10) >= 0) {
                         handleChange(e);
                       }
                     }}
                     slotProps={{
-                      input: {
+                      htmlInput: {
                         min: 0,
-                        onKeyDown: (e) => {
+                        onKeyDown: (
+                          e: React.KeyboardEvent<HTMLInputElement>
+                        ) => {
                           if (e.key === '-' || e.key === 'e') {
                             e.preventDefault();
                           }
@@ -566,16 +594,18 @@ export default function WorkoutForm({
                     value={values.weight}
                     onBlur={handleBlur}
                     error={!!errors.weight}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const value = e.target.value;
                       if (!value || parseInt(value, 10) >= 0) {
                         handleChange(e);
                       }
                     }}
                     slotProps={{
-                      input: {
+                      htmlInput: {
                         min: 0,
-                        onKeyDown: (e) => {
+                        onKeyDown: (
+                          e: React.KeyboardEvent<HTMLInputElement>
+                        ) => {
                           if (e.key === '-' || e.key === 'e') {
                             e.preventDefault();
                           }
@@ -595,7 +625,11 @@ export default function WorkoutForm({
                       onChange={(newValue) =>
                         setFieldValue('duration', newValue)
                       }
-                      label={errors.duration || 'Duration'}
+                      label={
+                        (typeof errors.duration === 'string' &&
+                          errors.duration) ||
+                        'Duration'
+                      }
                       slotProps={{
                         textField: {
                           error: !!errors.duration,
@@ -615,7 +649,11 @@ export default function WorkoutForm({
                       onChange={(newValue) =>
                         setFieldValue('duration', newValue)
                       }
-                      label={errors.duration || 'Duration'}
+                      label={
+                        (typeof errors.duration === 'string' &&
+                          errors.duration) ||
+                        'Duration'
+                      }
                       slotProps={{
                         textField: {
                           error: !!errors.duration,
@@ -630,16 +668,18 @@ export default function WorkoutForm({
                     value={values.weight}
                     onBlur={handleBlur}
                     error={!!errors.weight}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const value = e.target.value;
                       if (!value || parseInt(value, 10) >= 0) {
                         handleChange(e);
                       }
                     }}
                     slotProps={{
-                      input: {
+                      htmlInput: {
                         min: 0,
-                        onKeyDown: (e) => {
+                        onKeyDown: (
+                          e: React.KeyboardEvent<HTMLInputElement>
+                        ) => {
                           if (e.key === '-' || e.key === 'e') {
                             e.preventDefault();
                           }
