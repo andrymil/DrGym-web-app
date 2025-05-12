@@ -6,7 +6,7 @@ export type Post = {
   avatar: string;
   date: Date;
   title: string;
-  content: String;
+  content: string;
   userReaction: boolean;
   reactionCount: number;
   workout: Workout;

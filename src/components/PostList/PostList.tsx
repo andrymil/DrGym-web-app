@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Post from '@/components/Post';
 import SkeletonCard from '@/components/SkeletonCard';

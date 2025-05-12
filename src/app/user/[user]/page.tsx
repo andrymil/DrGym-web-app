@@ -46,6 +46,7 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
         });
         setAvatar(response.data?.avatar || null);
       } catch (err) {
+        console.error('Error fetching user data', err);
         showAppMessage({
           status: true,
           text: 'Failed to fetch user data',
@@ -72,7 +73,7 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
             `/user/${username}/posts?message=User ${user} is not your friend&type=warning`
           );
         }
-      } catch (err) {
+      } catch {
         router.replace(
           `/user/${username}/posts?message=An error occurred. Redirected.&type=error`
         );
@@ -94,6 +95,7 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
         `/user/${getUsername()}/posts?message=Removed ${username} from friends&type=success`
       );
     } catch (err) {
+      console.error('Error removing friend', err);
       showAppMessage({
         status: true,
         text: 'Failed to delete friend',

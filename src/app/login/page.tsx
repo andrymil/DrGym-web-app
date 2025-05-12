@@ -22,7 +22,7 @@ import { LoginSchema, LoginDefaultValues } from '@/utils/schemas/LoginSchema';
 import Link from 'next/link';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import { stringToColor } from '@/utils/avatar';
+// import { stringToColor } from '@/utils/avatar';
 import { signIn, getSession } from 'next-auth/react';
 
 const Root = styled('div')(({ theme }) => ({
@@ -85,7 +85,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
         form.setTouched({});
       } else if (res?.ok) {
         const session = await getSession();
-        const { username, avatar } = session?.user;
+        const { username, avatar: _avatar } = session.user;
         if (!username) {
           throw new Error('Missing username');
         }

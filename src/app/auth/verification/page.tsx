@@ -22,7 +22,7 @@ const VerificationPageContent = ({ showAppMessage }) => {
       try {
         setLoading(true);
         setMessage('Verifying your account...');
-        const res = await api.post(`/api/verification`, {
+        await api.post(`/api/verification`, {
           email,
           token,
         });

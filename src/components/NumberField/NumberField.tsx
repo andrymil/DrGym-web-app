@@ -16,7 +16,9 @@ const CustomInput = ({
       {...rest}
       type="number"
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        setHasChanges && setHasChanges(true);
+        if (setHasChanges) {
+          setHasChanges(true);
+        }
         const value = e.target.value;
         if (!value || parseInt(value, 10) >= 0) {
           handleChange(e);

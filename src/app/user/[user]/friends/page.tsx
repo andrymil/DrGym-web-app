@@ -82,6 +82,7 @@ const Friends = ({ showAppMessage }) => {
         prevRequests.filter((request) => request.sender !== username)
       );
     } catch (err) {
+      console.error('Error declining friend request', err);
       showAppMessage({
         status: true,
         text: 'Something went wrong',
@@ -107,6 +108,7 @@ const Friends = ({ showAppMessage }) => {
         type: 'success',
       });
     } catch (err) {
+      console.error('Error removing friend', err);
       showAppMessage({
         status: true,
         text: 'Failed to delete friend',

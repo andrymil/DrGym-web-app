@@ -1,5 +1,3 @@
-import { requestToBodyStream } from 'next/dist/server/body-streams';
-
 const videos = {
   cardio: [
     {

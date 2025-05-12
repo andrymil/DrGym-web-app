@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Tooltip,
   Typography,
   Dialog,
   DialogTitle,
@@ -11,7 +10,7 @@ import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
 import api from '@/utils/axiosInstance';
 import Model from 'react-body-highlighter';
-import { bodyData as mockData } from '@/utils/mockData';
+// import { bodyData as mockData } from '@/utils/mockData';
 
 type BodyHighlighterProps = {
   username: string;
@@ -20,13 +19,11 @@ type BodyHighlighterProps = {
 const BodyHighlighter = ({ username }: BodyHighlighterProps) => {
   const [bodyData, setBodyData] = useState([]);
   const [selectedMuscle, setSelectedMuscle] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBodyData = async () => {
       try {
-        setLoading(true);
         const response = await api.get(
           `/api/users/${username}/exercises?startDate=2024-01-16&endDate=2025-01-16`
         );
@@ -35,11 +32,9 @@ const BodyHighlighter = ({ username }: BodyHighlighterProps) => {
         //   setBodyData(mockData);
         //   setLoading(false);
         // }, 1500);
-      } catch (error) {
+      } catch (err) {
+        console.error('Error fetching BodyHighligter data', err);
         setError('Failed to load the data');
-        setLoading(false);
-      } finally {
-        setLoading(false);
       }
     };
 

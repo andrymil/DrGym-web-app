@@ -33,6 +33,7 @@ const HomePage = () => {
         const res = await api.get('/api/exercises/by-type');
         setExerciseData(res.data);
       } catch (err) {
+        console.error('Error fetching exercises:', err);
         setError('Failed to fetch exercises');
       }
     };

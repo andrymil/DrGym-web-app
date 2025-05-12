@@ -24,6 +24,8 @@ const ResetPasswordContent = ({ showAppMessage }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  let _XDDDDDDD;
+
   const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useState(false);
   const [showConfirmPassword, toggleShowConfirmPassword] = useState(false);
@@ -47,11 +49,11 @@ const ResetPasswordContent = ({ showAppMessage }) => {
     }
   }, [email, token, showAppMessage]);
 
-  const handleResetPassword = async (formData, form) => {
+  const handleResetPassword = async (formData) => {
     try {
       setLoading(true);
       setMessage('');
-      const res = await api.post('/api/reset-password', {
+      await api.post('/api/reset-password', {
         email,
         token,
         password: formData.password,

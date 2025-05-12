@@ -44,6 +44,7 @@ export default function Ranking({ username, showAppMessage }: RankingProps) {
         const response = await api.get(`/api/exercises/with-ranking`);
         setExercisesNames(response.data);
       } catch (err) {
+        console.error('Error fetching exercises', err);
         setError('Failed to fetch exercises');
         showAppMessage({
           status: true,
@@ -66,6 +67,7 @@ export default function Ranking({ username, showAppMessage }: RankingProps) {
         );
         setRanking(response.data);
       } catch (err) {
+        console.error('Error fetching ranking', err);
         setError('Failed to fetch ranking');
         showAppMessage({
           status: true,

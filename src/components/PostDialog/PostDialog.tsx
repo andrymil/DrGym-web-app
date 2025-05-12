@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -84,7 +84,7 @@ export default function PostDialog({
   const handleAddPost = async (values, actions) => {
     try {
       actions.setSubmitting(true);
-      const response = await api.post('/api/posts/create', {
+      await api.post('/api/posts/create', {
         username: username,
         title: values.title,
         content: values.description,
@@ -112,7 +112,7 @@ export default function PostDialog({
   const handleEditPost = async (values, actions) => {
     try {
       actions.setSubmitting(true);
-      const response = await api.put(`/api/posts/update`, {
+      await api.put(`/api/posts/update`, {
         id: post.id,
         title: values.title,
         content: values.description,

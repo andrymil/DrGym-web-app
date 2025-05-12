@@ -89,7 +89,6 @@ export default function WorkoutForm({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [activityList, setActivityList] = useState([]);
   const [activitiesToDelete, setActivitiesToDelete] = useState([]);
-  const [isRegular, setRegular] = useState(false);
   const [exercises, setExercises] = useState<Exercises>({
     strength: [],
     cardio: [],
@@ -102,7 +101,8 @@ export default function WorkoutForm({
       try {
         const response = await api.get(`/api/exercises/by-type`);
         setExercises(response.data);
-      } catch (error) {
+      } catch (err) {
+        console.error('Error fetching exercises', err);
         togglePopup();
         showAppMessage({
           status: true,
@@ -202,10 +202,10 @@ export default function WorkoutForm({
       if (popupType === 'new') {
         activities = activityList;
       } else {
-        activities = activityList.map(({ id, ...activity }) => activity);
+        activities = activityList.map(({ id: _, ...activity }) => activity);
       }
 
-      const response = await api.post(`/api/workouts/create`, {
+      await api.post(`/api/workouts/create`, {
         username: username,
         description: values.description,
         startDate: values.startDate.toISOString(),
@@ -214,7 +214,11 @@ export default function WorkoutForm({
         schedule: values.isRegular ? values.interval : 0,
       });
 
-      popupType === 'new' ? onAddWorkout() : onEditWorkout();
+      if (popupType === 'new') {
+        onAddWorkout();
+      } else {
+        onEditWorkout();
+      }
       handleClose();
       showAppMessage({
         status: true,
@@ -245,7 +249,7 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      const response = await api.put(`/api/workouts/update`, {
+      await api.put(`/api/workouts/update`, {
         id: workout.id,
         username: username,
         description: values.description,
@@ -625,7 +629,7 @@ export default function WorkoutForm({
                   </Typography>
                 </>
               )}
-              {activityList.map(({ exerciseId, ...activity }, index) => (
+              {activityList.map(({ exerciseId: _, ...activity }, index) => (
                 <Box key={index}>
                   <Box
                     sx={{

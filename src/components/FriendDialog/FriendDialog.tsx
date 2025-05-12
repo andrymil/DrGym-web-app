@@ -114,7 +114,6 @@ export default function FriendDialog({
           errors,
           handleBlur,
           handleChange,
-          isValid,
           setFieldError,
           setFieldValue,
           touched,

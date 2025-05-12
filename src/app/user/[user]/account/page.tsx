@@ -61,6 +61,7 @@ const AccountPage = ({ showAppMessage }) => {
         );
         setExercises(exerciseData);
       } catch (err) {
+        console.error('Error fetching user data:', err);
         setError('Could not fetch user data');
         showAppMessage({
           status: true,
@@ -83,7 +84,8 @@ const AccountPage = ({ showAppMessage }) => {
 
   const handleUpdateAccount = async (formData) => {
     try {
-      const respone = await api.put(`/api/users/update`, {
+      setSubmitting(true);
+      await api.put(`/api/users/update`, {
         ...formData,
         name: formData.firstName,
         favoriteExercise: formData.exercise?.id,
@@ -104,6 +106,8 @@ const AccountPage = ({ showAppMessage }) => {
         text: 'Failed to update account',
         type: 'error',
       });
+    } finally {
+      setSubmitting(true);
     }
   };
 

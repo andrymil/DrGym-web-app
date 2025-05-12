@@ -47,7 +47,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
   const handleRegister = async (formData, form) => {
     try {
       setLoading(true);
-      const response = await api.post('/api/register', {
+      await api.post('/api/register', {
         name: formData.firstName,
         surname: formData.lastName,
         username: formData.username,

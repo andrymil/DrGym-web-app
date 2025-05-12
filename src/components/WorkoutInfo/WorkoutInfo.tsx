@@ -29,7 +29,7 @@ type ExpandMoreProps = IconButtonProps & {
   expand: boolean;
 };
 
-const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
+const ExpandMore = styled(({ expand: _, ...other }: ExpandMoreProps) => (
   <IconButton {...other} />
 ))(({ theme }) => ({
   marginLeft: 'auto',
@@ -78,7 +78,8 @@ export default function WorkoutInfo({
     try {
       await api.post(`/api/posts/${post.id}/reactions?username=${username}`);
       setLikeCount((prev) => prev + 1);
-    } catch (error) {
+    } catch (err) {
+      console.error('Error adding like:', err);
       setLiked(false);
       showAppMessage({
         status: true,
@@ -97,7 +98,8 @@ export default function WorkoutInfo({
         }
         return prev;
       });
-    } catch (error) {
+    } catch (err) {
+      console.error('Error removing like:', err);
       setLiked(true);
       showAppMessage({
         status: true,

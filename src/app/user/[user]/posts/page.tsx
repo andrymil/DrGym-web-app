@@ -12,7 +12,6 @@ import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import PostDialog from '@/components/PostDialog';
-import { ref } from 'yup';
 
 const PostsContent = ({ showAppMessage }) => {
   const [dialogOpen, setDialogOpen] = useState(false);

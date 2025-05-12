@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { Tooltip, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { calendarData as mockData } from '@/utils/mockData';
+// import { calendarData as mockData } from '@/utils/mockData';
 import api from '@/utils/axiosInstance';
 import { formatDate } from '@/utils/dateUtils';
 

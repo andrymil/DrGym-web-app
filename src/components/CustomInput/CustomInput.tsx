@@ -6,12 +6,11 @@ import {
   OutlinedInputProps,
 } from '@mui/material';
 import type { ReactNode } from 'react';
-import { FormikErrors } from 'formik';
 
 type CustomInputProps = OutlinedInputProps & {
   label: string;
   name: string;
-  errorStr?: string | FormikErrors<any> | string[] | FormikErrors<any>[];
+  errorStr?: string;
   touched?: boolean;
   tabIndex?: number;
   endAdornment?: ReactNode;

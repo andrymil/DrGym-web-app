@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useEffect, useState, useCallback } from 'react';
 import api from '@/utils/axiosInstance';
 import WorkoutCard from '@/components/WorkoutCard';
@@ -11,7 +11,6 @@ import SkeletonCard from '@/components/SkeletonCard';
 import Grid from '@mui/material/Grid2';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { getUsername } from '@/utils/localStorage';
 import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
 
 const Workouts = ({ showAppMessage }) => {
@@ -34,6 +33,7 @@ const Workouts = ({ showAppMessage }) => {
       setFromFuture(true);
       setWorkoutsData([...data.futureWorkouts].reverse());
     } catch (err) {
+      console.error('Error fetching workouts', err);
       setError('Failed to fetch workouts. Please try again later.');
       showAppMessage({
         status: true,

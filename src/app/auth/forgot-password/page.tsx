@@ -24,7 +24,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
   const handleForgotPassword = async (formData, form) => {
     try {
       setLoading(true);
-      const respone = await api.post('/api/forgot-password', {
+      await api.post('/api/forgot-password', {
         email: formData.email,
       });
       showAppMessage({
@@ -98,7 +98,6 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                 errors,
                 handleBlur,
                 handleChange,
-                isValid,
                 setFieldError,
                 setFieldValue,
                 touched,

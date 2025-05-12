@@ -4,14 +4,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import style from './WorkoutFormTitle.module.css';
 import Tooltip from '@mui/material/Tooltip';
 import { ReactNode } from 'react';
-import { DialogTitleProps } from '@mui/material/DialogTitle';
 
 type WorkoutFormTitleProps = {
   children: ReactNode;
   onClose: () => void;
 };
 
-const WorkoutFormTitle = ({ children, onClose, ...other }) => {
+const WorkoutFormTitle = ({
+  children,
+  onClose,
+  ...other
+}: WorkoutFormTitleProps) => {
   return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other} className={style.title}>
       {children}

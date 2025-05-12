@@ -16,7 +16,6 @@ import IconButton from '@mui/material/IconButton';
 import CustomAvatar from '@/components/CustomAvatar';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { getAvatar, removeUserData } from '@/utils/localStorage';
 
@@ -48,7 +47,8 @@ export default function CustomAppBar() {
       signOut({
         callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/login?message=You have been signed out&type=info`,
       });
-    } catch (error) {
+    } catch (err) {
+      console.error('Error logging out', err);
       router.push(
         `/user/${username}/posts?message=Failed to sign out. Please try again.&type=error`
       );
