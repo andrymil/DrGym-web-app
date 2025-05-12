@@ -10,7 +10,8 @@
     "seed": "node prisma/seed.js",
     "lint": "next lint",
     "lint-fix": "next lint --fix",
-    "ts-check": "npx tsc --noEmit"
+    "ts-check": "npx tsc --noEmit",
+    "eslint": "npx eslint ./src"
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
@@ -43,13 +44,15 @@
     "yup-password": "^0.4.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.26.0",
     "@types/node": "22.15.3",
-    "eslint": "^8",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.4.1",
     "prisma": "^6.5.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
   }
 }
