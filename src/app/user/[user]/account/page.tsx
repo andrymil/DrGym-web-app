@@ -224,8 +224,8 @@ const AccountPage = ({ showAppMessage }) => {
                     label="First Name"
                     name="firstName"
                     value={values.firstName}
-                    error={errors.firstName}
-                    touched={touched.firstName}
+                    errorStr={errors.firstName}
+                    touched={!!touched.firstName}
                     onBlur={handleBlur}
                     onChange={(e) => {
                       handleChange(e);
@@ -237,8 +237,8 @@ const AccountPage = ({ showAppMessage }) => {
                     label="Surname"
                     name="surname"
                     value={values.surname}
-                    error={errors.surname}
-                    touched={touched.surname}
+                    errorStr={errors.surname}
+                    touched={!!touched.surname}
                     onBlur={handleBlur}
                     onChange={(e) => {
                       handleChange(e);
@@ -264,9 +264,11 @@ const AccountPage = ({ showAppMessage }) => {
                       }
                     }}
                     slotProps={{
-                      input: {
+                      htmlInput: {
                         min: 0,
-                        onKeyDown: (e) => {
+                        onKeyDown: (
+                          e: React.KeyboardEvent<HTMLInputElement>
+                        ) => {
                           if (e.key === '-' || e.key === 'e') {
                             e.preventDefault();
                           }
@@ -284,7 +286,7 @@ const AccountPage = ({ showAppMessage }) => {
                     onBlur={handleBlur}
                     error={!!errors.height}
                     sx={{ width: '100%' }}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setHasChanges(true);
                       const value = e.target.value;
                       if (!value || parseInt(value, 10) >= 0) {
@@ -292,9 +294,11 @@ const AccountPage = ({ showAppMessage }) => {
                       }
                     }}
                     slotProps={{
-                      input: {
+                      htmlInput: {
                         min: 0,
-                        onKeyDown: (e) => {
+                        onKeyDown: (
+                          e: React.KeyboardEvent<HTMLInputElement>
+                        ) => {
                           if (e.key === '-' || e.key === 'e') {
                             e.preventDefault();
                           }

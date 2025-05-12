@@ -229,8 +229,8 @@ export default function PostDialog({
                   label="Title"
                   name="title"
                   value={values.title}
-                  error={errors.title}
-                  touched={touched.title}
+                  errorStr={errors.title}
+                  touched={!!touched.title}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
@@ -238,8 +238,8 @@ export default function PostDialog({
                   label="Description"
                   name="description"
                   value={values.description}
-                  error={errors.description}
-                  touched={touched.description}
+                  errorStr={errors.description}
+                  touched={!!touched.description}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   multiline

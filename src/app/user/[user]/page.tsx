@@ -15,11 +15,19 @@ import PostList from '@/components/PostList';
 import { getUsername } from '@/utils/localStorage';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography } from '@mui/material';
+import type { ShowAppMessage } from '@/types/general';
+import type { UserData } from '@/types/api/user';
+import type { Usable } from 'react';
 
-const User = ({ params, showAppMessage }) => {
+type UserPageProps = {
+  params: Usable<{ user: string }>;
+  showAppMessage: ShowAppMessage;
+};
+
+const User = ({ params, showAppMessage }: UserPageProps) => {
   const [loading, setLoading] = useState(true);
   const { user } = React.use(params);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData>(null);
   const [avatar, setAvatar] = useState(null);
   const router = useRouter();
   const username = getUsername();
@@ -34,7 +42,7 @@ const User = ({ params, showAppMessage }) => {
           surname: response.data?.surname,
           weight: response.data?.weight,
           height: response.data?.height,
-          'favourite Exercise': response.data?.favoriteExerciseName,
+          favouriteExercise: response.data?.favoriteExerciseName,
         });
         setAvatar(response.data?.avatar || null);
       } catch (err) {

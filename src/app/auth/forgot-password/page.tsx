@@ -19,7 +19,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const formikRef = useRef();
+  const formikRef = useRef(null);
 
   const handleForgotPassword = async (formData, form) => {
     try {
@@ -118,8 +118,8 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                           name="email"
                           type="email"
                           value={values.email}
-                          error={errors.email}
-                          touched={touched.email}
+                          errorStr={errors.email}
+                          touched={!!touched.email}
                           onBlur={handleBlur}
                           onChange={handleChange}
                           tabIndex={1}
@@ -132,7 +132,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                                     setFieldError('email', null);
                                   }}
                                 >
-                                  <CloseIcon color="accent" />
+                                  <CloseIcon color="primary" />
                                 </IconButton>
                               </InputAdornment>
                             )

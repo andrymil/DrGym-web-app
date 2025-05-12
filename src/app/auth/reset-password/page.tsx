@@ -118,8 +118,8 @@ const ResetPasswordContent = ({ showAppMessage }) => {
                         name="password"
                         type={showPassword ? 'text' : 'password'}
                         value={values.password}
-                        error={errors.password}
-                        touched={touched.password}
+                        errorStr={errors.password}
+                        touched={!!touched.password}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         tabIndex={1}
@@ -147,8 +147,8 @@ const ResetPasswordContent = ({ showAppMessage }) => {
                         name="confirmPassword"
                         type={showConfirmPassword ? 'text' : 'password'}
                         value={values.confirmPassword}
-                        error={errors.confirmPassword}
-                        touched={touched.confirmPassword}
+                        errorStr={errors.confirmPassword}
+                        touched={!!touched.confirmPassword}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         tabIndex={2}

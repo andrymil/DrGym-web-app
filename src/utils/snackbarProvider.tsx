@@ -31,7 +31,7 @@ export const withSnackbar = (WrappedComponent) => {
           onClose={handleCloseSnackbar}
         >
           <Alert
-            onClose={handleCloseSnackbar}
+            onClose={(event) => handleCloseSnackbar(event, 'closeButton')}
             severity={appMessage?.type}
             variant="filled"
             sx={{ width: '100%' }}

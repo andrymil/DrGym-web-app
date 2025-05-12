@@ -6,11 +6,12 @@ import {
   OutlinedInputProps,
 } from '@mui/material';
 import type { ReactNode } from 'react';
+import { FormikErrors } from 'formik';
 
 type CustomInputProps = OutlinedInputProps & {
   label: string;
   name: string;
-  error?: string;
+  errorStr?: string | FormikErrors<any> | string[] | FormikErrors<any>[];
   touched?: boolean;
   tabIndex?: number;
   endAdornment?: ReactNode;
@@ -21,24 +22,24 @@ const CustomInput = ({
   name,
   type = 'text',
   value,
-  error,
+  errorStr,
   touched,
   onBlur,
   onChange,
   tabIndex,
   endAdornment,
   ...rest
-}) => {
-  const showError = !!error && (!!touched || !!value);
+}: CustomInputProps) => {
+  const showError = !!errorStr && (!!touched || !!value);
 
   return (
     <FormControl fullWidth>
       <InputLabel error={showError}>
-        {showError ? `${label} - ${error}` : label}
+        {showError ? `${label} - ${errorStr}` : label}
       </InputLabel>
       <OutlinedInput
         error={showError}
-        label={showError ? `${label} - ${error}` : label}
+        label={showError ? `${label} - ${errorStr}` : label}
         name={name}
         type={type}
         value={value || ''}

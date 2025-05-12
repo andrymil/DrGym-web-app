@@ -2,7 +2,8 @@ import type { Workout } from '@/types/api/workout';
 
 export type Post = {
   id: number;
-  author: string;
+  username: string;
+  avatar: string;
   date: Date;
   title: string;
   content: String;

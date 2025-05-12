@@ -45,7 +45,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
     const message = searchParams.get('message');
     const type = searchParams.get('type');
     if (message) {
-      router.replace('/login', undefined, { shallow: true });
+      router.replace('/login', { scroll: true });
       showAppMessage({
         status: true,
         text: message,
@@ -180,8 +180,8 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                         name="username"
                         type="text"
                         value={values.username}
-                        error={errors.username}
-                        touched={touched.username}
+                        errorStr={errors.username}
+                        touched={!!touched.username}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         tabIndex={1}
@@ -192,8 +192,8 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                         name="email"
                         type="email"
                         value={values.email}
-                        error={errors.email}
-                        touched={touched.email}
+                        errorStr={errors.email}
+                        touched={!!touched.email}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         tabIndex={1}
@@ -206,8 +206,8 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                       name="password"
                       type={showPassword ? 'text' : 'password'}
                       value={values.password}
-                      error={errors.password}
-                      touched={touched.password}
+                      errorStr={errors.password}
+                      touched={!!touched.password}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={2}

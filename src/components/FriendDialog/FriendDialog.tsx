@@ -114,7 +114,6 @@ export default function FriendDialog({
           errors,
           handleBlur,
           handleChange,
-          handleSubmit,
           isValid,
           setFieldError,
           setFieldValue,
@@ -131,8 +130,8 @@ export default function FriendDialog({
                       name="username"
                       type="username"
                       value={values.username}
-                      error={errors.username}
-                      touched={touched.username}
+                      errorStr={errors.username}
+                      touched={!!touched.username}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={0}
@@ -145,7 +144,7 @@ export default function FriendDialog({
                                 setFieldError('username', null);
                               }}
                             >
-                              <CloseIcon color="accent" />
+                              <CloseIcon color="primary" />
                             </IconButton>
                           </InputAdornment>
                         )
@@ -155,7 +154,7 @@ export default function FriendDialog({
                   <Grid size={12}>
                     <Button
                       fullWidth
-                      onClick={handleSubmit}
+                      type="submit"
                       variant="contained"
                       color="primary"
                       disabled={loading}

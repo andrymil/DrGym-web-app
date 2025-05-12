@@ -23,24 +23,28 @@ import api from '@/utils/axiosInstance';
 import type { Workout } from '@/types/api/workout';
 import type { Post } from '@/types/api/post';
 import type { ShowAppMessage } from '@/types/general';
+import type { IconButtonProps } from '@mui/material/IconButton';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme }) => ({
+type ExpandMoreProps = IconButtonProps & {
+  expand: boolean;
+};
+
+const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
+  <IconButton {...other} />
+))(({ theme }) => ({
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
   variants: [
     {
-      props: ({ expand }) => !expand,
+      props: { expand: false },
       style: {
         transform: 'rotate(0deg)',
       },
     },
     {
-      props: ({ expand }) => !!expand,
+      props: { expand: true },
       style: {
         transform: 'rotate(180deg)',
       },
@@ -52,7 +56,7 @@ type WorkoutInfoProps = {
   workout: Workout;
   isPost?: boolean;
   post?: Post;
-  showAppMessage: ShowAppMessage;
+  showAppMessage?: ShowAppMessage;
 };
 
 export default function WorkoutInfo({

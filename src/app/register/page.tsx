@@ -114,8 +114,8 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       label="First name"
                       name="firstName"
                       value={values.firstName}
-                      error={errors.firstName}
-                      touched={touched.firstName}
+                      errorStr={errors.firstName}
+                      touched={!!touched.firstName}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={1}
@@ -126,8 +126,8 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       label="Last name"
                       name="lastName"
                       value={values.lastName}
-                      error={errors.lastName}
-                      touched={touched.lastName}
+                      errorStr={errors.lastName}
+                      touched={!!touched.lastName}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={2}
@@ -138,8 +138,8 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       label="Username"
                       name="username"
                       value={values.username}
-                      error={errors.username}
-                      touched={touched.username}
+                      errorStr={errors.username}
+                      touched={!!touched.username}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={3}
@@ -151,8 +151,8 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       name="email"
                       type="email"
                       value={values.email}
-                      error={errors.email}
-                      touched={touched.email}
+                      errorStr={errors.email}
+                      touched={!!touched.email}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={4}
@@ -164,8 +164,8 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       name="password"
                       type={showPassword ? 'text' : 'password'}
                       value={values.password}
-                      error={errors.password}
-                      touched={touched.password}
+                      errorStr={errors.password}
+                      touched={!!touched.password}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={5}
@@ -190,8 +190,8 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                       name="confirmPassword"
                       type={showConfirmPassword ? 'text' : 'password'}
                       value={values.confirmPassword}
-                      error={errors.confirmPassword}
-                      touched={touched.confirmPassword}
+                      errorStr={errors.confirmPassword}
+                      touched={!!touched.confirmPassword}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={6}

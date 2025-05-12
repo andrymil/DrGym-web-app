@@ -17,7 +17,7 @@ import { ref } from 'yup';
 const PostsContent = ({ showAppMessage }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [onlyThisUser, setOnlyThisUser] = useState(false);
-  const [refetch, setRefetch] = useState(false);
+  const [refetch, setRefetch] = useState(0);
 
   const username = getUsername();
   const router = useRouter();
@@ -28,7 +28,7 @@ const PostsContent = ({ showAppMessage }) => {
     const message = searchParams.get('message');
     const type = searchParams.get('type');
     if (message) {
-      router.replace(`${pathname}`, undefined, { shallow: true });
+      router.replace(`${pathname}`, { scroll: true });
       showAppMessage({
         status: true,
         text: message,
@@ -38,7 +38,7 @@ const PostsContent = ({ showAppMessage }) => {
   }, [router, pathname, searchParams, showAppMessage]);
 
   const triggerRefetch = () => {
-    setRefetch(!refetch);
+    setRefetch(+!refetch);
   };
 
   const handleChange = (event, newOption) => {
