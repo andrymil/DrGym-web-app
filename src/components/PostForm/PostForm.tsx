@@ -23,6 +23,7 @@ import { useMediaQuery } from '@mui/material';
 import type { Post } from '@/types/api/post';
 import type { Workout } from '@/types/api/workout';
 import type { ShowAppMessage } from '@/types/general';
+import type { PostFormValues } from '@/types/forms/PostForm';
 
 type PostFormProps = {
   title: string;
@@ -32,11 +33,6 @@ type PostFormProps = {
   onClose: () => void;
   onChange: () => Promise<void> | void;
   showAppMessage: ShowAppMessage;
-};
-
-type PostFormValues = {
-  title: string;
-  description: string;
 };
 
 export default function PostForm({

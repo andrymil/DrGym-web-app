@@ -43,7 +43,7 @@ import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
 import type { Workout } from '@/types/api/workout';
 import type { ShowAppMessage } from '@/types/general';
-import type { Exercise } from '@/types/api/exercise';
+import type { WorkoutFormValues } from '@/types/forms/WorkoutForm';
 import type { Activity } from '@/types/api/activity';
 import { ValidationError } from 'yup';
 import type { Exercises } from '@/types/api/exercise';
@@ -57,19 +57,6 @@ type WorkoutFormProps = {
   onAddWorkout?: () => Promise<void>;
   onEditWorkout?: () => Promise<void>;
   showAppMessage: ShowAppMessage;
-};
-
-type WorkoutFormValues = {
-  startDate: Date | null;
-  endDate: Date | null;
-  description: string;
-  isRegular: boolean;
-  interval: number;
-  exerciseType: string;
-  exercise: Exercise;
-  reps: number;
-  weight: number;
-  duration: Date;
 };
 
 export default function WorkoutForm({

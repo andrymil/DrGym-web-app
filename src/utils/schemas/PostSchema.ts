@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import type { PostFormValues } from '@/types/forms/PostForm';
 
 const PostSchema = () => {
   return yup.object().shape({
@@ -13,7 +14,7 @@ const PostSchema = () => {
   });
 };
 
-const PostDefaultValues = () => {
+const PostDefaultValues = (): PostFormValues => {
   return {
     title: '',
     description: '',
