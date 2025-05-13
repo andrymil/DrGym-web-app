@@ -5,6 +5,8 @@ import Post from '@/components/Post';
 import SkeletonCard from '@/components/SkeletonCard';
 import api from '@/utils/axiosInstance';
 import type { ShowAppMessage } from '@/types/general';
+import type { Post as PostType } from '@/types/api/post';
+import { AxiosResponse } from 'axios';
 
 type PostListProps = {
   username: string;
@@ -19,19 +21,19 @@ const PostList = ({
   actions,
   showAppMessage,
 }: PostListProps) => {
-  const [postsData, setPostsData] = useState([]);
+  const [postsData, setPostsData] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>(null);
 
   const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
-      let response;
+      let response: AxiosResponse<PostType[]>;
       if (onlyThisUser) {
-        response = await api.get(`/api/posts/user/${username}`);
+        response = await api.get<PostType[]>(`/api/posts/user/${username}`);
         setPostsData(response.data);
       } else {
-        response = await api.get(`/api/posts/friends/${username}`);
+        response = await api.get<PostType[]>(`/api/posts/friends/${username}`);
         setPostsData(response.data);
       }
     } catch (err) {
@@ -49,7 +51,7 @@ const PostList = ({
 
   useEffect(() => {
     if (username) {
-      fetchPosts();
+      void fetchPosts();
     }
   }, [username, onlyThisUser, showAppMessage, fetchPosts]);
 
