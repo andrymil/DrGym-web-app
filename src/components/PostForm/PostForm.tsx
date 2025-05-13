@@ -24,7 +24,7 @@ import type { Post } from '@/types/api/post';
 import type { Workout } from '@/types/api/workout';
 import type { ShowAppMessage } from '@/types/general';
 
-type PostDialogProps = {
+type PostFormProps = {
   title: string;
   type: string;
   post?: Post;
@@ -34,7 +34,7 @@ type PostDialogProps = {
   showAppMessage: ShowAppMessage;
 };
 
-export default function PostDialog({
+export default function PostForm({
   title,
   type,
   post,
@@ -42,7 +42,7 @@ export default function PostDialog({
   onClose,
   onChange,
   showAppMessage,
-}: PostDialogProps) {
+}: PostFormProps) {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedWorkout, setSelectedWorkout] = useState<Workout>(null);

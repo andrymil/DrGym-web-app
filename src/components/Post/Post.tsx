@@ -11,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
 import api from '@/utils/axiosInstance';
-import PostDialog from '@/components/PostDialog';
+import PostForm from '@/components/PostForm';
 import type { ShowAppMessage } from '@/types/general';
 import type { Post } from '@/types/api/post';
 
@@ -113,7 +113,7 @@ export default function Post({
         onConfirm={handleDeletePost}
         onClose={() => setDeleteDialogOpen(false)}
       />
-      <PostDialog
+      <PostForm
         title="Edit Post"
         type="edit"
         post={post}

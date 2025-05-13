@@ -11,7 +11,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import PostDialog from '@/components/PostDialog';
+import PostForm from '@/components/PostForm';
 
 const PostsContent = ({ showAppMessage }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -78,7 +78,7 @@ const PostsContent = ({ showAppMessage }) => {
         actions
         showAppMessage={showAppMessage}
       />
-      <PostDialog
+      <PostForm
         title="Add New Post"
         type="add"
         open={dialogOpen}
