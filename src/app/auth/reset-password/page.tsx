@@ -18,8 +18,10 @@ import {
 } from '@/utils/schemas/ResetPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import api from '@/utils/axiosInstance';
+import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { WithAppMessage } from '@/types/general';
+import type { ResetPasswordRequest } from '@/types/api/requests/resetPassword';
+import type { ResetPasswordValues } from '@/types/forms/ResetPasswordForm';
 
 const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
   const searchParams = useSearchParams();
@@ -48,11 +50,11 @@ const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
     }
   }, [email, token, showAppMessage]);
 
-  const handleResetPassword = async (formData) => {
+  const handleResetPassword = async (formData: ResetPasswordValues) => {
     try {
       setLoading(true);
       setMessage('');
-      await api.post('/api/reset-password', {
+      await api.post<ResetPasswordRequest>('/api/reset-password', {
         email,
         token,
         password: formData.password,
@@ -60,8 +62,8 @@ const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
       router.push(
         '/login?message=Your password has been successfully changed.&type=success'
       );
-    } catch (error) {
-      const errMessage = error.response?.data?.error;
+    } catch (err) {
+      const { message: errMessage } = handleAxiosError(err);
       showAppMessage({
         status: true,
         text: errMessage,
@@ -105,7 +107,7 @@ const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
             <Typography sx={{ mb: 3 }} variant="body1">
               Please enter your new password
             </Typography>
-            <Formik
+            <Formik<ResetPasswordValues>
               initialValues={ResetPasswordDefaultValues()}
               validationSchema={ResetPasswordSchema()}
               onSubmit={handleResetPassword}
