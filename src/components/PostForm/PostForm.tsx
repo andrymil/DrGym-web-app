@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import api from '@/utils/axiosInstance';
 import WorkoutCard from '@/components/WorkoutCard';
 import { getUsername } from '@/utils/localStorage';
@@ -32,6 +32,11 @@ type PostFormProps = {
   onClose: () => void;
   onChange: () => Promise<void> | void;
   showAppMessage: ShowAppMessage;
+};
+
+type PostFormValues = {
+  title: string;
+  description: string;
 };
 
 export default function PostForm({
@@ -82,7 +87,10 @@ export default function PostForm({
     }
   }, [open, username, type, post?.workout, showAppMessage, onClose]);
 
-  const handleAddPost = async (values, actions) => {
+  const handleAddPost = async (
+    values: PostFormValues,
+    actions: FormikHelpers<PostFormValues>
+  ) => {
     try {
       actions.setSubmitting(true);
       await api.post('/api/posts/create', {
@@ -96,7 +104,7 @@ export default function PostForm({
         text: 'Post added successfully',
         type: 'success',
       });
-      onChange();
+      void onChange();
       onClose();
     } catch (error) {
       console.error('Error adding post:', error);
@@ -110,7 +118,10 @@ export default function PostForm({
     }
   };
 
-  const handleEditPost = async (values, actions) => {
+  const handleEditPost = async (
+    values: PostFormValues,
+    actions: FormikHelpers<PostFormValues>
+  ) => {
     try {
       actions.setSubmitting(true);
       await api.put(`/api/posts/update`, {
@@ -124,7 +135,7 @@ export default function PostForm({
         text: 'Post edited successfully',
         type: 'success',
       });
-      onChange();
+      void onChange();
       onClose();
     } catch (error) {
       console.error('Error editing post:', error);
@@ -138,7 +149,7 @@ export default function PostForm({
     }
   };
 
-  const handleWorkoutSelection = (workout) => {
+  const handleWorkoutSelection = (workout: Workout) => {
     if (selectedWorkout) {
       setWorkouts((prev) => [selectedWorkout, ...prev]);
     }
@@ -170,7 +181,7 @@ export default function PostForm({
       fullWidth
       aria-labelledby="new-post-dialog"
     >
-      <Formik
+      <Formik<PostFormValues>
         validationSchema={PostSchema()}
         initialValues={
           type === 'edit'
