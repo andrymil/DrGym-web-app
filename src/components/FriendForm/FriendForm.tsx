@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import api from '@/utils/axiosInstance';
-import FriendDialogTitle from './FriendDialogTitle';
+import FriendFormTitle from './FriendFormTitle';
 import CustomInput from '@/components/CustomInput';
 import {
   UsernameSchema,
@@ -22,16 +22,16 @@ import {
 import { getUsername } from '@/utils/localStorage';
 import type { SetState, WithAppMessage } from '@/types/general';
 
-type FriendDialogProps = WithAppMessage & {
+type FriendFormProps = WithAppMessage & {
   popupStatus: boolean;
   togglePopup: SetState<boolean>;
 };
 
-export default function FriendDialog({
+export default function FriendForm({
   popupStatus,
   togglePopup,
   showAppMessage,
-}: FriendDialogProps) {
+}: FriendFormProps) {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -101,9 +101,9 @@ export default function FriendDialog({
       open={popupStatus}
       aria-labelledby="new-friend-dialog"
     >
-      <FriendDialogTitle id="new-friend-dialog" onClose={handleClose}>
+      <FriendFormTitle id="new-friend-dialog" onClose={handleClose}>
         Add friend
-      </FriendDialogTitle>
+      </FriendFormTitle>
       <Formik
         initialValues={UsernameDefaultValues()}
         validationSchema={UsernameSchema()}

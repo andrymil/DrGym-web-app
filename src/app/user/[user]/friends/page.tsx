@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import CardHeader from '@mui/material/CardHeader';
 import { withSnackbar } from '@/utils/snackbarProvider';
-import FriendDialog from '@/components/FriendDialog';
+import FriendForm from '@/components/FriendForm';
 import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -204,7 +204,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
               </Card>
             ))}
       </Box>
-      <FriendDialog
+      <FriendForm
         popupStatus={dialogOpen}
         togglePopup={setDialogOpen}
         showAppMessage={showAppMessage}

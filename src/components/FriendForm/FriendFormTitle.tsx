@@ -5,16 +5,16 @@ import Tooltip from '@mui/material/Tooltip';
 import type { ReactNode } from 'react';
 import type { DialogTitleProps } from '@mui/material/DialogTitle';
 
-type FriendDialogTitleProps = DialogTitleProps & {
+type FriendFormTitleProps = DialogTitleProps & {
   children: ReactNode;
   onClose: () => void;
 };
 
-const FriendDialogTitle = ({
+const FriendFormTitle = ({
   children,
   onClose,
   ...other
-}: FriendDialogTitleProps) => {
+}: FriendFormTitleProps) => {
   return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}
@@ -37,4 +37,4 @@ const FriendDialogTitle = ({
   );
 };
 
-export default FriendDialogTitle;
+export default FriendFormTitle;
