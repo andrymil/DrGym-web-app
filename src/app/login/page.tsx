@@ -17,13 +17,15 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import { LoginSchema, LoginDefaultValues } from '@/utils/schemas/LoginSchema';
 import Link from 'next/link';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 // import { stringToColor } from '@/utils/avatar';
 import { signIn, getSession } from 'next-auth/react';
+import type { WithAppMessage, WithCsrfToken } from '@/types/general';
+import type { LoginForm } from '@/types/forms/LoginForm';
 
 const Root = styled('div')(({ theme }) => ({
   width: '100%',
@@ -34,7 +36,10 @@ const Root = styled('div')(({ theme }) => ({
   },
 }));
 
-const LoginContent = ({ csrfToken = null, showAppMessage }) => {
+const LoginContent = ({
+  csrfToken = null,
+  showAppMessage,
+}: WithAppMessage & WithCsrfToken) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loginType, setLoginType] = useState('username');
@@ -58,11 +63,14 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
     toggleShowPassword(!showPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
   };
 
-  const handleLogin = async (formData, form) => {
+  const handleLogin = async (
+    formData: LoginForm,
+    form: FormikHelpers<LoginForm>
+  ) => {
     try {
       setLoading(true);
 
@@ -81,8 +89,8 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
           type: 'error',
         });
 
-        form.setValues({ ...formData, password: '' });
-        form.setTouched({});
+        void form.setValues({ ...formData, password: '' });
+        void form.setTouched({});
       } else if (res?.ok) {
         const session = await getSession();
         const { username, avatar: _avatar } = session.user;
@@ -123,7 +131,7 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
       }}
     >
       <Grid sx={{ width: '100%' }}>
-        <Formik
+        <Formik<LoginForm>
           initialValues={LoginDefaultValues()}
           validationSchema={LoginSchema(loginType)}
           onSubmit={handleLogin}
@@ -156,7 +164,11 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
                         value={loginType}
                         onChange={(e) => {
                           setLoginType(e.target.value);
-                          setValues({ ...values, username: '', email: '' });
+                          void setValues({
+                            ...values,
+                            username: '',
+                            email: '',
+                          });
                           setErrors({});
                         }}
                       >
@@ -282,7 +294,10 @@ const LoginContent = ({ csrfToken = null, showAppMessage }) => {
   );
 };
 
-const Login = ({ csrfToken = null, showAppMessage }) => {
+const Login = ({
+  csrfToken = null,
+  showAppMessage,
+}: WithAppMessage & WithCsrfToken) => {
   return (
     <Suspense fallback={<CircularProgress size={40} color="primary" />}>
       <LoginContent csrfToken={csrfToken} showAppMessage={showAppMessage} />

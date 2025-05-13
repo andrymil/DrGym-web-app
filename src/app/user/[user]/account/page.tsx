@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import { Box, Button, Typography, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { withSnackbar } from '@/utils/snackbarProvider';
@@ -78,13 +78,15 @@ const AccountPage = ({ showAppMessage }: WithAppMessage) => {
     void fetchUserData();
   }, [username, showAppMessage]);
 
-  const handleResetFields = (resetForm) => {
+  const handleResetFields = (
+    resetForm: FormikHelpers<UserData>['resetForm']
+  ) => {
     resetForm();
     setColor(getAvatar() || '#b01919');
     setHasChanges(false);
   };
 
-  const handleUpdateAccount = async (formData) => {
+  const handleUpdateAccount = async (formData: UserData) => {
     try {
       setSubmitting(true);
       await api.put(`/api/users/update`, {
@@ -117,7 +119,7 @@ const AccountPage = ({ showAppMessage }: WithAppMessage) => {
       setDeleting(true);
       await api.delete(`/api/users/${username}`);
       removeUserData();
-      signOut();
+      void signOut();
     } catch (err) {
       console.error('Error deleting account:', err);
       setDeleting(false);
@@ -141,7 +143,7 @@ const AccountPage = ({ showAppMessage }: WithAppMessage) => {
         <Typography variant="h5" sx={{ my: 2 }}>
           Account Settings
         </Typography>
-        <Formik
+        <Formik<UserData>
           validationSchema={AccountSchema}
           initialValues={AccountDefaultValues(userData)}
           onSubmit={handleUpdateAccount}

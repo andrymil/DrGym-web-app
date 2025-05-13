@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import YupPassword from 'yup-password';
+import type { RegisterForm } from '@/types/forms/RegisterForm';
 
 YupPassword(yup);
 
@@ -42,11 +43,11 @@ const RegisterSchema = () => {
   });
 };
 
-const RegisterDefaultValues = () => {
+const RegisterDefaultValues = (): RegisterForm => {
   return {
     username: '',
-    firstName: '',
-    lastName: '',
+    name: '',
+    surname: '',
     email: '',
     password: '',
     confirmPassword: '',

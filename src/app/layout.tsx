@@ -1,5 +1,7 @@
 'use client';
 
+import { Session } from 'next-auth';
+import { ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline, Container } from '@mui/material';
 import Head from 'next/head';
@@ -9,7 +11,12 @@ import '@/app/globals.css';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import { SessionProvider } from 'next-auth/react';
 
-export default function RootLayout({ children, session }) {
+type RootLayoutProps = {
+  children: ReactNode;
+  session: Session | null;
+};
+
+export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <html lang="en">
       <Head>

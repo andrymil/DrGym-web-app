@@ -15,12 +15,13 @@ import MonitorHeartOutlinedIcon from '@mui/icons-material/MonitorHeartOutlined';
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import api from '@/utils/axiosInstance';
 import { useMediaQuery } from '@mui/material';
+import type { Exercises, ExerciseType } from '@/types/api/exercise';
 
 const HomePage = () => {
-  const [error, setError] = useState(null);
-  const [expanded, setExpanded] = useState(false);
-  const [exerciseType, setExerciseType] = useState('strength');
-  const [exerciseData, setExerciseData] = useState({
+  const [error, setError] = useState<string>(null);
+  const [expanded, setExpanded] = useState<number>(null);
+  const [exerciseType, setExerciseType] = useState<ExerciseType>('strength');
+  const [exerciseData, setExerciseData] = useState<Exercises>({
     cardio: [],
     strength: [],
     crossfit: [],
@@ -30,24 +31,29 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get('/api/exercises/by-type');
+        const res = await api.get<Exercises>('/api/exercises/by-type');
         setExerciseData(res.data);
       } catch (err) {
         console.error('Error fetching exercises:', err);
         setError('Failed to fetch exercises');
       }
     };
-    fetchData();
+    void fetchData();
   }, []);
 
-  const handleTypeChange = (event, newType) => {
-    setExpanded(false);
+  const handleTypeChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newType: ExerciseType
+  ) => {
+    setExpanded(null);
     setExerciseType(newType);
   };
 
-  const handleAccordionChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
+  const handleAccordionChange =
+    (panel: number) =>
+    (_event: React.SyntheticEvent<Element, Event>, newExpanded: boolean) => {
+      setExpanded(newExpanded ? panel : null);
+    };
 
   return (
     <>

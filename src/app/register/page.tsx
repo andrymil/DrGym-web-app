@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { Button, Divider, IconButton, InputAdornment } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import {
   RegisterSchema,
   RegisterDefaultValues,
@@ -16,6 +16,9 @@ import { CircularProgress } from '@mui/material';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api from '@/utils/axiosInstance';
+import { AxiosError } from 'axios';
+import type { RegisterForm } from '@/types/forms/RegisterForm';
+import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 
 const Root = styled('div')(({ theme }) => ({
   width: '100%',
@@ -26,7 +29,10 @@ const Root = styled('div')(({ theme }) => ({
   },
 }));
 
-const Register = ({ csrfToken = null, showAppMessage }) => {
+const Register = ({
+  csrfToken = null,
+  showAppMessage,
+}: WithAppMessage & WithCsrfToken) => {
   const router = useRouter();
   const [showPassword, toggleShowPassword] = useState(false);
   const [showConfirmPassword, toggleShowConfirmPassword] = useState(false);
@@ -40,23 +46,27 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
     toggleShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
   };
 
-  const handleRegister = async (formData, form) => {
+  const handleRegister = async (
+    formData: RegisterForm,
+    form: FormikHelpers<RegisterForm>
+  ) => {
     try {
       setLoading(true);
-      await api.post('/api/register', {
-        name: formData.firstName,
-        surname: formData.lastName,
+      await api.post<RegisterForm>('/api/register', {
+        name: formData.name,
+        surname: formData.surname,
         username: formData.username,
         email: formData.email,
         password: formData.password,
       });
       router.replace('/auth/verification?account=welcome');
     } catch (error) {
-      const message = error.response?.data?.error;
+      const err = error as AxiosError<{ error: string }>;
+      const message = err.response?.data?.error;
       if (message === 'E-mail is already taken') {
         form.setFieldError('email', 'already taken');
       } else if (message === 'Username is already taken') {
@@ -95,7 +105,7 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
       }}
     >
       <Grid sx={{ width: '100%' }}>
-        <Formik
+        <Formik<RegisterForm>
           initialValues={RegisterDefaultValues()}
           validationSchema={RegisterSchema()}
           onSubmit={handleRegister}
@@ -112,10 +122,10 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                   <Grid size={12}>
                     <CustomInput
                       label="First name"
-                      name="firstName"
-                      value={values.firstName}
-                      errorStr={errors.firstName}
-                      touched={!!touched.firstName}
+                      name="name"
+                      value={values.name}
+                      errorStr={errors.name}
+                      touched={!!touched.name}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={1}
@@ -124,10 +134,10 @@ const Register = ({ csrfToken = null, showAppMessage }) => {
                   <Grid size={12}>
                     <CustomInput
                       label="Last name"
-                      name="lastName"
-                      value={values.lastName}
-                      errorStr={errors.lastName}
-                      touched={!!touched.lastName}
+                      name="surname"
+                      value={values.surname}
+                      errorStr={errors.surname}
+                      touched={!!touched.surname}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       tabIndex={2}
