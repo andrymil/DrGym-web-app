@@ -2,7 +2,7 @@ import { Avatar } from '@mui/material';
 import { stringToColor } from '@/utils/avatar';
 import type { AvatarProps } from '@mui/material';
 
-const getContrastColor = (hexColor) => {
+const getContrastColor = (hexColor: string) => {
   const color = hexColor.replace('#', '');
 
   const r = parseInt(color.substring(0, 2), 16);

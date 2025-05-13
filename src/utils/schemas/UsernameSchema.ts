@@ -10,7 +10,7 @@ const UsernameSchema = () => {
   });
 };
 
-const UsernameDefaultValues = () => {
+const UsernameDefaultValues = (): { username: string } => {
   return {
     username: '',
   };

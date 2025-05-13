@@ -46,7 +46,7 @@ export default function DeleteConfirmation({
           <Button
             variant="contained"
             color="error"
-            onClick={onConfirm}
+            onClick={void onConfirm}
             disabled={loading}
             endIcon={
               loading && <CircularProgress color="secondary" size={18} />

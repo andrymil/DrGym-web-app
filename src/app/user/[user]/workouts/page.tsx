@@ -47,14 +47,14 @@ const Workouts = ({ showAppMessage }: WithAppMessage) => {
   }, [showAppMessage]);
 
   useEffect(() => {
-    fetchWorkouts();
+    void fetchWorkouts();
   }, [fetchWorkouts]);
 
-  const handleDeleteWorkout = (id) => {
+  const handleDeleteWorkout = (id: number) => {
     setWorkoutsData((prev) => prev.filter((workout) => workout.id !== id));
   };
 
-  const handleTypeChange = (event, newType) => {
+  const handleTypeChange = (_event, newType: string) => {
     if (newType === 'future') {
       setWorkoutsData([...allWorkouts.futureWorkouts].reverse());
       setFromFuture(true);

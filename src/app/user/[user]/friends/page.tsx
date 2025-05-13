@@ -16,19 +16,20 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Divider } from '@mui/material';
 import { getUsername } from '@/utils/localStorage';
 import type { WithAppMessage } from '@/types/general';
+import type { Friend, Invitation, FriendsInfo } from '@/types/api/friends';
 
 const Friends = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [friends, setFriends] = useState([]);
-  const [requests, setRequests] = useState([]);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const [requests, setRequests] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>(null);
 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
         setLoading(true);
-        const response = await api.get(
+        const response = await api.get<FriendsInfo>(
           `/api/friends/friendsinfo/${getUsername()}`
         );
         setFriends(response.data.friends);
@@ -46,10 +47,14 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
       }
     };
 
-    fetchFriends();
+    void fetchFriends();
   }, [showAppMessage]);
 
-  const handleAcceptRequest = async (id, username, avatar) => {
+  const handleAcceptRequest = async (
+    id: number,
+    username: string,
+    avatar: string
+  ) => {
     try {
       await api.post(`/api/friends/acceptRequest?invitationId=${id}`);
       showAppMessage({
@@ -71,7 +76,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     }
   };
 
-  const handleDeclineRequest = async (id, username) => {
+  const handleDeclineRequest = async (id: number, username: string) => {
     try {
       await api.post(`/api/friends/rejectRequest?invitationId=${id}`);
       showAppMessage({
@@ -92,7 +97,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     }
   };
 
-  const handleDeleteFriend = async (username) => {
+  const handleDeleteFriend = async (username: string) => {
     try {
       await api.delete(`/api/friends/removeFriend`, {
         data: {

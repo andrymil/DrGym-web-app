@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import {
   CircularProgress,
   InputAdornment,
@@ -27,6 +27,10 @@ type FriendFormProps = WithAppMessage & {
   togglePopup: SetState<boolean>;
 };
 
+type FriendFormValues = {
+  username: string;
+};
+
 export default function FriendForm({
   popupStatus,
   togglePopup,
@@ -37,7 +41,10 @@ export default function FriendForm({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const username = getUsername();
 
-  const handleAddFriend = async (formData, form) => {
+  const handleAddFriend = async (
+    formData: FriendFormValues,
+    form: FormikHelpers<FriendFormValues>
+  ) => {
     try {
       if (formData.username === username) {
         form.setFieldError('username', 'it is you');
@@ -66,13 +73,13 @@ export default function FriendForm({
         form.setFieldError('username', 'no account found');
         showAppMessage({
           status: true,
-          text: response.data,
+          text: response.data as string,
           type: 'error',
         });
       } else {
         showAppMessage({
           status: true,
-          text: response.data,
+          text: response.data as string,
           type: 'info',
         });
         handleClose();
@@ -104,7 +111,7 @@ export default function FriendForm({
       <FriendFormTitle id="new-friend-dialog" onClose={handleClose}>
         Add friend
       </FriendFormTitle>
-      <Formik
+      <Formik<FriendFormValues>
         initialValues={UsernameDefaultValues()}
         validationSchema={UsernameSchema()}
         onSubmit={handleAddFriend}
@@ -138,7 +145,7 @@ export default function FriendForm({
                           <InputAdornment position="end">
                             <IconButton
                               onClick={() => {
-                                setFieldValue('username', '', false);
+                                void setFieldValue('username', '', false);
                                 setFieldError('username', null);
                               }}
                             >
