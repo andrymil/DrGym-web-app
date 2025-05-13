@@ -33,9 +33,10 @@ const ForgotPassword = ({
   ) => {
     try {
       setLoading(true);
-      await api.post<ForgotPasswordRequest>('/api/forgot-password', {
+      const payload: ForgotPasswordRequest = {
         email: formData.email,
-      });
+      };
+      await api.post('/api/forgot-password', payload);
       showAppMessage({
         status: true,
         text: 'Request successfully sent.',

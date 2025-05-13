@@ -17,6 +17,7 @@ import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { RegisterForm } from '@/types/forms/RegisterForm';
+import type { RegisterRequest } from '@/types/api/requests/register';
 import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 
 const Root = styled('div')(({ theme }) => ({
@@ -55,13 +56,14 @@ const Register = ({
   ) => {
     try {
       setLoading(true);
-      await api.post<RegisterForm>('/api/register', {
+      const payload: RegisterRequest = {
         name: formData.name,
         surname: formData.surname,
         username: formData.username,
         email: formData.email,
         password: formData.password,
-      });
+      };
+      await api.post('/api/register', payload);
       router.replace('/auth/verification?account=welcome');
     } catch (err) {
       const { message } = handleAxiosError(err);

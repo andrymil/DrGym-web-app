@@ -6,6 +6,7 @@ import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography, CircularProgress } from '@mui/material';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { WithAppMessage } from '@/types/general';
+import type { VerificationRequest } from '@/types/api/requests/verification';
 
 const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
   const searchParams = useSearchParams();
@@ -23,10 +24,11 @@ const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
       try {
         setLoading(true);
         setMessage('Verifying your account...');
-        await api.post(`/api/verification`, {
+        const payload: VerificationRequest = {
           email,
           token,
-        });
+        };
+        await api.post(`/api/verification`, payload);
         router.replace('/login?message=Account has been verified&type=success');
       } catch (err) {
         const { message: errMessage, status } = handleAxiosError(err);

@@ -54,11 +54,12 @@ const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
     try {
       setLoading(true);
       setMessage('');
-      await api.post<ResetPasswordRequest>('/api/reset-password', {
+      const payload: ResetPasswordRequest = {
         email,
         token,
         password: formData.password,
-      });
+      };
+      await api.post('/api/reset-password', payload);
       router.push(
         '/login?message=Your password has been successfully changed.&type=success'
       );

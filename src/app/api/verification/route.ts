@@ -1,10 +1,11 @@
 import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { verifyToken } from '@/utils/crypto';
+import type { VerificationRequest } from '@/types/api/requests/verification';
 
-export async function POST(req) {
+export async function POST(req: Request): Promise<Response> {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as VerificationRequest;
     const { email, token } = body;
 
     if (!email || !token) {
