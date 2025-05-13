@@ -22,6 +22,8 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
 import { ShowAppMessage } from '@/types/general';
+import type { Ranking } from '@/types/api/ranking';
+import type { Exercise, Exercises, ExerciseType } from '@/types/api/exercise';
 
 type RankingProps = {
   username: string;
@@ -31,17 +33,23 @@ type RankingProps = {
 export default function Ranking({ username, showAppMessage }: RankingProps) {
   const [loading, setLoading] = useState(true);
   const [loadingRanking, setLoadingRanking] = useState(true);
-  const [error, setError] = useState(null);
-  const [exerciseType, setExerciseType] = useState('strength');
-  const [exercise, setExercise] = useState('');
-  const [exercisesNames, setExercisesNames] = useState({});
-  const [ranking, setRanking] = useState(null);
+  const [error, setError] = useState<string>(null);
+  const [exerciseType, setExerciseType] = useState<ExerciseType>('strength');
+  const [exercise, setExercise] = useState<Exercise>(null);
+  const [exercisesNames, setExercisesNames] = useState<Exercises>({
+    strength: [],
+    cardio: [],
+    crossfit: [],
+  });
+  const [ranking, setRanking] = useState<Ranking>(null);
 
   useEffect(() => {
     const fetchExercises = async () => {
       try {
         setLoading(true);
-        const response = await api.get(`/api/exercises/with-ranking`);
+        const response = await api.get<Exercises>(
+          `/api/exercises/with-ranking`
+        );
         setExercisesNames(response.data);
       } catch (err) {
         console.error('Error fetching exercises', err);
@@ -55,14 +63,14 @@ export default function Ranking({ username, showAppMessage }: RankingProps) {
         setLoading(false);
       }
     };
-    fetchExercises();
+    void fetchExercises();
   }, [showAppMessage]);
 
   useEffect(() => {
-    const fetchRanking = async (exercise) => {
+    const fetchRanking = async (exercise: Exercise) => {
       try {
         setLoadingRanking(true);
-        const response = await api.get(
+        const response = await api.get<Ranking>(
           `/api/users/${username}/ranking?exerciseId=${exercise.id}`
         );
         setRanking(response.data);
@@ -79,9 +87,9 @@ export default function Ranking({ username, showAppMessage }: RankingProps) {
       }
     };
     if (exercise) {
-      fetchRanking(exercise);
+      void fetchRanking(exercise);
     } else if (exercisesNames[exerciseType]?.length > 0) {
-      fetchRanking(exercisesNames[exerciseType][0]);
+      void fetchRanking(exercisesNames[exerciseType][0]);
     }
   }, [exercise, exerciseType, exercisesNames, username, showAppMessage]);
 
@@ -144,7 +152,7 @@ export default function Ranking({ username, showAppMessage }: RankingProps) {
                     </Typography>
                   </Link>
                 }
-                secondary={`Max Weight: ${user.max_weight} kg`}
+                secondary={`Max Weight: ${user.maxWeight} kg`}
               />
             </ListItem>
           );
@@ -173,9 +181,9 @@ export default function Ranking({ username, showAppMessage }: RankingProps) {
         color="info"
         value={exerciseType}
         exclusive
-        onChange={(event, newType) => {
+        onChange={(event, newType: ExerciseType) => {
           setExerciseType(newType);
-          setExercise('');
+          setExercise(null);
         }}
         aria-label="Exercise Type Selector"
         sx={{ mb: 2 }}
