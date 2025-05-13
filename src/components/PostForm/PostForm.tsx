@@ -22,17 +22,16 @@ import { PostSchema, PostDefaultValues } from '@/utils/schemas/PostSchema';
 import { useMediaQuery } from '@mui/material';
 import type { Post } from '@/types/api/post';
 import type { Workout } from '@/types/api/workout';
-import type { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { PostFormValues } from '@/types/forms/PostForm';
 
-type PostFormProps = {
+type PostFormProps = WithAppMessage & {
   title: string;
   type: string;
   post?: Post;
   open: boolean;
   onClose: () => void;
   onChange: () => Promise<void> | void;
-  showAppMessage: ShowAppMessage;
 };
 
 export default function PostForm({

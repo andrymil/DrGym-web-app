@@ -15,13 +15,12 @@ import PostList from '@/components/PostList';
 import { getUsername } from '@/utils/localStorage';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography } from '@mui/material';
-import type { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { UserData } from '@/types/api/user';
 import type { Usable } from 'react';
 
-type UserPageProps = {
+type UserPageProps = WithAppMessage & {
   params: Usable<{ user: string }>;
-  showAppMessage: ShowAppMessage;
 };
 
 const User = ({ params, showAppMessage }: UserPageProps) => {

@@ -42,13 +42,13 @@ import { formatDate } from '@/utils/dateUtils';
 import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
 import type { Workout } from '@/types/api/workout';
-import type { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { WorkoutFormValues } from '@/types/forms/WorkoutForm';
 import type { Activity } from '@/types/api/activity';
 import { ValidationError } from 'yup';
 import type { Exercises } from '@/types/api/exercise';
 
-type WorkoutFormProps = {
+type WorkoutFormProps = WithAppMessage & {
   dialogTitle: string;
   popupType: string;
   popupStatus: boolean;
@@ -56,7 +56,6 @@ type WorkoutFormProps = {
   workout?: Workout;
   onAddWorkout?: () => Promise<void>;
   onEditWorkout?: () => Promise<void>;
-  showAppMessage: ShowAppMessage;
 };
 
 export default function WorkoutForm({

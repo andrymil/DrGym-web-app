@@ -12,14 +12,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteConfirmation from '@/components/DeleteConfirmation';
 import api from '@/utils/axiosInstance';
 import PostForm from '@/components/PostForm';
-import type { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { Post } from '@/types/api/post';
 
-type PostProps = {
+type PostProps = WithAppMessage & {
   post: Post;
   actions: boolean;
   onChanges: () => Promise<void>;
-  showAppMessage: ShowAppMessage;
 };
 
 export default function Post({

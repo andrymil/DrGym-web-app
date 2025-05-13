@@ -8,12 +8,11 @@ import Calendar from '@/components/Calendar';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import BodyHighlighter from '@/components/BodyHighlighter';
 import Ranking from '@/components/Ranking';
-import type { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { Usable } from 'react';
 
-type StatsProps = {
+type StatsProps = WithAppMessage & {
   params: Usable<{ user: string }>;
-  showAppMessage: ShowAppMessage;
 };
 
 const Stats = ({ params, showAppMessage }: StatsProps) => {

@@ -24,16 +24,18 @@ import CustomAvatar from '@/components/CustomAvatar';
 import { stringToColor } from '@/utils/avatar';
 import { useRouter } from 'next/navigation';
 import type { UserData } from '@/types/api/user';
+import type { Exercise, Exercises } from '@/types/api/exercise';
+import type { WithAppMessage } from '@/types/general';
 
-const AccountPage = ({ showAppMessage }) => {
+const AccountPage = ({ showAppMessage }: WithAppMessage) => {
   const [userData, setUserData] = useState<UserData>(null);
   const [loading, setLoading] = useState(true);
-  const [color, setColor] = useState(getAvatar() || '#b01919');
+  const [color, setColor] = useState<string>(getAvatar() || '#b01919');
   const [submitting, setSubmitting] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [error, setError] = useState(null);
-  const [exercises, setExercises] = useState([]);
+  const [error, setError] = useState<string>(null);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
   const [hasChanges, setHasChanges] = useState(false);
   const username = getUsername();
   const router = useRouter();
@@ -43,20 +45,22 @@ const AccountPage = ({ showAppMessage }) => {
       try {
         setLoading(true);
 
-        const userResponse = await api.get(`/api/users/${username}`);
+        const userResponse = await api.get<UserData>(`/api/users/${username}`);
         setUserData(userResponse.data);
         const userAvatar = userResponse.data.avatar || stringToColor(username);
         setColor(userAvatar);
         localStorage.setItem('avatar', userAvatar);
-        const exercisesResponse = await api.get('/api/exercises/by-type');
+        const exercisesResponse = await api.get<Exercises>(
+          '/api/exercises/by-type'
+        );
         const exerciseData = [
           ...exercisesResponse.data.strength,
           ...exercisesResponse.data.cardio,
           ...exercisesResponse.data.crossfit,
         ];
-        userResponse.data.exercise = exerciseData.find(
-          (exercise) => exercise.id === userResponse.data.exercise
-        );
+        // userResponse.data.exercise = exerciseData.find(
+        //   (exercise) => exercise.id === userResponse.data.exercise
+        // );
         setExercises(exerciseData);
       } catch (err) {
         console.error('Error fetching user data:', err);
@@ -71,7 +75,7 @@ const AccountPage = ({ showAppMessage }) => {
       }
     };
 
-    fetchUserData();
+    void fetchUserData();
   }, [username, showAppMessage]);
 
   const handleResetFields = (resetForm) => {

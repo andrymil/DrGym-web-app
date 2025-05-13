@@ -20,12 +20,11 @@ import {
   UsernameDefaultValues,
 } from '@/utils/schemas/UsernameSchema';
 import { getUsername } from '@/utils/localStorage';
-import type { ShowAppMessage, SetState } from '@/types/general';
+import type { SetState, WithAppMessage } from '@/types/general';
 
-type FriendDialogProps = {
+type FriendDialogProps = WithAppMessage & {
   popupStatus: boolean;
   togglePopup: SetState<boolean>;
-  showAppMessage: ShowAppMessage;
 };
 
 export default function FriendDialog({

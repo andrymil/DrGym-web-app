@@ -15,8 +15,9 @@ import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Divider } from '@mui/material';
 import { getUsername } from '@/utils/localStorage';
+import type { WithAppMessage } from '@/types/general';
 
-const Friends = ({ showAppMessage }) => {
+const Friends = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);

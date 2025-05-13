@@ -21,13 +21,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
-import { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { Ranking } from '@/types/api/ranking';
 import type { Exercise, Exercises, ExerciseType } from '@/types/api/exercise';
 
-type RankingProps = {
+type RankingProps = WithAppMessage & {
   username: string;
-  showAppMessage: ShowAppMessage;
 };
 
 export default function Ranking({ username, showAppMessage }: RankingProps) {

@@ -12,8 +12,9 @@ import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import PostForm from '@/components/PostForm';
+import type { WithAppMessage } from '@/types/general';
 
-const PostsContent = ({ showAppMessage }) => {
+const PostsContent = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [onlyThisUser, setOnlyThisUser] = useState(false);
   const [refetch, setRefetch] = useState(0);
@@ -90,7 +91,7 @@ const PostsContent = ({ showAppMessage }) => {
   );
 };
 
-const Posts = ({ showAppMessage }) => {
+const Posts = ({ showAppMessage }: WithAppMessage) => {
   return (
     <Suspense fallback={<Typography>Loading posts...</Typography>}>
       <PostsContent showAppMessage={showAppMessage} />

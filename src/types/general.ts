@@ -7,3 +7,7 @@ export type ShowAppMessage = (args: {
 }) => void;
 
 export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+
+export type WithAppMessage = {
+  showAppMessage: ShowAppMessage;
+};

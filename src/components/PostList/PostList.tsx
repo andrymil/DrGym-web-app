@@ -4,15 +4,14 @@ import Grid from '@mui/material/Grid2';
 import Post from '@/components/Post';
 import SkeletonCard from '@/components/SkeletonCard';
 import api from '@/utils/axiosInstance';
-import type { ShowAppMessage } from '@/types/general';
+import type { WithAppMessage } from '@/types/general';
 import type { Post as PostType } from '@/types/api/post';
 import { AxiosResponse } from 'axios';
 
-type PostListProps = {
+type PostListProps = WithAppMessage & {
   username: string;
   onlyThisUser?: boolean;
   actions?: boolean;
-  showAppMessage: ShowAppMessage;
 };
 
 const PostList = ({

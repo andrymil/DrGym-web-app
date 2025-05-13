@@ -12,8 +12,9 @@ import Grid from '@mui/material/Grid2';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
+import type { WithAppMessage } from '@/types/general';
 
-const Workouts = ({ showAppMessage }) => {
+const Workouts = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [workoutsData, setWorkoutsData] = useState<Workout[]>([]);
   const [allWorkouts, setAllWorkouts] = useState<FuturePastWorkouts>({

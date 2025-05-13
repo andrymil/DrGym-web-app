@@ -19,12 +19,11 @@ import {
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api from '@/utils/axiosInstance';
+import type { WithAppMessage } from '@/types/general';
 
-const ResetPasswordContent = ({ showAppMessage }) => {
+const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  let _XDDDDDDD;
 
   const [loading, setLoading] = useState(false);
   const [showPassword, toggleShowPassword] = useState(false);
@@ -201,7 +200,7 @@ const ResetPasswordContent = ({ showAppMessage }) => {
   );
 };
 
-const ResetPassword = ({ showAppMessage }) => {
+const ResetPassword = ({ showAppMessage }: WithAppMessage) => {
   return (
     <Suspense fallback={<CircularProgress size={40} color="primary" />}>
       <ResetPasswordContent showAppMessage={showAppMessage} />

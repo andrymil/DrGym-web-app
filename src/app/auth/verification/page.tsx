@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography, CircularProgress } from '@mui/material';
 import api from '@/utils/axiosInstance';
+import type { WithAppMessage } from '@/types/general';
 
-const VerificationPageContent = ({ showAppMessage }) => {
+const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -85,7 +86,7 @@ const VerificationPageContent = ({ showAppMessage }) => {
   );
 };
 
-const VerificationPage = ({ showAppMessage }) => {
+const VerificationPage = ({ showAppMessage }: WithAppMessage) => {
   return (
     <Suspense fallback={<CircularProgress size={40} color="primary" />}>
       <VerificationPageContent showAppMessage={showAppMessage} />
