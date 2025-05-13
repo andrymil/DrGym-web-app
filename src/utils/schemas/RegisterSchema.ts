@@ -11,12 +11,12 @@ const RegisterSchema = () => {
       .max(20, 'maximum 20 characters')
       .min(2, 'minimum 2 characters')
       .required("it's required"),
-    firstName: yup
+    name: yup
       .string()
       .max(20, 'maximum 20 characters')
       .min(2, 'minimum 2 characters')
       .required("it's required"),
-    lastName: yup
+    surname: yup
       .string()
       .max(30, 'maximum 30 characters')
       .min(2, 'minimum 2 characters')

@@ -15,8 +15,7 @@ import Link from 'next/link';
 import { CircularProgress } from '@mui/material';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import api from '@/utils/axiosInstance';
-import { AxiosError } from 'axios';
+import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { RegisterForm } from '@/types/forms/RegisterForm';
 import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 
@@ -64,9 +63,8 @@ const Register = ({
         password: formData.password,
       });
       router.replace('/auth/verification?account=welcome');
-    } catch (error) {
-      const err = error as AxiosError<{ error: string }>;
-      const message = err.response?.data?.error;
+    } catch (err) {
+      const message = handleAxiosError(err);
       if (message === 'E-mail is already taken') {
         form.setFieldError('email', 'already taken');
       } else if (message === 'Username is already taken') {
