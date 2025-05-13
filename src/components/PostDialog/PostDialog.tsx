@@ -21,6 +21,7 @@ import CustomInput from '@/components/CustomInput';
 import { PostSchema, PostDefaultValues } from '@/utils/schemas/PostSchema';
 import { useMediaQuery } from '@mui/material';
 import type { Post } from '@/types/api/post';
+import type { Workout } from '@/types/api/workout';
 import type { ShowAppMessage } from '@/types/general';
 
 type PostDialogProps = {
@@ -42,9 +43,9 @@ export default function PostDialog({
   onChange,
   showAppMessage,
 }: PostDialogProps) {
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedWorkout, setSelectedWorkout] = useState(null);
+  const [selectedWorkout, setSelectedWorkout] = useState<Workout>(null);
   const fullScreen = useMediaQuery('(max-width: 900px)');
 
   const username = getUsername();
@@ -53,7 +54,7 @@ export default function PostDialog({
     const fetchWorkouts = async () => {
       try {
         setLoading(true);
-        const response = await api.get(`/api/workouts/private`);
+        const response = await api.get<Workout[]>(`/api/workouts/private`);
         const fetchedWorkouts = response.data;
 
         if (type === 'edit' && post?.workout) {
@@ -77,7 +78,7 @@ export default function PostDialog({
     };
 
     if (open) {
-      fetchWorkouts();
+      void fetchWorkouts();
     }
   }, [open, username, type, post?.workout, showAppMessage, onClose]);
 

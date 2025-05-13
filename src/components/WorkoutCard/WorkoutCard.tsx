@@ -45,7 +45,7 @@ export default function WorkoutCard({
   const isSmallScreen = useMediaQuery('(max-width: 550px)');
 
   const menuOpen = Boolean(anchorEl);
-  const realitveStartDate = formatRelativeTime(workout.startDate.toISOString());
+  const realitveStartDate = formatRelativeTime(workout.startDate);
 
   const handleMenuClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

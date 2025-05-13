@@ -24,8 +24,8 @@ export const parseDuration = (durationString: string) => {
 export const formatDate = (date: string, pattern = 'MMMM d, yyyy h:mm a') =>
   format(parseISO(date), pattern);
 
-export const formatRelativeTime = (date: string) =>
-  formatDistanceToNow(parseISO(date), { addSuffix: true });
+export const formatRelativeTime = (date: Date) =>
+  formatDistanceToNow(date, { addSuffix: true });
 
 export const getDiffInHoursAndMinutes = (startISO: string, endISO: string) => {
   const startDate = parseISO(startISO);
