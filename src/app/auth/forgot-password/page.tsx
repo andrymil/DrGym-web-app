@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import { Button, InputAdornment, IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import {
@@ -13,18 +13,27 @@ import {
 } from '@/utils/schemas/ForgotPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-import api from '@/utils/axiosInstance';
+import api, { handleAxiosError } from '@/utils/axiosInstance';
+import type { ForgotPasswordRequest } from '@/types/api/requests/forgotPassword';
+import type { ForgotPasswordValues } from '@/types/forms/ForgotPasswordForm';
+import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 
-const ForgotPassword = ({ csrfToken, showAppMessage }) => {
+const ForgotPassword = ({
+  csrfToken,
+  showAppMessage,
+}: WithCsrfToken & WithAppMessage) => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState<string>(null);
 
   const formikRef = useRef(null);
 
-  const handleForgotPassword = async (formData, form) => {
+  const handleForgotPassword = async (
+    formData: ForgotPasswordValues,
+    form: FormikHelpers<ForgotPasswordValues>
+  ) => {
     try {
       setLoading(true);
-      await api.post('/api/forgot-password', {
+      await api.post<ForgotPasswordRequest>('/api/forgot-password', {
         email: formData.email,
       });
       showAppMessage({
@@ -35,19 +44,20 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
       setMessage(
         'We have sent you a link. Please check your inbox and follow the instructions.'
       );
-    } catch (error) {
-      if (error.response?.status === 404) {
+    } catch (err) {
+      const { message: errMessage, status } = handleAxiosError(err);
+      if (status === 404) {
         form.setFieldError('email', 'no account found');
         showAppMessage({
           status: true,
           text: 'There is no account associated with this e-mail.',
           type: 'error',
         });
-      } else if (error.response?.status === 403) {
+      } else if (status === 403) {
         form.setFieldError('email', 'not verified');
         showAppMessage({
           status: true,
-          text: error.response?.data?.error,
+          text: errMessage,
           type: 'info',
         });
       } else {
@@ -88,7 +98,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
             <Typography sx={{ mb: 3 }} variant="body1">
               Please enter your e-mail
             </Typography>
-            <Formik
+            <Formik<ForgotPasswordValues>
               innerRef={formikRef}
               initialValues={ForogtPasswordDefaultValues()}
               validationSchema={ForogtPasswordSchema()}
@@ -127,7 +137,7 @@ const ForgotPassword = ({ csrfToken, showAppMessage }) => {
                               <InputAdornment position="end">
                                 <IconButton
                                   onClick={() => {
-                                    setFieldValue('email', '', false);
+                                    void setFieldValue('email', '', false);
                                     setFieldError('email', null);
                                   }}
                                 >
