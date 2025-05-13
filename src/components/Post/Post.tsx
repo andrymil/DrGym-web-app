@@ -38,7 +38,7 @@ export default function Post({
     try {
       setDeleting(true);
       await api.delete(`/api/posts/${post.id}`);
-      onChanges();
+      void onChanges();
       showAppMessage({
         status: true,
         text: 'Post deleted successfully',

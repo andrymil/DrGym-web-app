@@ -60,19 +60,19 @@ export default function UserHeader({
     setDeleteDialogOpen(false);
   };
 
-  const handleAcceptRequest = async () => {
+  const handleAcceptRequest = () => {
     try {
       setLoading(true);
-      await onAccept(id, username, avatar);
+      void onAccept(id, username, avatar);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDeclineRequest = async () => {
+  const handleDeclineRequest = () => {
     try {
       setLoading(true);
-      await onDecline(id, username);
+      void onDecline(id, username);
     } finally {
       setLoading(false);
     }

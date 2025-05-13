@@ -11,7 +11,7 @@ type DeleteConfirmationProps = {
   message: string;
   open: boolean;
   loading: boolean;
-  onConfirm: () => void;
+  onConfirm: () => Promise<void>;
   onClose: () => void;
 };
 

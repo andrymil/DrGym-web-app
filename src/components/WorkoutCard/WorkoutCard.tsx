@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -36,7 +36,7 @@ export default function WorkoutCard({
   disableActions,
   showAppMessage,
 }: WorkoutCardProps) {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [popupType, setPopupType] = useState('');
@@ -45,9 +45,9 @@ export default function WorkoutCard({
   const isSmallScreen = useMediaQuery('(max-width: 550px)');
 
   const menuOpen = Boolean(anchorEl);
-  const realitveStartDate = formatRelativeTime(workout.startDate);
+  const realitveStartDate = formatRelativeTime(workout.startDate.toISOString());
 
-  const handleMenuClick = (event) => {
+  const handleMenuClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -128,7 +128,7 @@ export default function WorkoutCard({
             title={
               <Grid container alignItems="center">
                 <Typography variant="h5" sx={{ mr: 8 }}>
-                  {formatDate(workout.startDate, 'd MMMM yyyy')}
+                  {formatDate(workout.startDate.toISOString(), 'd MMMM yyyy')}
                 </Typography>
                 <Box>{!isSmallScreen && chips}</Box>
               </Grid>

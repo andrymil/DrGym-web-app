@@ -46,6 +46,7 @@ import type { ShowAppMessage } from '@/types/general';
 import type { Exercise } from '@/types/api/exercise';
 import type { Activity } from '@/types/api/activity';
 import { ValidationError } from 'yup';
+import type { Exercises } from '@/types/api/exercise';
 
 type WorkoutFormProps = {
   dialogTitle: string;
@@ -69,12 +70,6 @@ type WorkoutFormValues = {
   reps: number;
   weight: number;
   duration: Date;
-};
-
-type Exercises = {
-  strength: Exercise[];
-  cardio: Exercise[];
-  crossfit: Exercise[];
 };
 
 export default function WorkoutForm({
