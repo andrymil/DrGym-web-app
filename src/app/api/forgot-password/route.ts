@@ -2,10 +2,11 @@ import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { generateToken } from '@/utils/crypto';
 import sendEmail from '@/utils/sendEmail';
+import type { ForgotPasswordRequest } from '@/types/api/requests/forgotPassword';
 
-export async function POST(req) {
+export async function POST(req: Request): Promise<Response> {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as ForgotPasswordRequest;
     const email = body.email?.toLowerCase().trim();
 
     if (!email) {

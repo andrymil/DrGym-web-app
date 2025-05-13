@@ -2,10 +2,11 @@ import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import sendEmail from '@/utils/sendEmail';
 import { hashPassword, generateToken } from '@/utils/crypto';
+import type { RegisterRequest } from '@/types/api/requests/register';
 
-export async function POST(req) {
+export async function POST(req: Request): Promise<Response> {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as RegisterRequest;
     const { name, surname, username, password } = body;
     const email = body.email?.toLowerCase().trim();
 

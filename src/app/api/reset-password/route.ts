@@ -2,10 +2,11 @@ import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { hashPassword, verifyToken } from '@/utils/crypto';
 import sendEmail from '@/utils/sendEmail';
+import type { ResetPasswordRequest } from '@/types/api/requests/resetPassword';
 
-export async function POST(req) {
+export async function POST(req: Request): Promise<Response> {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as ResetPasswordRequest;
     const { password, token } = body;
     const email = body.email?.toLowerCase().trim();
 

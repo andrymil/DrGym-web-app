@@ -7,7 +7,7 @@ import path from 'path';
 import open from 'open';
 
 interface EmailTemplateData {
-  subject: string;
+  subject?: string;
   [key: string]: unknown;
 }
 
