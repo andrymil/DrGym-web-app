@@ -8,20 +8,22 @@ const api = axios.create({
 export function handleAxiosError(
   error: unknown,
   fallback = 'Something went wrong'
-): string {
+): { message: string; status?: number } {
   if (
     typeof error === 'object' &&
     error !== null &&
     'isAxiosError' in error &&
     (error as AxiosError).isAxiosError
   ) {
-    return (
-      (error as AxiosError<{ error?: string }>).response?.data?.error ||
-      fallback
-    );
+    const axiosError = error as AxiosError<{ error?: string }>;
+
+    return {
+      message: axiosError.response?.data?.error || fallback,
+      status: axiosError.response?.status,
+    };
   }
 
-  return fallback;
+  return { message: fallback };
 }
 
 export default api;

@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography, CircularProgress } from '@mui/material';
-import api from '@/utils/axiosInstance';
+import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { WithAppMessage } from '@/types/general';
 
 const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
@@ -28,11 +28,11 @@ const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
           token,
         });
         router.replace('/login?message=Account has been verified&type=success');
-      } catch (error) {
-        const errMessage = error.response?.data?.error;
-        if (error.response?.status === 404) {
+      } catch (err) {
+        const { message: errMessage, status } = handleAxiosError(err);
+        if (status === 404) {
           router.replace(`/login?message=${errMessage}&type=error`);
-        } else if (error.response?.status === 409) {
+        } else if (status === 409) {
           router.replace(
             `/login?message=Your account has been already verified&type=info`
           );
@@ -72,7 +72,7 @@ const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
         type: 'error',
       });
     } else {
-      handleVerification();
+      void handleVerification();
     }
   }, [router, searchParams, showAppMessage]);
 

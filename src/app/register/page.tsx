@@ -64,7 +64,7 @@ const Register = ({
       });
       router.replace('/auth/verification?account=welcome');
     } catch (err) {
-      const message = handleAxiosError(err);
+      const { message } = handleAxiosError(err);
       if (message === 'E-mail is already taken') {
         form.setFieldError('email', 'already taken');
       } else if (message === 'Username is already taken') {
