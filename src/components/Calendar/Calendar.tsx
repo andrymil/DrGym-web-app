@@ -5,15 +5,16 @@ import Grid from '@mui/material/Grid2';
 // import { calendarData as mockData } from '@/utils/mockData';
 import api from '@/utils/axiosInstance';
 import { formatDate } from '@/utils/dateUtils';
+import type { CalendarData } from '@/types/api/calendar';
 
 type CalendarProps = {
   username: string;
 };
 
 const Calendar = ({ username }: CalendarProps) => {
-  const [calendarData, setCalendarData] = useState([]);
+  const [calendarData, setCalendarData] = useState<CalendarData>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>(null);
 
   const calendarTheme = {
     light: ['#ebedf0', '#bbdefb', '#64b5f6', '#1976d2', '#0d47a1'],
@@ -43,7 +44,7 @@ const Calendar = ({ username }: CalendarProps) => {
         //   );
         //   setLoading(false);
         // }, 1000);
-        const response = await api.get(
+        const response = await api.get<CalendarData>(
           `/api/users/${username}/daily-exercise-count?startDate=${oneYearAgoDate}&endDate=${currentDate}`
         );
         setCalendarData(
@@ -57,10 +58,14 @@ const Calendar = ({ username }: CalendarProps) => {
       }
     };
 
-    fetchCalendarData();
+    void fetchCalendarData();
   }, [username]);
 
-  function addStartAndEndDate(data, startDate, endDate) {
+  function addStartAndEndDate(
+    data: CalendarData,
+    startDate: string,
+    endDate: string
+  ) {
     const startObject = { date: startDate, count: 0, level: 0 };
 
     const updatedData = [startObject, ...data];

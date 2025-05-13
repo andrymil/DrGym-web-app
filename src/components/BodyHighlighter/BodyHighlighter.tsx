@@ -9,7 +9,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
 import api from '@/utils/axiosInstance';
-import Model from 'react-body-highlighter';
+import Model, { IExerciseData, IMuscleStats } from 'react-body-highlighter';
 // import { bodyData as mockData } from '@/utils/mockData';
 
 type BodyHighlighterProps = {
@@ -17,14 +17,14 @@ type BodyHighlighterProps = {
 };
 
 const BodyHighlighter = ({ username }: BodyHighlighterProps) => {
-  const [bodyData, setBodyData] = useState([]);
-  const [selectedMuscle, setSelectedMuscle] = useState(null);
-  const [error, setError] = useState(null);
+  const [bodyData, setBodyData] = useState<IExerciseData[]>([]);
+  const [selectedMuscle, setSelectedMuscle] = useState<IMuscleStats>(null);
+  const [error, setError] = useState<string>(null);
 
   useEffect(() => {
     const fetchBodyData = async () => {
       try {
-        const response = await api.get(
+        const response = await api.get<IExerciseData[]>(
           `/api/users/${username}/exercises?startDate=2024-01-16&endDate=2025-01-16`
         );
         setBodyData(response.data);
@@ -38,11 +38,11 @@ const BodyHighlighter = ({ username }: BodyHighlighterProps) => {
       }
     };
 
-    fetchBodyData();
+    void fetchBodyData();
   }, [username]);
 
-  const handleClick = useCallback(({ muscle, data }) => {
-    setSelectedMuscle({ muscle, data });
+  const handleClick = useCallback((muscleStats: IMuscleStats) => {
+    setSelectedMuscle(muscleStats);
   }, []);
 
   const handleClose = () => {
