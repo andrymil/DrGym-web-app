@@ -32,7 +32,7 @@ export default function CustomDrawer({
 }: CustomDrawerProps) {
   const [open, setOpen] = useState(false);
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
