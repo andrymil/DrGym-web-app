@@ -1,16 +1,19 @@
 import prisma from '@prisma';
+import { NextResponse } from 'next/server';
+import type { Exercise, Exercises } from '@/types/api/exercise';
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   try {
-    const allExercises = await prisma.exercise.findMany({
+    const allExercises: Exercise[] = await prisma.exercise.findMany({
       select: {
+        id: true,
         name: true,
         videoId: true,
         type: true,
       },
     });
 
-    const grouped = {
+    const grouped: Exercises = {
       strength: [],
       cardio: [],
       crossfit: [],
@@ -18,18 +21,15 @@ export async function GET() {
 
     allExercises.forEach((exercise) => {
       if (grouped[exercise.type]) {
-        grouped[exercise.type].push({
-          name: exercise.name,
-          videoId: exercise.videoId,
-        });
+        grouped[exercise.type].push(exercise);
       }
     });
 
-    return new Response(JSON.stringify(grouped), { status: 200 });
+    return NextResponse.json<Exercises>(grouped);
   } catch (err) {
     console.error('Error fetching exercises:', err);
-    return new Response(
-      JSON.stringify({ error: 'Failed to fetch exercises' }),
+    return NextResponse.json(
+      { error: 'Failed to fetch exercises' },
       { status: 500 }
     );
   }

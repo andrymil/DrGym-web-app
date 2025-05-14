@@ -3,7 +3,7 @@ import YupPassword from 'yup-password';
 
 YupPassword(yup);
 
-const LoginSchema = (loginType) => {
+const LoginSchema = (loginType: string) => {
   const emailSchema = yup.object().shape({
     email: yup
       .string()
