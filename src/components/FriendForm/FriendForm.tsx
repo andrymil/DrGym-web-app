@@ -18,7 +18,7 @@ import CustomInput from '@/components/CustomInput';
 import {
   UsernameSchema,
   UsernameDefaultValues,
-} from '../../../schemas/forms/UsernameSchema';
+} from '@/schemas/forms/UsernameSchema';
 import { getUsername } from '@/utils/localStorage';
 import type { SetState, WithAppMessage } from '@/types/general';
 

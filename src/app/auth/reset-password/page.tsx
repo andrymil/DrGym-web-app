@@ -15,7 +15,7 @@ import { Formik, Form } from 'formik';
 import {
   ResetPasswordSchema,
   ResetPasswordDefaultValues,
-} from '../../../../schemas/forms/ResetPasswordSchema';
+} from '@/schemas/forms/ResetPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api, { handleAxiosError } from '@/utils/axiosInstance';

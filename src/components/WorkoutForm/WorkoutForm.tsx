@@ -37,7 +37,7 @@ import {
   schema,
   strengthActivitySchema,
   cardioActivitySchema,
-} from '../../../schemas/forms/WorkoutSchema';
+} from '@/schemas/forms/WorkoutSchema';
 import { formatDate } from '@/utils/dateUtils';
 import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
