@@ -1181,9 +1181,9 @@ insert into users (
            '#4b7fc4' );
 
 
---- INSERTING into TOKEN
+--- INSERTING into TOKENS
 
-insert into token (
+insert into tokens (
    email,
    verification_token,
    reset_token,
@@ -1192,7 +1192,7 @@ insert into token (
            null,
            null,
            null );
-insert into token (
+insert into tokens (
    email,
    verification_token,
    reset_token,
@@ -1201,7 +1201,7 @@ insert into token (
            null,
            null,
            null );
-insert into token (
+insert into tokens (
    email,
    verification_token,
    reset_token,
@@ -1210,7 +1210,7 @@ insert into token (
            null,
            null,
            null );
-insert into token (
+insert into tokens (
    email,
    verification_token,
    reset_token,
@@ -3629,7 +3629,6 @@ insert into exercises_muscles (
 
 --- INSERTING into FRIENDSHIPS
 
-   SET DEFINE OFF;
 insert into friendships (
    id,
    friend1_username,

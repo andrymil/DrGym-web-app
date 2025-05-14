@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ExerciseType {
+  strength
+  cardio
+  crossfit
+}
+
 model Activity {
   id         Int      @id @default(autoincrement()) @map("activity_id")
   exerciseId Int      @map("exercise_id")
@@ -22,7 +28,7 @@ model Activity {
 
 model Exercise {
   id              Int              @id @default(autoincrement()) @map("exercise_id")
-  type            String?          @default("S") @db.VarChar(10)
+  type            ExerciseType
   kcalBurned      Int?             @default(0) @map("kcal_burned")
   name            String           @db.VarChar(40)
   videoId         String?          @map("video_id") @db.VarChar(11)
