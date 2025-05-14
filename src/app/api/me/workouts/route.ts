@@ -3,7 +3,7 @@ import prisma from '@prisma';
 import { getSessionUsername, handleApiError } from '@/utils/apiHelpers';
 import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   try {
     const username = await getSessionUsername();
 

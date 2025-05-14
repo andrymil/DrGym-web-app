@@ -10,7 +10,7 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import {
   RegisterSchema,
   RegisterDefaultValues,
-} from '@/utils/schemas/RegisterSchema';
+} from '../../../schemas/RegisterSchema';
 import Link from 'next/link';
 import { CircularProgress } from '@mui/material';
 import { withSnackbar } from '@/utils/snackbarProvider';

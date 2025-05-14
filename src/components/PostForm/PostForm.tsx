@@ -18,7 +18,7 @@ import api from '@/utils/axiosInstance';
 import WorkoutCard from '@/components/WorkoutCard';
 import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
-import { PostSchema, PostDefaultValues } from '@/utils/schemas/PostSchema';
+import { PostSchema, PostDefaultValues } from '../../../schemas/PostSchema';
 import { useMediaQuery } from '@mui/material';
 import type { Post } from '@/types/api/post';
 import type { Workout } from '@/types/api/workout';

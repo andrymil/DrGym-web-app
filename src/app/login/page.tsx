@@ -18,7 +18,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Formik, Form, FormikHelpers } from 'formik';
-import { LoginSchema, LoginDefaultValues } from '@/utils/schemas/LoginSchema';
+import { LoginSchema, LoginDefaultValues } from '../../../schemas/LoginSchema';
 import Link from 'next/link';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';

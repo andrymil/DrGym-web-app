@@ -2,13 +2,14 @@ import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
-class ApiError extends Error {
+export class ApiError extends Error {
   statusCode: number;
 
   constructor(message: string, statusCode: number) {
     super(message);
     this.statusCode = statusCode;
     this.name = 'ApiError';
+    Error.captureStackTrace?.(this, ApiError);
   }
 }
 
@@ -29,13 +30,14 @@ export async function getSessionUsername() {
   return username;
 }
 
-export function handleApiError(err: ApiError) {
-  if (err?.statusCode === 401 || err?.statusCode === 400) {
+export function handleApiError(err: unknown) {
+  if (err instanceof ApiError) {
     return NextResponse.json(
       { error: err.message },
       { status: err.statusCode }
     );
   }
 
+  console.error('Unexpected API error:', err);
   return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
 }
