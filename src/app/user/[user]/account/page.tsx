@@ -11,7 +11,7 @@ import NumberField from '@/components/NumberField';
 import {
   AccountSchema,
   AccountDefaultValues,
-} from '../../../../../schemas/AccountSchema';
+} from '../../../../../schemas/forms/AccountSchema';
 import api from '@/utils/axiosInstance';
 import { getUsername, getAvatar } from '@/utils/localStorage';
 import { signOut } from 'next-auth/react';

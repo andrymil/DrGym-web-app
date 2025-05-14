@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid2';
 import {
   ForogtPasswordSchema,
   ForogtPasswordDefaultValues,
-} from '../../../../schemas/ForgotPasswordSchema';
+} from '../../../../schemas/forms/ForgotPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
