@@ -32,15 +32,15 @@ type RankingProps = WithAppMessage & {
 export default function Ranking({ username, showAppMessage }: RankingProps) {
   const [loading, setLoading] = useState(true);
   const [loadingRanking, setLoadingRanking] = useState(true);
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string | null>(null);
   const [exerciseType, setExerciseType] = useState<ExerciseType>('strength');
-  const [exercise, setExercise] = useState<Exercise>(null);
+  const [exercise, setExercise] = useState<Exercise | null>(null);
   const [exercisesNames, setExercisesNames] = useState<Exercises>({
     strength: [],
     cardio: [],
     crossfit: [],
   });
-  const [ranking, setRanking] = useState<Ranking>(null);
+  const [ranking, setRanking] = useState<Ranking | null>(null);
 
   useEffect(() => {
     const fetchExercises = async () => {

@@ -45,7 +45,7 @@ export default function PostForm({
 }: PostFormProps) {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedWorkout, setSelectedWorkout] = useState<Workout>(null);
+  const [selectedWorkout, setSelectedWorkout] = useState<Workout | null>(null);
   const fullScreen = useMediaQuery('(max-width: 900px)');
 
   const username = getUsername();
@@ -86,6 +86,8 @@ export default function PostForm({
     values: PostFormValues,
     actions: FormikHelpers<PostFormValues>
   ) => {
+    if (!selectedWorkout) return;
+
     try {
       actions.setSubmitting(true);
       await api.post('/api/posts/create', {
@@ -117,6 +119,8 @@ export default function PostForm({
     values: PostFormValues,
     actions: FormikHelpers<PostFormValues>
   ) => {
+    if (!post || !selectedWorkout) return;
+
     try {
       actions.setSubmitting(true);
       await api.put(`/api/posts/update`, {
@@ -179,7 +183,7 @@ export default function PostForm({
       <Formik<PostFormValues>
         validationSchema={PostSchema()}
         initialValues={
-          type === 'edit'
+          type === 'edit' && post
             ? {
                 title: post.title,
                 description: post.content,
@@ -263,7 +267,11 @@ export default function PostForm({
                     onChange={() => handleWorkoutSelection(selectedWorkout)}
                     sx={{ pb: 0 }}
                   />
-                  <WorkoutCard workout={selectedWorkout} disableActions />
+                  <WorkoutCard
+                    workout={selectedWorkout}
+                    disableActions
+                    showAppMessage={showAppMessage}
+                  />
                 </Box>
               )}
               <Divider sx={{ mt: 2 }} />
@@ -279,7 +287,11 @@ export default function PostForm({
                         onChange={() => handleWorkoutSelection(workout)}
                         sx={{ pb: 0 }}
                       />
-                      <WorkoutCard workout={workout} disableActions />
+                      <WorkoutCard
+                        workout={workout}
+                        disableActions
+                        showAppMessage={showAppMessage}
+                      />
                       <Divider sx={{ mt: 2 }} />
                     </Box>
                   ))}

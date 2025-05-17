@@ -28,13 +28,13 @@ import type { Exercise, Exercises } from '@/types/api/exercise';
 import type { WithAppMessage } from '@/types/general';
 
 const AccountPage = ({ showAppMessage }: WithAppMessage) => {
-  const [userData, setUserData] = useState<UserData>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState<string>(getAvatar() || '#b01919');
   const [submitting, setSubmitting] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string | null>(null);
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [hasChanges, setHasChanges] = useState(false);
   const username = getUsername();
@@ -42,6 +42,8 @@ const AccountPage = ({ showAppMessage }: WithAppMessage) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!username) return;
+
       try {
         setLoading(true);
 
@@ -137,6 +139,7 @@ const AccountPage = ({ showAppMessage }: WithAppMessage) => {
 
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography>{error}</Typography>;
+  if (!userData) return null;
   return (
     <>
       <Grid container direction="column">
@@ -193,7 +196,7 @@ const AccountPage = ({ showAppMessage }: WithAppMessage) => {
                   >
                     <CustomAvatar
                       username={username}
-                      color={color}
+                      background={color}
                       sx={{
                         width: 100,
                         height: 100,

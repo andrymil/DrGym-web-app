@@ -23,7 +23,7 @@ const ForgotPassword = ({
   showAppMessage,
 }: WithCsrfToken & WithAppMessage) => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
   const formikRef = useRef(null);
 
@@ -139,7 +139,7 @@ const ForgotPassword = ({
                                 <IconButton
                                   onClick={() => {
                                     void setFieldValue('email', '', false);
-                                    setFieldError('email', null);
+                                    setFieldError('email', undefined);
                                   }}
                                 >
                                   <CloseIcon color="primary" />

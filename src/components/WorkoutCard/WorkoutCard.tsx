@@ -26,7 +26,7 @@ type WorkoutCardProps = {
   disableActions?: boolean;
   onDelete?: (id: number) => void;
   onEditWorkout?: () => Promise<void>;
-  showAppMessage?: ShowAppMessage;
+  showAppMessage: ShowAppMessage;
 };
 
 export default function WorkoutCard({
@@ -68,7 +68,7 @@ export default function WorkoutCard({
         text: 'Workout deleted successfully',
         type: 'success',
       });
-      onDelete(workout.id);
+      onDelete!(workout.id);
     } catch (error) {
       console.error('Error deleting workout:', error);
       showAppMessage({
@@ -82,7 +82,7 @@ export default function WorkoutCard({
     }
   };
 
-  const getIntervalDescription = (interval) => {
+  const getIntervalDescription = (interval: number) => {
     switch (interval) {
       case 1:
         return 'Everyday';
@@ -102,7 +102,7 @@ export default function WorkoutCard({
         color={workout.posted ? 'success' : 'warning'}
         variant="outlined"
       />
-      {workout.schedule !== 0 && (
+      {workout.schedule && workout.schedule !== 0 && (
         <Chip
           label={getIntervalDescription(workout.schedule)}
           color="info"
@@ -128,7 +128,7 @@ export default function WorkoutCard({
             title={
               <Grid container alignItems="center">
                 <Typography variant="h5" sx={{ mr: 8 }}>
-                  {formatDate(workout.startDate.toISOString(), 'd MMMM yyyy')}
+                  {formatDate(workout.startDate, 'd MMMM yyyy')}
                 </Typography>
                 <Box>{!isSmallScreen && chips}</Box>
               </Grid>

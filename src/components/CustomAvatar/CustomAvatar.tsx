@@ -15,18 +15,21 @@ const getContrastColor = (hexColor: string) => {
 };
 
 type ColoredAvatarProps = AvatarProps & {
-  username: string;
-  color?: string;
+  username: string | null;
+  background?: string | null;
 };
 
 export default function ColoredAvatar({
   username,
-  color,
+  background,
   sx,
   ...rest
 }: ColoredAvatarProps) {
-  color = color || stringToColor(username);
-  const contrastColor = getContrastColor(color);
+  if (!username) {
+    username = 'A';
+  }
+  background = background || stringToColor(username);
+  const contrastColor = getContrastColor(background);
 
   return (
     <Avatar
@@ -34,7 +37,7 @@ export default function ColoredAvatar({
       alt={username.charAt(0).toUpperCase()}
       aria-label="avatar"
       sx={{
-        backgroundColor: color,
+        backgroundColor: background,
         color: contrastColor,
         border: contrastColor === '#4f4f4f' ? '2px solid #00000020' : 'none',
         ...sx,

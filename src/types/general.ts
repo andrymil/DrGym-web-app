@@ -13,5 +13,5 @@ export type WithAppMessage = {
 };
 
 export type WithCsrfToken = {
-  csrfToken: string;
+  csrfToken?: string;
 };

@@ -24,6 +24,12 @@ const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
       try {
         setLoading(true);
         setMessage('Verifying your account...');
+        if (!email || !token) {
+          setMessage(
+            'Verification link seems to be broken. Please try again later.'
+          );
+          throw new Error('Missing email or token');
+        }
         const payload: VerificationRequest = {
           email,
           token,

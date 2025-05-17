@@ -21,7 +21,7 @@ import CustomAvatar from '@/components/CustomAvatar';
 
 type CustomDrawerProps = {
   handleLogout: () => void;
-  username: string;
+  username: string | null;
   status: string;
 };
 
@@ -66,7 +66,10 @@ export default function CustomDrawer({
                     onClick={toggleDrawer(false)}
                     aria-label="account"
                   >
-                    <CustomAvatar username={username} color={getAvatar()} />
+                    <CustomAvatar
+                      username={username}
+                      background={getAvatar()}
+                    />
                   </IconButton>
                 </Link>
                 <Typography sx={{ mt: '12px' }} variant="h6" component="div">

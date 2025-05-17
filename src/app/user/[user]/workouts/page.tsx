@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Typography } from '@mui/material';
-import { useEffect, useState, useCallback } from 'react';
+import { MouseEvent, useEffect, useState, useCallback } from 'react';
 import api from '@/utils/axiosInstance';
 import WorkoutCard from '@/components/WorkoutCard';
 import AddIcon from '@mui/icons-material/Add';
@@ -54,7 +54,10 @@ const Workouts = ({ showAppMessage }: WithAppMessage) => {
     setWorkoutsData((prev) => prev.filter((workout) => workout.id !== id));
   };
 
-  const handleTypeChange = (_event, newType: string) => {
+  const handleTypeChange = (
+    _event: MouseEvent<HTMLElement>,
+    newType: string
+  ) => {
     if (newType === 'future') {
       setWorkoutsData([...allWorkouts.futureWorkouts].reverse());
       setFromFuture(true);

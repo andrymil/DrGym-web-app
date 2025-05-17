@@ -18,8 +18,10 @@ type BodyHighlighterProps = {
 
 const BodyHighlighter = ({ username }: BodyHighlighterProps) => {
   const [bodyData, setBodyData] = useState<IExerciseData[]>([]);
-  const [selectedMuscle, setSelectedMuscle] = useState<IMuscleStats>(null);
-  const [error, setError] = useState<string>(null);
+  const [selectedMuscle, setSelectedMuscle] = useState<IMuscleStats | null>(
+    null
+  );
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBodyData = async () => {

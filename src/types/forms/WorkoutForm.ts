@@ -6,9 +6,9 @@ export type WorkoutFormValues = {
   description: string;
   isRegular: boolean;
   interval: number;
-  exerciseType: string;
-  exercise: Exercise;
-  reps: number;
-  weight: number;
-  duration: Date;
+  exerciseType: string | null;
+  exercise: Exercise | null;
+  reps: number | null;
+  weight: number | null;
+  duration: Date | null;
 };

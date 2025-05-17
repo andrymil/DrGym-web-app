@@ -18,8 +18,8 @@ import { useMediaQuery } from '@mui/material';
 import type { Exercises, ExerciseType } from '@/types/api/exercise';
 
 const HomePage = () => {
-  const [error, setError] = useState<string>(null);
-  const [expanded, setExpanded] = useState<number>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const [exerciseType, setExerciseType] = useState<ExerciseType>('strength');
   const [exerciseData, setExerciseData] = useState<Exercises>({
     cardio: [],
@@ -105,7 +105,7 @@ const HomePage = () => {
                   <Typography component="span">{exercise.name}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  {expanded === index && (
+                  {expanded === index && exercise.videoId && (
                     <YouTubePlayer videoId={exercise.videoId} />
                   )}
                 </AccordionDetails>

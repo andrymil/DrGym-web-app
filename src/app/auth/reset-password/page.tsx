@@ -54,6 +54,12 @@ const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
     try {
       setLoading(true);
       setMessage('');
+      if (!email || !token) {
+        setMessage(
+          'Rest password link seems to be broken. Please try requesting it again.'
+        );
+        throw new Error('Missing email or token');
+      }
       const payload: ResetPasswordRequest = {
         email,
         token,

@@ -14,7 +14,7 @@ type CalendarProps = {
 const Calendar = ({ username }: CalendarProps) => {
   const [calendarData, setCalendarData] = useState<CalendarData>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const calendarTheme = {
     light: ['#ebedf0', '#bbdefb', '#64b5f6', '#1976d2', '#0d47a1'],
@@ -25,15 +25,13 @@ const Calendar = ({ username }: CalendarProps) => {
 
   useEffect(() => {
     const fetchCalendarData = async () => {
-      const currentDate = formatDate(new Date().toISOString(), 'yyyy-MM-dd');
+      const currentDate = formatDate(new Date(), 'yyyy-MM-dd');
       const yesterdayDate = formatDate(
-        new Date(new Date().setDate(new Date().getDate() - 1)).toISOString(),
+        new Date(new Date().setDate(new Date().getDate() - 1)),
         'yyyy-MM-dd'
       );
       const oneYearAgoDate = formatDate(
-        new Date(
-          new Date().setFullYear(new Date().getFullYear() - 1)
-        ).toISOString(),
+        new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
         'yyyy-MM-dd'
       );
       try {

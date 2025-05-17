@@ -27,7 +27,7 @@ export default function DeleteConfirmation({
     <>
       <Dialog
         open={open}
-        onClose={loading ? null : onClose}
+        onClose={onClose}
         slotProps={{
           transition: {
             direction: 'up',

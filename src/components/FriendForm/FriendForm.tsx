@@ -146,7 +146,7 @@ export default function FriendForm({
                             <IconButton
                               onClick={() => {
                                 void setFieldValue('username', '', false);
-                                setFieldError('username', null);
+                                setFieldError('username', undefined);
                               }}
                             >
                               <CloseIcon color="primary" />

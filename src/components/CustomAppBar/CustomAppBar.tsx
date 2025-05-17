@@ -165,7 +165,10 @@ export default function CustomAppBar() {
               <>
                 <Link href={`/user/${username}/account`}>
                   <IconButton aria-label="account">
-                    <CustomAvatar username={username} color={getAvatar()} />
+                    <CustomAvatar
+                      username={username || null}
+                      background={getAvatar()}
+                    />
                   </IconButton>
                 </Link>
                 <Button
@@ -195,7 +198,7 @@ export default function CustomAppBar() {
           </Box>
           <CustomDrawer
             handleLogout={handleLogout}
-            username={username}
+            username={username || null}
             status={status}
           />
         </StyledToolbar>

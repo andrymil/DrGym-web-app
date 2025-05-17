@@ -26,8 +26,8 @@ type UserPageProps = WithAppMessage & {
 const User = ({ params, showAppMessage }: UserPageProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const { user } = React.use(params);
-  const [userData, setUserData] = useState<UserData>(null);
-  const [avatar, setAvatar] = useState<string>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [avatar, setAvatar] = useState<string>('');
   const router = useRouter();
   const username = getUsername();
 
@@ -37,7 +37,7 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
         setLoading(true);
         const response = await api.get<UserData>(`/api/users/${user}`);
         setUserData(response?.data);
-        setAvatar(response.data?.avatar || null);
+        setAvatar(response.data?.avatar);
       } catch (err) {
         console.error('Error fetching user data', err);
         showAppMessage({
@@ -145,7 +145,8 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
               <Grid container justifyContent="center" gap={5} sx={{ mb: 5 }}>
                 {Object.entries(userData).map(
                   ([key, value]) =>
-                    key !== 'username' && (
+                    key !== 'username' &&
+                    !(value instanceof Object) && (
                       <Grid key={key} size={12}>
                         <Typography variant="body1" color="textSecondary">
                           {key.charAt(0).toUpperCase() + key.slice(1)}:

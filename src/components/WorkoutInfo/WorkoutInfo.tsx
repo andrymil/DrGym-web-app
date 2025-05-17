@@ -21,7 +21,7 @@ import Grid from '@mui/material/Grid2';
 import { getUsername } from '@/utils/localStorage';
 import api from '@/utils/axiosInstance';
 import type { Workout } from '@/types/api/workout';
-import type { Post } from '@/types/api/post';
+import type { PostInfo } from '@/types/api/post';
 import type { ShowAppMessage } from '@/types/general';
 import type { IconButtonProps } from '@mui/material/IconButton';
 
@@ -55,7 +55,7 @@ const ExpandMore = styled(({ expand: _, ...other }: ExpandMoreProps) => (
 type WorkoutInfoProps = {
   workout: Workout;
   isPost?: boolean;
-  post?: Post;
+  post?: PostInfo;
   showAppMessage?: ShowAppMessage;
 };
 
@@ -76,12 +76,12 @@ export default function WorkoutInfo({
 
   const handleAddLike = async () => {
     try {
-      await api.post(`/api/posts/${post.id}/reactions?username=${username}`);
+      await api.post(`/api/posts/${post?.id}/reactions?username=${username}`);
       setLikeCount((prev) => prev + 1);
     } catch (err) {
       console.error('Error adding like:', err);
       setLiked(false);
-      showAppMessage({
+      showAppMessage!({
         status: true,
         text: 'Error adding like',
         type: 'error',
@@ -91,7 +91,7 @@ export default function WorkoutInfo({
 
   const handleRemoveLike = async () => {
     try {
-      await api.delete(`/api/posts/${post.id}/reactions?username=${username}`);
+      await api.delete(`/api/posts/${post?.id}/reactions?username=${username}`);
       setLikeCount((prev) => {
         if (prev > 0) {
           return prev - 1;
@@ -101,7 +101,7 @@ export default function WorkoutInfo({
     } catch (err) {
       console.error('Error removing like:', err);
       setLiked(true);
-      showAppMessage({
+      showAppMessage!({
         status: true,
         text: 'Error removing like',
         type: 'error',

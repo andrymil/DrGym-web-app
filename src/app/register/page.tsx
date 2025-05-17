@@ -30,7 +30,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const Register = ({
-  csrfToken = null,
+  csrfToken = undefined,
   showAppMessage,
 }: WithAppMessage & WithCsrfToken) => {
   const router = useRouter();

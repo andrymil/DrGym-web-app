@@ -9,7 +9,7 @@ import type { Post as PostType } from '@/types/api/post';
 import { AxiosResponse } from 'axios';
 
 type PostListProps = WithAppMessage & {
-  username: string;
+  username: string | null;
   onlyThisUser?: boolean;
   actions?: boolean;
 };
@@ -22,9 +22,11 @@ const PostList = ({
 }: PostListProps) => {
   const [postsData, setPostsData] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchPosts = useCallback(async () => {
+    if (!username) return;
+
     try {
       setLoading(true);
       let response: AxiosResponse<PostType[]>;
@@ -72,7 +74,7 @@ const PostList = ({
           <Post
             key={post.id}
             post={post}
-            actions={actions && onlyThisUser}
+            actions={(actions && onlyThisUser) || false}
             onChanges={fetchPosts}
             showAppMessage={showAppMessage}
           />

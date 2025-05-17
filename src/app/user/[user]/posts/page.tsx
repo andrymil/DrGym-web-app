@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { MouseEvent, useState, useEffect, Suspense } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import Typography from '@mui/material/Typography';
 import { withSnackbar } from '@/utils/snackbarProvider';
@@ -41,7 +41,7 @@ const PostsContent = ({ showAppMessage }: WithAppMessage) => {
     setRefetch(+!refetch);
   };
 
-  const handleChange = (event, newOption) => {
+  const handleChange = (_event: MouseEvent<HTMLElement>, newOption: string) => {
     setOnlyThisUser(newOption === 'my');
   };
 

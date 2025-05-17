@@ -10,7 +10,11 @@ export async function GET(): Promise<Response> {
     const now = new Date();
     const workoutActivities = {
       activities: {
-        include: {
+        select: {
+          id: true,
+          reps: true,
+          weight: true,
+          duration: true,
           exercise: {
             select: {
               id: true,

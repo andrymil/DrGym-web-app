@@ -1,11 +1,6 @@
-import {
-  format,
-  parseISO,
-  formatDistanceToNow,
-  differenceInMinutes,
-} from 'date-fns';
+import { format, formatDistanceToNow, differenceInMinutes } from 'date-fns';
 
-export const formatDuration = (seconds) => {
+export const formatDuration = (seconds: number) => {
   const hrs = Math.floor(seconds / 3600)
     .toString()
     .padStart(2, '0');
@@ -21,16 +16,13 @@ export const parseDuration = (durationString: string) => {
   return hours * 3600 + minutes * 60 + seconds;
 };
 
-export const formatDate = (date: string, pattern = 'MMMM d, yyyy h:mm a') =>
-  format(parseISO(date), pattern);
+export const formatDate = (date: Date, pattern = 'MMMM d, yyyy h:mm a') =>
+  format(date, pattern);
 
 export const formatRelativeTime = (date: Date) =>
   formatDistanceToNow(date, { addSuffix: true });
 
-export const getDiffInHoursAndMinutes = (startISO: string, endISO: string) => {
-  const startDate = parseISO(startISO);
-  const endDate = parseISO(endISO);
-
+export const getDiffInHoursAndMinutes = (startDate: Date, endDate: Date) => {
   const totalMinutes = differenceInMinutes(endDate, startDate);
 
   const hours = Math.floor(totalMinutes / 60);

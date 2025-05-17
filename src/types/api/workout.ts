@@ -5,7 +5,7 @@ export type Workout = {
   username: string;
   startDate: Date;
   endDate: Date;
-  description?: string;
+  description: string | null;
   posted: number;
   schedule: number;
   activities: Activity[];

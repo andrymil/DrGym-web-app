@@ -18,7 +18,7 @@ import CustomAvatar from '@/components/CustomAvatar';
 
 type UserHeaderProps = {
   username: string;
-  avatar: string;
+  avatar?: string;
   subheader?: string;
   id?: number;
   actions?: string;
@@ -47,6 +47,8 @@ export default function UserHeader({
   };
 
   const handleConfirmDelete = async () => {
+    if (!onDelete) return;
+
     try {
       setDeleting(true);
       await onDelete(username);
@@ -61,6 +63,8 @@ export default function UserHeader({
   };
 
   const handleAcceptRequest = () => {
+    if (!onAccept || !id || !avatar) return;
+
     try {
       setLoading(true);
       void onAccept(id, username, avatar);
@@ -70,6 +74,8 @@ export default function UserHeader({
   };
 
   const handleDeclineRequest = () => {
+    if (!onDecline || !id) return;
+
     try {
       setLoading(true);
       void onDecline(id, username);
@@ -89,7 +95,7 @@ export default function UserHeader({
               padding: '5px',
             }}
           >
-            <CustomAvatar username={username} color={avatar} />
+            <CustomAvatar username={username} background={avatar} />
           </IconButton>
         }
         title={

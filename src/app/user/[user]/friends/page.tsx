@@ -23,7 +23,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
   const [friends, setFriends] = useState<Friend[]>([]);
   const [requests, setRequests] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchFriends = async () => {

@@ -16,7 +16,7 @@ const ResetPasswordSchema = () => {
       .required("it's required"),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password'), null], "doesn't match")
+      .oneOf([yup.ref('password'), undefined], "doesn't match")
       .required("it's required"),
   });
 };

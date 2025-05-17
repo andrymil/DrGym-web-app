@@ -30,7 +30,7 @@ export default function Post({
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const workout = post.workout;
+  const { workout, ...postWithoutWorkout } = post;
   const realitveStartDate = formatRelativeTime(post.date);
 
   const handleDeletePost = async () => {
@@ -99,7 +99,7 @@ export default function Post({
           <WorkoutInfo
             workout={workout}
             isPost
-            post={post}
+            post={postWithoutWorkout}
             showAppMessage={showAppMessage}
           />
         </Card>

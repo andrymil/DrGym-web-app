@@ -11,3 +11,5 @@ export type Post = {
   reactionCount: number;
   workout: Workout;
 };
+
+export type PostInfo = Omit<Post, 'workout'>;

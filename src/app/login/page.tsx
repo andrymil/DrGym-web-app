@@ -37,7 +37,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const LoginContent = ({
-  csrfToken = null,
+  csrfToken = undefined,
   showAppMessage,
 }: WithAppMessage & WithCsrfToken) => {
   const router = useRouter();
@@ -93,7 +93,13 @@ const LoginContent = ({
         void form.setTouched({});
       } else if (res?.ok) {
         const session = await getSession();
+
+        if (!session) {
+          throw new Error('Missing session');
+        }
+
         const { username, avatar: _avatar } = session.user;
+
         if (!username) {
           throw new Error('Missing username');
         }
@@ -295,7 +301,7 @@ const LoginContent = ({
 };
 
 const Login = ({
-  csrfToken = null,
+  csrfToken = undefined,
   showAppMessage,
 }: WithAppMessage & WithCsrfToken) => {
   return (
