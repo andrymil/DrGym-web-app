@@ -149,8 +149,8 @@ model Workout {
   endDate     DateTime   @map("end_datetime") @db.Timestamp(6)
   description String?    @db.VarChar(255)
   createdDate DateTime?  @default(now()) @map("created_datetime") @db.Timestamp(6)
-  posted      Int?       @default(0) @map("is_posted")
-  schedule    Int?       @default(0)
+  posted      Int        @default(0) @map("is_posted")
+  schedule    Int        @default(0)
   activities  Activity[]
   posts       Post[]
   user        User       @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_workouts_username")
