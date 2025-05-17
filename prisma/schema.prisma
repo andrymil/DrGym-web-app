@@ -144,9 +144,9 @@ model User {
 
 model Workout {
   id          Int        @id @default(autoincrement()) @map("workout_id")
-  startDate   DateTime?  @map("start_datetime") @db.Timestamp(6)
+  startDate   DateTime   @map("start_datetime") @db.Timestamp(6)
   username    String     @db.VarChar(50)
-  endDate     DateTime?  @map("end_datetime") @db.Timestamp(6)
+  endDate     DateTime   @map("end_datetime") @db.Timestamp(6)
   description String?    @db.VarChar(255)
   createdDate DateTime?  @default(now()) @map("created_datetime") @db.Timestamp(6)
   posted      Int?       @default(0) @map("is_posted")
