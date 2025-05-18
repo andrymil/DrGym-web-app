@@ -2,20 +2,18 @@ import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import sendEmail from '@/utils/sendEmail';
 import { hashPassword, generateToken } from '@/utils/crypto';
+import { handleApiError, validateBody } from '@/utils/apiHelpers';
+import { RegisterSchema } from '@/schemas/api/RegisterSchema';
 import type { RegisterRequest } from '@/types/api/requests/register';
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const body = (await req.json()) as RegisterRequest;
-    const { name, surname, username, password } = body;
-    const email = body.email?.toLowerCase().trim();
+    const body: RegisterRequest = await validateBody(
+      RegisterSchema,
+      await req.json()
+    );
 
-    if (!username || !email || !password) {
-      return NextResponse.json(
-        { error: 'Username, email and password are required' },
-        { status: 400 }
-      );
-    }
+    const { name, surname, username, password, email } = body;
 
     let existingUser = await prisma.user.findUnique({
       where: { email },
@@ -73,9 +71,6 @@ export async function POST(req: Request): Promise<Response> {
     );
   } catch (err) {
     console.error('Registration error:', err);
-    return NextResponse.json(
-      { error: 'Something went wrong' },
-      { status: 500 }
-    );
+    return handleApiError(err);
   }
 }
