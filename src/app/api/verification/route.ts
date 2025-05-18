@@ -1,7 +1,7 @@
 import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { verifyToken } from '@/utils/crypto';
-import type { VerificationRequest } from '@/types/api/requests/verification';
+import type { VerificationRequest } from '@/schemas/api/VerificationSchema';
 
 export async function POST(req: Request): Promise<Response> {
   try {

@@ -4,7 +4,7 @@ import sendEmail from '@/utils/sendEmail';
 import { hashPassword, generateToken } from '@/utils/crypto';
 import { handleApiError, validateBody } from '@/utils/apiHelpers';
 import { RegisterApiSchema } from '@/schemas/api/RegisterSchema';
-import type { RegisterRequest } from '@/types/api/requests';
+import type { RegisterRequest } from '@/schemas/api/RegisterSchema';
 
 export async function POST(req: Request): Promise<Response> {
   try {

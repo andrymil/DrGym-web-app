@@ -1,6 +1,6 @@
-import { RegisterSchema as RegisterFormSchema } from '@/schemas/forms/RegisterSchema';
 import { InferType } from 'yup';
+import { RegisterSchema as RegisterFormSchema } from '@/schemas/forms/RegisterSchema';
 
 export const RegisterApiSchema = RegisterFormSchema().omit(['confirmPassword']);
 
-export type RegisterApiRequest = InferType<typeof RegisterApiSchema>;
+export type RegisterRequest = InferType<typeof RegisterApiSchema>;

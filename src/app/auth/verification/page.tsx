@@ -6,7 +6,7 @@ import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography, CircularProgress } from '@mui/material';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { WithAppMessage } from '@/types/general';
-import type { VerificationRequest } from '@/types/api/requests/verification';
+import type { VerificationRequest } from '@/schemas/api/VerificationSchema';
 
 const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
   const searchParams = useSearchParams();
