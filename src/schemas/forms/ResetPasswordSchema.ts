@@ -1,23 +1,16 @@
 import * as yup from 'yup';
 import YupPassword from 'yup-password';
+import { PasswordSchema } from './PasswordSchema';
 
 YupPassword(yup);
 
 const ResetPasswordSchema = () => {
   return yup.object().shape({
-    password: yup
-      .string()
-      .max(30, 'too long')
-      .min(10, 'too short')
-      .minLowercase(2, 'minimum 2 lowercases')
-      .minUppercase(1, 'minimum 1 uppercase')
-      .minNumbers(1, 'minimum 1 number')
-      .minSymbols(1, 'minimum 1 symbol')
-      .required("it's required"),
+    password: PasswordSchema,
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password'), undefined], "doesn't match")
-      .required("it's required"),
+      .oneOf([yup.ref('password'), undefined], "Passwords don't match")
+      .required("Confirm Password - it's required"),
   });
 };
 

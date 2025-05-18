@@ -5,27 +5,27 @@ const AccountSchema = () => {
   return yup.object().shape({
     username: yup
       .string()
-      .max(20, 'maximum 20 characters')
-      .min(2, 'minimum 2 characters')
-      .required("it's required"),
+      .max(20, 'Username - maximum 20 characters')
+      .min(2, 'Username - minimum 2 characters')
+      .required('Username is required'),
     name: yup
       .string()
-      .max(20, 'maximum 20 characters')
-      .min(2, 'minimum 2 characters')
-      .required("it's required"),
+      .max(20, 'First Name - maximum 20 characters')
+      .min(2, 'First Name - minimum 2 characters')
+      .required('First Name is required'),
     surname: yup
       .string()
-      .max(30, 'maximum 30 characters')
-      .min(2, 'minimum 2 characters')
-      .required("it's required"),
+      .max(30, 'Surname - maximum 30 characters')
+      .min(2, 'Surname - minimum 2 characters')
+      .required('Surname is required'),
     weight: yup
       .number()
-      .typeError('must be a number')
-      .min(0, 'cannot be negative'),
+      .typeError('Weight must be a number')
+      .min(0, 'Weight cannot be negative'),
     height: yup
       .number()
-      .typeError('must be a number')
-      .min(0, 'cannot be negative'),
+      .typeError('Height must be a number')
+      .min(0, 'Height cannot be negative'),
   });
 };
 

@@ -33,12 +33,10 @@ const CustomInput = ({
 
   return (
     <FormControl fullWidth>
-      <InputLabel error={showError}>
-        {showError ? `${label} - ${errorStr}` : label}
-      </InputLabel>
+      <InputLabel error={showError}>{showError ? errorStr : label}</InputLabel>
       <OutlinedInput
         error={showError}
-        label={showError ? `${label} - ${errorStr}` : label}
+        label={showError ? errorStr : label}
         name={name}
         type={type}
         value={value || ''}

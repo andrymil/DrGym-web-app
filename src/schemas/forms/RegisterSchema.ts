@@ -1,45 +1,31 @@
 import * as yup from 'yup';
-import YupPassword from 'yup-password';
+import { PasswordSchema } from '@/schemas/forms/PasswordSchema';
+import { EmailSchema } from '@/schemas/forms/EmailSchema';
 import type { RegisterForm } from '@/types/forms/RegisterForm';
-
-YupPassword(yup);
 
 const RegisterSchema = () => {
   return yup.object().shape({
     username: yup
       .string()
-      .max(20, 'maximum 20 characters')
-      .min(2, 'minimum 2 characters')
-      .required("it's required"),
+      .max(20, 'Username - maximum 20 characters')
+      .min(2, 'Username - minimum 2 characters')
+      .required('Username is required'),
     name: yup
       .string()
-      .max(20, 'maximum 20 characters')
-      .min(2, 'minimum 2 characters')
-      .required("it's required"),
+      .max(20, 'First Name - maximum 20 characters')
+      .min(2, 'First Name - minimum 2 characters')
+      .required('First Name is required'),
     surname: yup
       .string()
-      .max(30, 'maximum 30 characters')
-      .min(2, 'minimum 2 characters')
-      .required("it's required"),
-    email: yup
-      .string()
-      .email("it's not an email")
-      .max(50, 'maximum 50 characters')
-      .min(5, 'minimum 5 characters')
-      .required("it's required"),
-    password: yup
-      .string()
-      .max(30, 'too long')
-      .min(10, 'too short')
-      .minLowercase(2, 'minimum 2 lowercases')
-      .minUppercase(1, 'minimum 1 uppercase')
-      .minNumbers(1, 'minimum 1 number')
-      .minSymbols(1, 'minimum 1 symbol')
-      .required("it's required"),
+      .max(30, 'Surname - maximum 30 characters')
+      .min(2, 'Surname - minimum 2 characters')
+      .required('Surname is required'),
+    email: EmailSchema.required('E-mail address is required'),
+    password: PasswordSchema,
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref('password'), undefined], "doesn't match")
-      .required("it's required"),
+      .oneOf([yup.ref('password'), undefined], "Passwords don't match")
+      .required("Confirm password - it's required"),
   });
 };
 
