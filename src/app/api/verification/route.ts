@@ -1,19 +1,18 @@
 import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { verifyToken } from '@/utils/crypto';
+import { handleApiError, validateBody } from '@/utils/apiHelpers';
+import { VerificationApiSchema } from '@/schemas/api/VerificationSchema';
 import type { VerificationRequest } from '@/schemas/api/VerificationSchema';
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const body = (await req.json()) as VerificationRequest;
-    const { email, token } = body;
+    const body: VerificationRequest = await validateBody(
+      VerificationApiSchema,
+      await req.json()
+    );
 
-    if (!email || !token) {
-      return NextResponse.json(
-        { error: 'Email and token are required' },
-        { status: 400 }
-      );
-    }
+    const { email, token } = body;
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -70,9 +69,6 @@ export async function POST(req: Request): Promise<Response> {
     );
   } catch (err) {
     console.error('Verification error:', err);
-    return NextResponse.json(
-      { error: 'Something went wrong' },
-      { status: 500 }
-    );
+    return handleApiError(err);
   }
 }
