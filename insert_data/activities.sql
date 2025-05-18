@@ -39,7 +39,7 @@ insert into activities (
            73,
            null,
            null,
-           7200,
+           '02:00:00',
            70 );
 
 insert into activities (
@@ -53,7 +53,7 @@ insert into activities (
            72,
            null,
            null,
-           3600,
+           '01:00:00',
            70 );
 
 insert into activities (
@@ -123,7 +123,7 @@ insert into activities (
            261,
            null,
            50,
-           600,
+           '00:10:00',
            71 );
 
 insert into activities (
@@ -137,7 +137,7 @@ insert into activities (
            262,
            null,
            100,
-           1800,
+           '00:30:00',
            72 );
 
 insert into activities (
@@ -249,7 +249,7 @@ insert into activities (
            66,
            null,
            null,
-           43200,
+           '12:00:00',
            97 );
 
 insert into activities (
@@ -263,7 +263,7 @@ insert into activities (
            73,
            null,
            null,
-           43200,
+           '12:00:00',
            82 );
 
 insert into activities (
@@ -389,7 +389,7 @@ insert into activities (
            66,
            null,
            null,
-           43200,
+           '12:00:00',
            96 );
 
 insert into activities (
@@ -403,7 +403,7 @@ insert into activities (
            66,
            null,
            null,
-           43200,
+           '12:00:00',
            98 );
 
 insert into activities (
@@ -417,7 +417,7 @@ insert into activities (
            173,
            null,
            234234,
-           45010,
+           '12:30:10',
            98 );
 
 insert into activities (
@@ -599,7 +599,7 @@ insert into activities (
            73,
            null,
            null,
-           45010,
+           '12:30:10',
            54 );
 
 insert into activities (
@@ -613,7 +613,7 @@ insert into activities (
            173,
            null,
            234,
-           45010,
+           '12:30:10',
            54 );
 
 insert into activities (
@@ -627,7 +627,7 @@ insert into activities (
            66,
            null,
            null,
-           47010,
+           '13:03:30',
            48 );
 
 insert into activities (
@@ -641,5 +641,5 @@ insert into activities (
            168,
            null,
            null,
-           45320,
+           '12:35:20',
            68 );

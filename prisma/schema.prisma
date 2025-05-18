@@ -7,25 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ExerciseType {
+  strength
+  cardio
+  crossfit
+}
+
 model Activity {
-  id          Int                      @id @default(autoincrement()) @map("activity_id")
-  exerciseId  Int                      @map("exercise_id")
-  reps        Int?
-  weight      Int?
-  duration    Int?
-  workoutId   Int                      @map("workout_id")
-  exercise    Exercise                 @relation(fields: [exerciseId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_exercise")
-  workout     Workout                  @relation(fields: [workoutId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout")
+  id         Int      @id @default(autoincrement()) @map("activity_id")
+  exerciseId Int      @map("exercise_id")
+  reps       Int?
+  weight     Int?
+  duration   String?
+  workoutId  Int      @map("workout_id")
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_exercise")
+  workout    Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout")
 
   @@map("activities")
 }
 
 model Exercise {
   id              Int              @id @default(autoincrement()) @map("exercise_id")
-  type            String?          @default("S") @db.VarChar(10)
+  type            ExerciseType
   kcalBurned      Int?             @default(0) @map("kcal_burned")
   name            String           @db.VarChar(40)
-  videoId         String?          @db.VarChar(11) @map("video_id")
+  videoId         String?          @map("video_id") @db.VarChar(11)
   activities      Activity[]
   exerciseMuscles ExerciseMuscle[]
 
@@ -33,34 +39,34 @@ model Exercise {
 }
 
 model ExerciseMuscle {
-  id          Int      @id @default(autoincrement())
-  exerciseId  Int      @map("exercise_id")
-  muscleId    Int      @map("muscle_id")
-  exercise    Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "exercise_fk")
-  muscle      Muscle   @relation(fields: [muscleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "muscle_fk")
+  id         Int      @id @default(autoincrement())
+  exerciseId Int      @map("exercise_id")
+  muscleId   Int      @map("muscle_id")
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "exercise_fk")
+  muscle     Muscle   @relation(fields: [muscleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "muscle_fk")
 
   @@map("exercises_muscles")
 }
 
 model FriendshipInvitation {
-  id                   Int       @id @default(autoincrement())
-  sender               String    @db.VarChar(50) @map("who_send_username")
-  receiver             String    @db.VarChar(50) @map("who_receive_username")
-  sendTime             DateTime? @default(now()) @db.Timestamp(6) @map("send_time")
-  receiverUser         User      @relation("friendship_invitations_who_receive_usernameTousers", fields: [receiver], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_receive")
-  senderUser           User      @relation("friendship_invitations_who_send_usernameTousers", fields: [sender], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_send")
+  id           Int       @id @default(autoincrement())
+  sender       String    @map("who_send_username") @db.VarChar(50)
+  receiver     String    @map("who_receive_username") @db.VarChar(50)
+  sendTime     DateTime? @default(now()) @map("send_time") @db.Timestamp(6)
+  receiverUser User      @relation("friendship_invitations_who_receive_usernameTousers", fields: [receiver], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_receive")
+  senderUser   User      @relation("friendship_invitations_who_send_usernameTousers", fields: [sender], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_send")
 
   @@unique([sender, receiver], map: "unique_friendship_invitation")
   @@map("friendship_invitations")
 }
 
 model Friendship {
-  id               Int       @id @default(autoincrement())
-  friend1          String    @db.VarChar(50) @map("friend1_username")
-  friend2          String    @db.VarChar(50) @map("friend2_username")
-  created_at       DateTime? @default(now()) @db.Timestamp(6)
-  friend1User      User      @relation("friendships_friend1_usernameTousers", fields: [friend1], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user1")
-  friend2User      User      @relation("friendships_friend2_usernameTousers", fields: [friend2], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user2")
+  id          Int       @id @default(autoincrement())
+  friend1     String    @map("friend1_username") @db.VarChar(50)
+  friend2     String    @map("friend2_username") @db.VarChar(50)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  friend1User User      @relation("friendships_friend1_usernameTousers", fields: [friend1], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user1")
+  friend2User User      @relation("friendships_friend2_usernameTousers", fields: [friend2], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user2")
 
   @@unique([friend1, friend2], map: "friendship_unique_pair1")
   @@map("friendships")
@@ -68,46 +74,46 @@ model Friendship {
 
 model Muscle {
   id              Int              @id @map("muscle_id")
-  name            String           @db.VarChar(40) @map("muscle_name")
+  name            String           @map("muscle_name") @db.VarChar(40)
   exerciseMuscles ExerciseMuscle[]
 
   @@map("muscles")
 }
 
 model PostComment {
-  id                Int       @id @default(autoincrement()) @map("post_comment_id")
-  postId            Int       @map("post_id")
-  author            String    @db.VarChar(50) @map("author_username")
-  content           String?   @db.VarChar(255)
-  date              DateTime? @default(now()) @db.Timestamp(6) @map("post_comment_date")
-  authorUser        User      @relation(fields: [author], references: [username], onDelete: NoAction, onUpdate: NoAction, map: "fk_author_username")
-  post              Post      @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_id")
+  id         Int       @id @default(autoincrement()) @map("post_comment_id")
+  postId     Int       @map("post_id")
+  author     String    @map("author_username") @db.VarChar(50)
+  content    String?   @db.VarChar(255)
+  date       DateTime? @default(now()) @map("post_comment_date") @db.Timestamp(6)
+  authorUser User      @relation(fields: [author], references: [username], onDelete: NoAction, onUpdate: NoAction, map: "fk_author_username")
+  post       Post      @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_id")
 
   @@map("post_comments")
 }
 
 model PostReaction {
-  id Int           @id @default(autoincrement()) @map("post_reaction_id")
-  postId           Int @map("post_id")
-  author           String @db.VarChar(40) @map("author_username")
-  post             Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_reaction_post_id")
-  authorUser       User   @relation(fields: [author], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_reactor_username")
+  id         Int    @id @default(autoincrement()) @map("post_reaction_id")
+  postId     Int    @map("post_id")
+  author     String @map("author_username") @db.VarChar(40)
+  post       Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_reaction_post_id")
+  authorUser User   @relation(fields: [author], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_reactor_username")
 
   @@unique([postId, author], map: "unique_reaction_author")
   @@map("post_reactions")
 }
 
 model Post {
-  id              Int            @id @default(autoincrement()) @map("post_id")
-  author          String         @db.VarChar(50) @map("author_username")
-  date            DateTime?      @default(now()) @db.Timestamp(6) @map("post_date")
-  title           String         @db.VarChar(100)
-  workoutId       Int?           @map("workout_id")
-  content         String?        @db.VarChar(200)
-  comments        PostComment[]
-  reactions       PostReaction[]
-  authorUser      User           @relation(fields: [author], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_username")
-  workout         Workout?       @relation(fields: [workoutId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout_id")
+  id         Int            @id @default(autoincrement()) @map("post_id")
+  author     String         @map("author_username") @db.VarChar(50)
+  date       DateTime?      @default(now()) @map("post_date") @db.Timestamp(6)
+  title      String         @db.VarChar(100)
+  workoutId  Int?           @map("workout_id")
+  content    String?        @db.VarChar(200)
+  comments   PostComment[]
+  reactions  PostReaction[]
+  authorUser User           @relation(fields: [author], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_username")
+  workout    Workout?       @relation(fields: [workoutId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout_id")
 
   @@map("posts")
 }
@@ -137,27 +143,27 @@ model User {
 }
 
 model Workout {
-  id               Int        @id @default(autoincrement()) @map("workout_id")
-  startDate        DateTime?  @db.Timestamp(6) @map("start_datetime")
-  username         String     @db.VarChar(50)
-  endDate          DateTime?  @db.Timestamp(6) @map("end_datetime")
-  description      String?    @db.VarChar(255)
-  createdDate      DateTime?  @default(now()) @db.Timestamp(6) @map("created_datetime")
-  posted           Int?       @default(0) @map("is_posted")
-  schedule         Int?       @default(0)
-  activities       Activity[]
-  posts            Post[]
-  user             User       @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_workouts_username")
+  id          Int        @id @default(autoincrement()) @map("workout_id")
+  startDate   DateTime   @map("start_datetime") @db.Timestamp(6)
+  username    String     @db.VarChar(50)
+  endDate     DateTime   @map("end_datetime") @db.Timestamp(6)
+  description String?    @db.VarChar(255)
+  createdDate DateTime?  @default(now()) @map("created_datetime") @db.Timestamp(6)
+  posted      Int        @default(0) @map("is_posted")
+  schedule    Int        @default(0)
+  activities  Activity[]
+  posts       Post[]
+  user        User       @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_workouts_username")
 
   @@map("workouts")
 }
 
 model Token {
-  email              String    @id(map: "token_pkey") @db.VarChar(255)
-  verificationToken  String?   @db.VarChar(255) @map("verification_token")
-  resetToken         String?   @db.VarChar(255) @map("reset_token")
-  resetExpiry        DateTime? @db.Timestamp(6) @map("reset_expiry")
-  user               User      @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: NoAction, map: "email_fk")
+  email             String    @id(map: "token_pkey") @db.VarChar(255)
+  verificationToken String?   @map("verification_token") @db.VarChar(255)
+  resetToken        String?   @map("reset_token") @db.VarChar(255)
+  resetExpiry       DateTime? @map("reset_expiry") @db.Timestamp(6)
+  user              User      @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: NoAction, map: "email_fk")
 
   @@map("tokens")
 }
