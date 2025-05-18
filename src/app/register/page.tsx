@@ -17,7 +17,7 @@ import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { RegisterForm } from '@/types/forms/RegisterForm';
-import type { RegisterRequest } from '@/types/api/requests/register';
+import type { RegisterRequest } from '@/types/api/requests';
 import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 
 const Root = styled('div')(({ theme }) => ({

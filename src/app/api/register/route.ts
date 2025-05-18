@@ -3,13 +3,13 @@ import { NextResponse } from 'next/server';
 import sendEmail from '@/utils/sendEmail';
 import { hashPassword, generateToken } from '@/utils/crypto';
 import { handleApiError, validateBody } from '@/utils/apiHelpers';
-import { RegisterSchema } from '@/schemas/api/RegisterSchema';
-import type { RegisterRequest } from '@/types/api/requests/register';
+import { RegisterApiSchema } from '@/schemas/api/RegisterSchema';
+import type { RegisterRequest } from '@/types/api/requests';
 
 export async function POST(req: Request): Promise<Response> {
   try {
     const body: RegisterRequest = await validateBody(
-      RegisterSchema,
+      RegisterApiSchema,
       await req.json()
     );
 
