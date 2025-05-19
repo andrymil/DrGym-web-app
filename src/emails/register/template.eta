@@ -1,0 +1,5 @@
+<% it.subject = "Welcome to DrGym!" %>
+
+<h1>Welcome, <%= it.username %>!</h1>
+<p>Thanks for signing up for DrGym 💪</p>
+<p>Follow <a href=<%= it.verifyUrl %>>this link</a> to verify your account.<p>

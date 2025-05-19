@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ExerciseType {
+  strength
+  cardio
+  crossfit
+}
+
+model Activity {
+  id         Int      @id @default(autoincrement()) @map("activity_id")
+  exerciseId Int      @map("exercise_id")
+  reps       Int?
+  weight     Int?
+  duration   String?
+  workoutId  Int      @map("workout_id")
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_exercise")
+  workout    Workout  @relation(fields: [workoutId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout")
+
+  @@map("activities")
+}
+
+model Exercise {
+  id              Int              @id @default(autoincrement()) @map("exercise_id")
+  type            ExerciseType
+  kcalBurned      Int?             @default(0) @map("kcal_burned")
+  name            String           @db.VarChar(40)
+  videoId         String?          @map("video_id") @db.VarChar(11)
+  activities      Activity[]
+  exerciseMuscles ExerciseMuscle[]
+
+  @@map("exercises")
+}
+
+model ExerciseMuscle {
+  id         Int      @id @default(autoincrement())
+  exerciseId Int      @map("exercise_id")
+  muscleId   Int      @map("muscle_id")
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "exercise_fk")
+  muscle     Muscle   @relation(fields: [muscleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "muscle_fk")
+
+  @@map("exercises_muscles")
+}
+
+model FriendshipInvitation {
+  id           Int       @id @default(autoincrement())
+  sender       String    @map("who_send_username") @db.VarChar(50)
+  receiver     String    @map("who_receive_username") @db.VarChar(50)
+  sendTime     DateTime? @default(now()) @map("send_time") @db.Timestamp(6)
+  receiverUser User      @relation("friendship_invitations_who_receive_usernameTousers", fields: [receiver], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_receive")
+  senderUser   User      @relation("friendship_invitations_who_send_usernameTousers", fields: [sender], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_send")
+
+  @@unique([sender, receiver], map: "unique_friendship_invitation")
+  @@map("friendship_invitations")
+}
+
+model Friendship {
+  id          Int       @id @default(autoincrement())
+  friend1     String    @map("friend1_username") @db.VarChar(50)
+  friend2     String    @map("friend2_username") @db.VarChar(50)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  friend1User User      @relation("friendships_friend1_usernameTousers", fields: [friend1], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user1")
+  friend2User User      @relation("friendships_friend2_usernameTousers", fields: [friend2], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user2")
+
+  @@unique([friend1, friend2], map: "friendship_unique_pair1")
+  @@map("friendships")
+}
+
+model Muscle {
+  id              Int              @id @map("muscle_id")
+  name            String           @map("muscle_name") @db.VarChar(40)
+  exerciseMuscles ExerciseMuscle[]
+
+  @@map("muscles")
+}
+
+model PostComment {
+  id         Int       @id @default(autoincrement()) @map("post_comment_id")
+  postId     Int       @map("post_id")
+  author     String    @map("author_username") @db.VarChar(50)
+  content    String?   @db.VarChar(255)
+  date       DateTime? @default(now()) @map("post_comment_date") @db.Timestamp(6)
+  authorUser User      @relation(fields: [author], references: [username], onDelete: NoAction, onUpdate: NoAction, map: "fk_author_username")
+  post       Post      @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_post_id")
+
+  @@map("post_comments")
+}
+
+model PostReaction {
+  id         Int    @id @default(autoincrement()) @map("post_reaction_id")
+  postId     Int    @map("post_id")
+  author     String @map("author_username") @db.VarChar(40)
+  post       Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_reaction_post_id")
+  authorUser User   @relation(fields: [author], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_reactor_username")
+
+  @@unique([postId, author], map: "unique_reaction_author")
+  @@map("post_reactions")
+}
+
+model Post {
+  id         Int            @id @default(autoincrement()) @map("post_id")
+  author     String         @map("author_username") @db.VarChar(50)
+  date       DateTime?      @default(now()) @map("post_date") @db.Timestamp(6)
+  title      String         @db.VarChar(100)
+  workoutId  Int?           @map("workout_id")
+  content    String?        @db.VarChar(200)
+  comments   PostComment[]
+  reactions  PostReaction[]
+  authorUser User           @relation(fields: [author], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_username")
+  workout    Workout?       @relation(fields: [workoutId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_workout_id")
+
+  @@map("posts")
+}
+
+model User {
+  username             String                 @id @db.VarChar(50)
+  name                 String                 @db.VarChar(50)
+  surname              String                 @db.VarChar(50)
+  email                String                 @unique @db.VarChar(100)
+  password             String                 @db.VarChar(100)
+  weight               Decimal?               @db.Decimal(5, 2)
+  height               Decimal?               @db.Decimal(5, 2)
+  verified             Int?                   @default(0)
+  favoriteExercise     Int?                   @map("favorite_exercise")
+  avatar               String?                @db.VarChar(7)
+  receivedInvitations  FriendshipInvitation[] @relation("friendship_invitations_who_receive_usernameTousers")
+  sentInvitations      FriendshipInvitation[] @relation("friendship_invitations_who_send_usernameTousers")
+  friendshipsAsFriend1 Friendship[]           @relation("friendships_friend1_usernameTousers")
+  friendshipsAsFriend2 Friendship[]           @relation("friendships_friend2_usernameTousers")
+  comments             PostComment[]
+  reactions            PostReaction[]
+  posts                Post[]
+  tokens               Token?
+  workouts             Workout[]
+
+  @@map("users")
+}
+
+model Workout {
+  id          Int        @id @default(autoincrement()) @map("workout_id")
+  startDate   DateTime   @map("start_datetime") @db.Timestamp(6)
+  username    String     @db.VarChar(50)
+  endDate     DateTime   @map("end_datetime") @db.Timestamp(6)
+  description String?    @db.VarChar(255)
+  createdDate DateTime?  @default(now()) @map("created_datetime") @db.Timestamp(6)
+  posted      Int        @default(0) @map("is_posted")
+  schedule    Int        @default(0)
+  activities  Activity[]
+  posts       Post[]
+  user        User       @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_workouts_username")
+
+  @@map("workouts")
+}
+
+model Token {
+  email             String    @id(map: "token_pkey") @db.VarChar(255)
+  verificationToken String?   @map("verification_token") @db.VarChar(255)
+  resetToken        String?   @map("reset_token") @db.VarChar(255)
+  resetExpiry       DateTime? @map("reset_expiry") @db.Timestamp(6)
+  user              User      @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: NoAction, map: "email_fk")
+
+  @@map("tokens")
+}

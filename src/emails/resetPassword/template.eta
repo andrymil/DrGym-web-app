@@ -1,0 +1,10 @@
+<% it.subject = "Reset your DrGym password" %>
+
+<h1>Hi <%= it.username %>,</h1>
+
+<p>We received a request to reset your password for your DrGym account.</p>
+<p>Click the link below to set a new password:</p>
+
+<p><a href="<%= it.resetUrl %>">Reset Password</a></p>
+
+<p>This link will expire in 1 hour. If you didn’t request a password reset, you can safely ignore this email.</p>
