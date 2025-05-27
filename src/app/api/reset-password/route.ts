@@ -2,27 +2,17 @@ import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { hashPassword, verifyToken } from '@/utils/crypto';
 import sendEmail from '@/utils/sendEmail';
-import type { ResetPasswordRequest } from '@/types/api/requests/resetPassword';
+import { handleApiError, validateBody } from '@/utils/apiHelpers';
+import { ResetPasswordApiSchema } from '@/schemas/api/ResetPasswordSchema';
+import type { ResetPasswordRequest } from '@/schemas/api/ResetPasswordSchema';
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const body = (await req.json()) as ResetPasswordRequest;
-    const { password, token } = body;
-    const email = body.email?.toLowerCase().trim();
-
-    if (!email || !password || !token) {
-      return NextResponse.json(
-        { error: 'Email, password and token are required' },
-        { status: 400 }
-      );
-    }
-
-    if (password.length < 8) {
-      return NextResponse.json(
-        { error: 'Password must be at least 8 characters long' },
-        { status: 400 }
-      );
-    }
+    const body: ResetPasswordRequest = await validateBody(
+      ResetPasswordApiSchema,
+      await req.json()
+    );
+    const { email, password, token } = body;
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -107,9 +97,6 @@ export async function POST(req: Request): Promise<Response> {
     );
   } catch (err) {
     console.error('Reset Password error:', err);
-    return NextResponse.json(
-      { error: 'Something went wrong' },
-      { status: 500 }
-    );
+    return handleApiError(err);
   }
 }
