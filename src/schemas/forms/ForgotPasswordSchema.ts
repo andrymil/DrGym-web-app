@@ -1,16 +1,16 @@
 import * as yup from 'yup';
 import { EmailSchema } from '@/schemas/forms/EmailSchema';
 
-const ForogtPasswordSchema = () => {
+const ForgotPasswordSchema = () => {
   return yup.object().shape({
     email: EmailSchema.required('E-mail address is required'),
   });
 };
 
-const ForogtPasswordDefaultValues = () => {
+const ForgotPasswordDefaultValues = () => {
   return {
     email: '',
   };
 };
 
-export { ForogtPasswordSchema, ForogtPasswordDefaultValues };
+export { ForgotPasswordSchema, ForgotPasswordDefaultValues };

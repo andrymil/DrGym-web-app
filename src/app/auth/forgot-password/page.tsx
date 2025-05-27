@@ -8,13 +8,13 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import { Button, InputAdornment, IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import {
-  ForogtPasswordSchema,
-  ForogtPasswordDefaultValues,
+  ForgotPasswordSchema,
+  ForgotPasswordDefaultValues,
 } from '@/schemas/forms/ForgotPasswordSchema';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
-import type { ForgotPasswordRequest } from '@/types/api/requests/forgotPassword';
+import type { ForgotPasswordRequest } from '@/schemas/api/ForgotPasswordSchema';
 import type { ForgotPasswordValues } from '@/types/forms/ForgotPasswordForm';
 import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 
@@ -101,8 +101,8 @@ const ForgotPassword = ({
             </Typography>
             <Formik<ForgotPasswordValues>
               innerRef={formikRef}
-              initialValues={ForogtPasswordDefaultValues()}
-              validationSchema={ForogtPasswordSchema()}
+              initialValues={ForgotPasswordDefaultValues()}
+              validationSchema={ForgotPasswordSchema()}
               onSubmit={handleForgotPassword}
             >
               {({
