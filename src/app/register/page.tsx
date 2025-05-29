@@ -63,7 +63,7 @@ const Register = ({
         email: formData.email,
         password: formData.password,
       };
-      await api.post('/api/register', payload);
+      await api.post('/api/auth/register', payload);
       router.replace('/auth/verification?account=welcome');
     } catch (err) {
       const { message } = handleAxiosError(err);

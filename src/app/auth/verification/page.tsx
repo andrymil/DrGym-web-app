@@ -34,7 +34,7 @@ const VerificationPageContent = ({ showAppMessage }: WithAppMessage) => {
           email,
           token,
         };
-        await api.post(`/api/verification`, payload);
+        await api.post(`/api/auth/verification`, payload);
         router.replace('/login?message=Account has been verified&type=success');
       } catch (err) {
         const { message: errMessage, status } = handleAxiosError(err);
