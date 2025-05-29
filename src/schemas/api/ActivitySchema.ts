@@ -6,10 +6,12 @@ export const ActivitySchema = yup.object().shape({
   reps: yup
     .number()
     .min(0, 'Reps cannot be negative')
+    .nullable()
     .defined('Reps must be defined'),
   weight: yup
     .number()
     .min(0, 'Weight cannot be negative')
+    .nullable()
     .defined('Weight must be defined'),
-  duration: yup.string().nullable().required('Duration is required'),
+  duration: yup.string().nullable().defined('Duration must be defined'),
 });

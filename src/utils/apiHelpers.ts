@@ -48,6 +48,7 @@ export function handleApiError(err: unknown) {
       {} as Record<string, string>
     );
 
+    console.log('Validation errors:', errors);
     return NextResponse.json(
       {
         error: 'Validation failed',

@@ -25,21 +25,21 @@ type WorkoutCardProps = {
   workout: Workout;
   disableActions?: boolean;
   onDelete?: (id: number) => void;
-  onEditWorkout?: () => Promise<void>;
+  onChange?: () => Promise<void>;
   showAppMessage: ShowAppMessage;
 };
 
 export default function WorkoutCard({
   workout,
   onDelete,
-  onEditWorkout,
+  onChange,
   disableActions,
   showAppMessage,
 }: WorkoutCardProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [popupType, setPopupType] = useState('');
+  const [popupType, setPopupType] = useState<'edit' | 'copy'>('edit');
   const [loading, setLoading] = useState(false);
 
   const isSmallScreen = useMediaQuery('(max-width: 550px)');
@@ -187,22 +187,28 @@ export default function WorkoutCard({
           )}
           <WorkoutInfo workout={workout} />
         </Card>
-        <WorkoutForm
-          dialogTitle={popupType === 'edit' ? 'Edit workout' : 'Copy workout'}
-          popupType={popupType}
-          popupStatus={dialogOpen}
-          togglePopup={togglePopup}
-          workout={workout}
-          onEditWorkout={onEditWorkout}
-          showAppMessage={showAppMessage}
-        />
-        <DeleteConfirmation
-          message="Are you sure you want to delete this workout?"
-          open={openDeleteConfirmation}
-          loading={loading}
-          onConfirm={deleteWorkout}
-          onClose={() => setOpenDeleteConfirmation(false)}
-        />
+        {onChange && (
+          <>
+            <WorkoutForm
+              dialogTitle={
+                popupType === 'edit' ? 'Edit workout' : 'Copy workout'
+              }
+              popupType={popupType}
+              popupStatus={dialogOpen}
+              togglePopup={togglePopup}
+              workout={workout}
+              onChange={onChange}
+              showAppMessage={showAppMessage}
+            />
+            <DeleteConfirmation
+              message="Are you sure you want to delete this workout?"
+              open={openDeleteConfirmation}
+              loading={loading}
+              onConfirm={deleteWorkout}
+              onClose={() => setOpenDeleteConfirmation(false)}
+            />
+          </>
+        )}
       </Box>
     </>
   );

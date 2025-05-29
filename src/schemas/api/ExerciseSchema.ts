@@ -7,5 +7,5 @@ export const ExerciseSchema = yup.object().shape({
     .string()
     .oneOf(['strength', 'cardio', 'crossfit'], 'Invalid exercise type')
     .required('Exercise type is required'),
-  videoId: yup.string(),
+  videoId: yup.string().nullable(),
 });

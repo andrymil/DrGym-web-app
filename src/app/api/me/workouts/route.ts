@@ -73,7 +73,7 @@ export async function POST(req: Request): Promise<Response> {
 
     const { startDate, endDate, description, schedule, activities } = body;
 
-    const newWorkout = await prisma.workout.create({
+    const newWorkout: Workout = await prisma.workout.create({
       data: {
         startDate,
         endDate,
@@ -96,7 +96,7 @@ export async function POST(req: Request): Promise<Response> {
       },
     });
 
-    return NextResponse.json(newWorkout, { status: 201 });
+    return NextResponse.json<Workout>(newWorkout, { status: 201 });
   } catch (err) {
     console.error('Adding Workout error:', err);
     return handleApiError(err);

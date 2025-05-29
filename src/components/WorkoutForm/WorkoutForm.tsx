@@ -39,7 +39,6 @@ import {
   cardioActivitySchema,
 } from '@/schemas/forms/WorkoutSchema';
 import { formatDate } from '@/utils/dateUtils';
-import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
 import { ValidationError } from 'yup';
 import type { Workout } from '@/types/api/workout';
@@ -47,15 +46,15 @@ import type { WithAppMessage } from '@/types/general';
 import type { WorkoutFormValues } from '@/types/forms/WorkoutForm';
 import type { Activity } from '@/types/api/activity';
 import type { Exercises } from '@/types/api/exercise';
+import type { WorkoutRequest } from '@/schemas/api/WorkoutSchema';
 
 type WorkoutFormProps = WithAppMessage & {
   dialogTitle: string;
-  popupType: string;
+  popupType: 'new' | 'edit' | 'copy';
   popupStatus: boolean;
   togglePopup: () => void;
   workout?: Workout;
-  onAddWorkout?: () => Promise<void>;
-  onEditWorkout?: () => Promise<void>;
+  onChange: () => Promise<void>;
 };
 
 export default function WorkoutForm({
@@ -64,8 +63,7 @@ export default function WorkoutForm({
   popupStatus,
   togglePopup,
   workout,
-  onAddWorkout,
-  onEditWorkout,
+  onChange,
   showAppMessage,
 }: WorkoutFormProps) {
   const theme = useTheme();
@@ -77,7 +75,6 @@ export default function WorkoutForm({
     cardio: [],
     crossfit: [],
   });
-  const username = getUsername();
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -162,13 +159,6 @@ export default function WorkoutForm({
       });
   };
 
-  const handleDeleteActivity = (activityId: number, index: number) => {
-    setActivityList((prev) => prev.filter((_, i) => i !== index));
-    if (activityId) {
-      setActivitiesToDelete((prev) => [...prev, activityId]);
-    }
-  };
-
   const handleAddWorkout = async (
     values: WorkoutFormValues,
     actions: FormikHelpers<WorkoutFormValues>
@@ -184,27 +174,18 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      let activities: Activity[];
-      if (popupType === 'new') {
-        activities = activityList;
-      } else {
-        activities = activityList.map(({ id: _, ...activity }) => activity);
-      }
 
-      await api.post(`/api/workouts/create`, {
-        username: username,
+      const payload: WorkoutRequest = {
+        startDate: values.startDate!,
+        endDate: values.endDate!,
         description: values.description,
-        startDate: values.startDate!.toISOString(),
-        endDate: values.endDate!.toISOString(),
-        activities: activities,
         schedule: values.isRegular ? values.interval : 0,
-      });
+        activities: activityList,
+      };
 
-      if (popupType === 'new' && onAddWorkout) {
-        void onAddWorkout();
-      } else if (onEditWorkout) {
-        void onEditWorkout();
-      }
+      await api.post<Workout>(`/api/me/workouts`, payload);
+
+      void onChange();
       handleClose();
       showAppMessage({
         status: true,
@@ -240,7 +221,6 @@ export default function WorkoutForm({
       actions.setSubmitting(true);
       await api.put(`/api/workouts/update`, {
         id: workout?.id,
-        username: username,
         description: values.description,
         startDate: values.startDate!.toISOString(),
         endDate: values.endDate!.toISOString(),
@@ -249,9 +229,7 @@ export default function WorkoutForm({
         activitiesToRemove: activitiesToDelete,
       });
 
-      if (onEditWorkout) {
-        void onEditWorkout();
-      }
+      void onChange();
       handleClose();
       showAppMessage({
         status: true,
@@ -267,6 +245,16 @@ export default function WorkoutForm({
       });
     } finally {
       actions.setSubmitting(false);
+    }
+  };
+
+  const handleDeleteActivity = (
+    activityId: number | undefined,
+    index: number
+  ) => {
+    setActivityList((prev) => prev.filter((_, i) => i !== index));
+    if (activityId) {
+      setActivitiesToDelete((prev) => [...prev, activityId]);
     }
   };
 
@@ -639,9 +627,7 @@ export default function WorkoutForm({
                         edge="end"
                         color="error"
                         sx={{ mr: 1 }}
-                        onClick={() =>
-                          handleDeleteActivity(activity.id!, index)
-                        }
+                        onClick={() => handleDeleteActivity(activity.id, index)}
                       >
                         <DeleteIcon />
                       </IconButton>
