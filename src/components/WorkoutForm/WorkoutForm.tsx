@@ -135,11 +135,9 @@ export default function WorkoutForm({
       .then(() => {
         const newActivity: Activity = {
           exercise: values.exercise!,
-          reps: values.reps || 0,
-          weight: values.weight || 0,
-          duration: values.duration
-            ? formatDate(values.duration, 'HH:mm:ss')
-            : '00:00:00',
+          reps: values.reps,
+          weight: values.weight,
+          duration: values.duration && formatDate(values.duration, 'HH:mm:ss'),
         };
         setActivityList((prev) => [...prev, newActivity]);
         void setFieldValue('exerciseType', '');

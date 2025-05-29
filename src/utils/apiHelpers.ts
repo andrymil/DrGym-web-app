@@ -69,5 +69,6 @@ export async function validateBody<T extends AnyObjectSchema>(
   return await schema.validate(body, {
     abortEarly: false,
     stripUnknown: true,
+    strict: true,
   });
 }
