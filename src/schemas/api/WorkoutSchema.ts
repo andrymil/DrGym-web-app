@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { ActivitySchema } from './ActivitySchema';
 
-export const WorkoutSchema = yup.object().shape({
+export const WorkoutApiSchema = yup.object().shape({
   startDate: yup
     .date()
     .required('Start Date is required')
@@ -18,5 +18,8 @@ export const WorkoutSchema = yup.object().shape({
   activities: yup
     .array()
     .of(ActivitySchema)
-    .min(1, 'At least one activity is required'),
+    .min(1, 'At least one activity is required')
+    .required('Activities list is required'),
 });
+
+export type WorkoutRequest = yup.InferType<typeof WorkoutApiSchema>;

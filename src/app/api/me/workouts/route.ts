@@ -1,7 +1,29 @@
 import { NextResponse } from 'next/server';
 import prisma from '@prisma';
-import { getSessionUsername, handleApiError } from '@/utils/apiHelpers';
+import {
+  getSessionUsername,
+  handleApiError,
+  validateBody,
+} from '@/utils/apiHelpers';
 import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
+import { WorkoutApiSchema } from '@/schemas/api/WorkoutSchema';
+import type { WorkoutRequest } from '@/schemas/api/WorkoutSchema';
+
+const activitiesSelect = {
+  select: {
+    id: true,
+    reps: true,
+    weight: true,
+    duration: true,
+    exercise: {
+      select: {
+        id: true,
+        name: true,
+        type: true,
+      },
+    },
+  },
+};
 
 export async function GET(): Promise<Response> {
   try {
@@ -9,21 +31,7 @@ export async function GET(): Promise<Response> {
 
     const now = new Date();
     const workoutActivities = {
-      activities: {
-        select: {
-          id: true,
-          reps: true,
-          weight: true,
-          duration: true,
-          exercise: {
-            select: {
-              id: true,
-              name: true,
-              type: true,
-            },
-          },
-        },
-      },
+      activities: activitiesSelect,
     };
 
     const [pastWorkouts, futureWorkouts]: [Workout[], Workout[]] =
@@ -50,6 +58,47 @@ export async function GET(): Promise<Response> {
     });
   } catch (err) {
     console.error('Workouts fetch error:', err);
+    return handleApiError(err);
+  }
+}
+
+export async function POST(req: Request): Promise<Response> {
+  try {
+    const username = await getSessionUsername();
+
+    const body: WorkoutRequest = await validateBody(
+      WorkoutApiSchema,
+      await req.json()
+    );
+
+    const { startDate, endDate, description, schedule, activities } = body;
+
+    const newWorkout = await prisma.workout.create({
+      data: {
+        startDate,
+        endDate,
+        description,
+        schedule,
+        username,
+        activities: {
+          create: activities.map((activity) => ({
+            reps: activity.reps,
+            weight: activity.weight,
+            duration: activity.duration,
+            exercise: {
+              connect: { id: activity.exercise.id },
+            },
+          })),
+        },
+      },
+      include: {
+        activities: activitiesSelect,
+      },
+    });
+
+    return NextResponse.json(newWorkout, { status: 201 });
+  } catch (err) {
+    console.error('Adding Workout error:', err);
     return handleApiError(err);
   }
 }

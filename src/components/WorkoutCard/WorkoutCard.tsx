@@ -102,7 +102,7 @@ export default function WorkoutCard({
         color={workout.posted ? 'success' : 'warning'}
         variant="outlined"
       />
-      {workout.schedule && workout.schedule !== 0 && (
+      {workout.schedule !== 0 && (
         <Chip
           label={getIntervalDescription(workout.schedule)}
           color="info"
