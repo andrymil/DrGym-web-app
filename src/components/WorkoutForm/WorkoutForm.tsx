@@ -46,7 +46,7 @@ import type { WithAppMessage } from '@/types/general';
 import type { WorkoutFormValues } from '@/types/forms/WorkoutForm';
 import type { Activity } from '@/types/api/activity';
 import type { Exercises } from '@/types/api/exercise';
-import type { WorkoutRequest } from '@/schemas/api/WorkoutSchema';
+import type { CreateWorkoutRequest } from '@/schemas/api/WorkoutSchema';
 
 type WorkoutFormProps = WithAppMessage & {
   dialogTitle: string;
@@ -179,7 +179,7 @@ export default function WorkoutForm({
     try {
       actions.setSubmitting(true);
 
-      const payload: WorkoutRequest = {
+      const payload: CreateWorkoutRequest = {
         startDate: values.startDate!,
         endDate: values.endDate!,
         description: values.description,
@@ -230,7 +230,7 @@ export default function WorkoutForm({
         endDate: values.endDate!.toISOString(),
         schedule: isRegular ? values.interval : 0,
         activitiesToAdd: activityList.filter((activity) => !activity.id),
-        activitiesToRemove: activitiesToDelete,
+        activitiesToDelete: activitiesToDelete,
       });
 
       void onChange();

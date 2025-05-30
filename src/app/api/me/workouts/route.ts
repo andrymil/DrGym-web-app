@@ -6,8 +6,8 @@ import {
   validateBody,
 } from '@/utils/apiHelpers';
 import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
-import { WorkoutApiSchema } from '@/schemas/api/WorkoutSchema';
-import type { WorkoutRequest } from '@/schemas/api/WorkoutSchema';
+import { CreateWorkoutSchema } from '@/schemas/api/WorkoutSchema';
+import type { CreateWorkoutRequest } from '@/schemas/api/WorkoutSchema';
 
 const activitiesSelect = {
   select: {
@@ -66,8 +66,8 @@ export async function POST(req: Request): Promise<Response> {
   try {
     const username = await getSessionUsername();
 
-    const body: WorkoutRequest = await validateBody(
-      WorkoutApiSchema,
+    const body: CreateWorkoutRequest = await validateBody(
+      CreateWorkoutSchema,
       await req.json()
     );
 
