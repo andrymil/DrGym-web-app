@@ -7,45 +7,27 @@ import {
 } from '@/utils/apiHelpers';
 import type { Workout, FuturePastWorkouts } from '@/types/api/workout';
 import { CreateWorkoutSchema } from '@/schemas/api/WorkoutSchema';
+import { activitiesSelect } from '@/utils/prismaSelects';
 import type { CreateWorkoutRequest } from '@/schemas/api/WorkoutSchema';
-
-const activitiesSelect = {
-  select: {
-    id: true,
-    reps: true,
-    weight: true,
-    duration: true,
-    exercise: {
-      select: {
-        id: true,
-        name: true,
-        type: true,
-      },
-    },
-  },
-};
 
 export async function GET(): Promise<Response> {
   try {
     const username = await getSessionUsername();
 
     const now = new Date();
-    const workoutActivities = {
-      activities: activitiesSelect,
-    };
 
     const [pastWorkouts, futureWorkouts]: [Workout[], Workout[]] =
       await prisma.$transaction([
         prisma.workout.findMany({
           where: { username, startDate: { lt: now } },
-          include: workoutActivities,
+          include: activitiesSelect,
           orderBy: {
             startDate: 'desc',
           },
         }),
         prisma.workout.findMany({
           where: { username, startDate: { gte: now } },
-          include: workoutActivities,
+          include: activitiesSelect,
           orderBy: {
             startDate: 'asc',
           },
@@ -91,9 +73,7 @@ export async function POST(req: Request): Promise<Response> {
           })),
         },
       },
-      include: {
-        activities: activitiesSelect,
-      },
+      include: activitiesSelect,
     });
 
     return NextResponse.json<Workout>(newWorkout, { status: 201 });
