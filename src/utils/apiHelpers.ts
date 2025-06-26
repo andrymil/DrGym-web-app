@@ -3,6 +3,10 @@ import authOptions from '@/lib/auth';
 import { NextResponse } from 'next/server';
 import { AnyObjectSchema, InferType, ValidationError } from 'yup';
 
+export type Params = Promise<{
+  id: string;
+}>;
+
 export class ApiError extends Error {
   statusCode: number;
 
@@ -66,10 +70,25 @@ export async function validateBody<T extends AnyObjectSchema>(
   schema: T,
   body: unknown
 ): Promise<InferType<T>> {
+  if (typeof body !== 'object' || body === null) {
+    throw new ApiError('Invalid request body', 400);
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return await schema.validate(body, {
     abortEarly: false,
     stripUnknown: true,
     // strict: true,
   });
+}
+
+export async function getParamId(params: Params) {
+  const { id } = await params;
+
+  const parsedId = parseInt(id, 10);
+  if (isNaN(parsedId)) {
+    throw new ApiError('Invalid workout ID', 400);
+  }
+
+  return parsedId;
 }

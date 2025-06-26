@@ -26,9 +26,11 @@ export const CreateWorkoutSchema = WorkoutBaseSchema.shape({
 });
 
 export const EditWorkoutSchema = WorkoutBaseSchema.shape({
-  id: yup.number().required('Workout ID is required'),
   activitiesToAdd: yup.array().of(ActivitySchema).optional(),
-  activitiesToDelete: yup.array().of(yup.number().integer()).optional(),
+  activitiesToDelete: yup
+    .array()
+    .of(yup.number().integer().required())
+    .optional(),
 });
 
 export type CreateWorkoutRequest = yup.InferType<typeof CreateWorkoutSchema>;

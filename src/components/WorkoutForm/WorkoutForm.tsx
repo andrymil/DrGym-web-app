@@ -46,7 +46,10 @@ import type { WithAppMessage } from '@/types/general';
 import type { WorkoutFormValues } from '@/types/forms/WorkoutForm';
 import type { Activity } from '@/types/api/activity';
 import type { Exercises } from '@/types/api/exercise';
-import type { CreateWorkoutRequest } from '@/schemas/api/WorkoutSchema';
+import type {
+  CreateWorkoutRequest,
+  EditWorkoutRequest,
+} from '@/schemas/api/WorkoutSchema';
 
 type WorkoutFormProps = WithAppMessage & {
   dialogTitle: string;
@@ -223,15 +226,16 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      await api.put(`/api/workouts/update`, {
-        id: workout?.id,
+      const newWorkout: EditWorkoutRequest = {
+        startDate: values.startDate!,
+        endDate: values.endDate!,
         description: values.description,
-        startDate: values.startDate!.toISOString(),
-        endDate: values.endDate!.toISOString(),
-        schedule: isRegular ? values.interval : 0,
+        schedule: isRegular && values.interval ? values.interval : 0,
         activitiesToAdd: activityList.filter((activity) => !activity.id),
         activitiesToDelete: activitiesToDelete,
-      });
+      };
+
+      await api.patch<Workout>(`/api/me/workouts/${workout?.id}`, newWorkout);
 
       void onChange();
       handleClose();
