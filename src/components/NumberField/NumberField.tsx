@@ -26,6 +26,7 @@ const CustomInput = ({
       error={showError}
       label={showError ? errorStr : label}
       type="number"
+      value={value || ''}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         if (setHasChanges) {
           setHasChanges(true);

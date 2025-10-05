@@ -14,11 +14,13 @@ const schema = (isRegular: boolean) =>
     interval: yup
       .number()
       .typeError('Interval must be a number')
-      .min(1, 'Interval must be at least 1')
       .max(99, 'Interval must be less than 100')
       .when([], {
         is: () => isRegular,
-        then: (schema) => schema.required('Interval is required'),
+        then: (schema) =>
+          schema
+            .min(1, 'Interval must be at least 1')
+            .required('Interval is required'),
         otherwise: (schema) => schema.notRequired(),
       }),
   });

@@ -71,7 +71,9 @@ export default function WorkoutForm({
 }: WorkoutFormProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [isRegular, setIsRegular] = useState<boolean>(false);
+  const [isRegular, setIsRegular] = useState<boolean>(
+    (workout?.schedule ?? 0) > 0
+  );
   const [activityList, setActivityList] = useState<Activity[]>([]);
   const [activitiesToDelete, setActivitiesToDelete] = useState<number[]>([]);
   const [exercises, setExercises] = useState<Exercises>({
@@ -302,7 +304,7 @@ export default function WorkoutForm({
       <WorkoutFormTitle onClose={togglePopup}>{dialogTitle}</WorkoutFormTitle>
       <Formik<WorkoutFormValues>
         initialValues={
-          popupType === 'edit' && workout
+          popupType !== 'new' && workout
             ? {
                 startDate: new Date(workout.startDate),
                 endDate: new Date(workout.endDate),
