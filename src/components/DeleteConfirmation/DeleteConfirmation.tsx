@@ -38,7 +38,7 @@ export default function DeleteConfirmation({
         <DialogTitle id="delete-confirmation" className={style.dialogTitle}>
           {title}
         </DialogTitle>
-        <DialogContent sx={{ p: 2 }}>{message}</DialogContent>
+        <DialogContent sx={{ mt: 2 }}>{message}</DialogContent>
         <DialogActions>
           <Button color="secondary" onClick={onClose} disabled={loading}>
             Cancel
@@ -46,7 +46,9 @@ export default function DeleteConfirmation({
           <Button
             variant="contained"
             color="error"
-            onClick={void onConfirm}
+            onClick={() => {
+              void onConfirm();
+            }}
             disabled={loading}
             endIcon={
               loading && <CircularProgress color="secondary" size={18} />

@@ -62,7 +62,7 @@ export default function WorkoutCard({
   const deleteWorkout = async () => {
     try {
       setLoading(true);
-      await api.delete(`/api/workouts/${workout.id}`);
+      await api.delete(`/api/me/workouts/${workout.id}`);
       showAppMessage({
         status: true,
         text: 'Workout deleted successfully',

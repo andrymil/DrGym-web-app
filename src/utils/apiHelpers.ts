@@ -7,6 +7,8 @@ export type Params = Promise<{
   id: string;
 }>;
 
+export type ParamsProp = { params: Params };
+
 export class ApiError extends Error {
   statusCode: number;
 

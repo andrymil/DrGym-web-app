@@ -11,11 +11,11 @@ import type { Workout } from '@/types/api/workout';
 import { EditWorkoutSchema } from '@/schemas/api/WorkoutSchema';
 import { activitiesSelect } from '@/utils/prismaSelects';
 import type { EditWorkoutRequest } from '@/schemas/api/WorkoutSchema';
-import type { Params } from '@/utils/apiHelpers';
+import type { ParamsProp } from '@/utils/apiHelpers';
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Params }
+  { params }: ParamsProp
 ): Promise<Response> {
   try {
     const username = await getSessionUsername();
@@ -89,6 +89,34 @@ export async function PATCH(
     return NextResponse.json<Workout>(updatedWorkout, { status: 200 });
   } catch (err) {
     console.error('Editing Workout error:', err);
+    return handleApiError(err);
+  }
+}
+
+export async function DELETE(
+  _req: Request,
+  { params }: ParamsProp
+): Promise<Response> {
+  try {
+    const username = await getSessionUsername();
+    const id = await getParamId(params);
+
+    const workout = await prisma.workout.findFirst({
+      where: { id, username },
+      select: { id: true },
+    });
+
+    if (!workout) {
+      throw new ApiError('Workout not found', 404);
+    }
+
+    await prisma.workout.delete({
+      where: { id, username },
+    });
+
+    return new NextResponse(null, { status: 204 });
+  } catch (err) {
+    console.error('Deleting Workout error:', err);
     return handleApiError(err);
   }
 }
