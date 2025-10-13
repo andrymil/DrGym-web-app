@@ -5,11 +5,11 @@ import { handleApiError, validateBody } from '@/utils/apiHelpers';
 import { VerificationApiSchema } from '@/schemas/api/VerificationSchema';
 import type { VerificationRequest } from '@/schemas/api/VerificationSchema';
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body: VerificationRequest = await validateBody(
       VerificationApiSchema,
-      await req.json()
+      await request.json()
     );
 
     const { email, token } = body;

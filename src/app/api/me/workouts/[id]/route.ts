@@ -14,7 +14,7 @@ import type { EditWorkoutRequest } from '@/schemas/api/WorkoutSchema';
 import type { ParamsProp } from '@/utils/apiHelpers';
 
 export async function PATCH(
-  req: Request,
+  request: Request,
   { params }: ParamsProp
 ): Promise<Response> {
   try {
@@ -22,7 +22,7 @@ export async function PATCH(
 
     const body: EditWorkoutRequest = await validateBody(
       EditWorkoutSchema,
-      await req.json()
+      await request.json()
     );
 
     const id = await getParamId(params);
@@ -94,7 +94,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _req: Request,
+  _request: Request,
   { params }: ParamsProp
 ): Promise<Response> {
   try {

@@ -74,7 +74,7 @@ const LoginContent = ({
     try {
       setLoading(true);
 
-      const res = await signIn('credentials', {
+      const response = await signIn('credentials', {
         identifierType: loginType,
         identifier:
           loginType === 'username' ? formData.username : formData.email,
@@ -82,16 +82,16 @@ const LoginContent = ({
         redirect: false,
       });
 
-      if (res?.error) {
+      if (response?.error) {
         showAppMessage({
           status: true,
-          text: `${res?.error}`,
+          text: `${response?.error}`,
           type: 'error',
         });
 
         void form.setValues({ ...formData, password: '' });
         void form.setTouched({});
-      } else if (res?.ok) {
+      } else if (response?.ok) {
         const session = await getSession();
 
         if (!session) {

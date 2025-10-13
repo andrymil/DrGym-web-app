@@ -6,11 +6,11 @@ import { handleApiError, validateBody } from '@/utils/apiHelpers';
 import { RegisterApiSchema } from '@/schemas/api/RegisterSchema';
 import type { RegisterRequest } from '@/schemas/api/RegisterSchema';
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body: RegisterRequest = await validateBody(
       RegisterApiSchema,
-      await req.json()
+      await request.json()
     );
 
     const { name, surname, username, password, email } = body;

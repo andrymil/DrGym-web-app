@@ -31,8 +31,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get<Exercises>('/api/exercises/by-type');
-        setExerciseData(res.data);
+        const response = await api.get<Exercises>('/api/exercises/by-type');
+        setExerciseData(response.data);
       } catch (err) {
         console.error('Error fetching exercises:', err);
         setError('Failed to fetch exercises');

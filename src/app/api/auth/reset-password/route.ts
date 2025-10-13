@@ -6,11 +6,11 @@ import { handleApiError, validateBody } from '@/utils/apiHelpers';
 import { ResetPasswordApiSchema } from '@/schemas/api/ResetPasswordSchema';
 import type { ResetPasswordRequest } from '@/schemas/api/ResetPasswordSchema';
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body: ResetPasswordRequest = await validateBody(
       ResetPasswordApiSchema,
-      await req.json()
+      await request.json()
     );
     const { email, password, token } = body;
 

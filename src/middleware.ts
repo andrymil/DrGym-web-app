@@ -1,9 +1,9 @@
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function middleware(req: NextRequest) {
-  const token = await getToken({ req });
-  const { pathname } = req.nextUrl;
+export async function middleware(request: NextRequest) {
+  const token = await getToken({ req: request });
+  const { pathname } = request.nextUrl;
 
   const userMatch = pathname.match(/^\/user\/([^/]+)(\/.*)?$/);
   const requestedUser = userMatch?.[1] ?? null;
@@ -18,14 +18,14 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(
       new URL(
         `/user/${username}/posts?message=You are already signed in`,
-        req.url
+        request.url
       )
     );
   }
 
   if (!token && pathname.startsWith('/user')) {
     return NextResponse.redirect(
-      new URL('/login?message=You have to sign in first', req.url)
+      new URL('/login?message=You have to sign in first', request.url)
     );
   }
 
@@ -39,7 +39,7 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/user/${username}/posts?message=You cannot access this page`,
-          req.url
+          request.url
         )
       );
     }

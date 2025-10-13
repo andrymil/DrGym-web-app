@@ -6,11 +6,11 @@ import { handleApiError, validateBody } from '@/utils/apiHelpers';
 import { ForgotPasswordApiSchema } from '@/schemas/api/ForgotPasswordSchema';
 import type { ForgotPasswordRequest } from '@/schemas/api/ForgotPasswordSchema';
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
     const body: ForgotPasswordRequest = await validateBody(
       ForgotPasswordApiSchema,
-      await req.json()
+      await request.json()
     );
 
     const { email } = body;

@@ -44,13 +44,13 @@ export async function GET(): Promise<Response> {
   }
 }
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
     const username = await getSessionUsername();
 
     const body: CreateWorkoutRequest = await validateBody(
       CreateWorkoutSchema,
-      await req.json()
+      await request.json()
     );
 
     const { startDate, endDate, description, schedule, activities } = body;
