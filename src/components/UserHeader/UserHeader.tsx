@@ -18,7 +18,7 @@ import CustomAvatar from '@/components/CustomAvatar';
 
 type UserHeaderProps = {
   username: string;
-  avatar?: string;
+  avatar?: string | null;
   subheader?: string;
   id?: number;
   actions?: string;

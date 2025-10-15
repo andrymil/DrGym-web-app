@@ -16,12 +16,17 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Divider } from '@mui/material';
 import { getUsername } from '@/utils/localStorage';
 import type { WithAppMessage } from '@/types/general';
-import type { Friend, Invitation, FriendsInfo } from '@/types/api/friends';
+import type {
+  Friend,
+  ReceivedInvitation,
+  GetFriendsResponse,
+  GetInvitationsResponse,
+} from '@/types/api/friends';
 
 const Friends = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [friends, setFriends] = useState<Friend[]>([]);
-  const [requests, setRequests] = useState<Invitation[]>([]);
+  const [requests, setRequests] = useState<ReceivedInvitation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,11 +34,15 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     const fetchFriends = async () => {
       try {
         setLoading(true);
-        const response = await api.get<FriendsInfo>(
-          `/api/friends/friendsinfo/${getUsername()}`
+
+        const friendsResponse =
+          await api.get<GetFriendsResponse>('/api/me/friends');
+        setFriends(friendsResponse.data.friends);
+
+        const InvitationsResponse = await api.get<GetInvitationsResponse>(
+          '/api/me/friends/invitations'
         );
-        setFriends(response.data.friends);
-        setRequests(response.data.invitations);
+        setRequests(InvitationsResponse.data.received);
       } catch (err) {
         console.error('Error fetching friends:', err);
         showAppMessage({
@@ -63,7 +72,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
         type: 'success',
       });
       setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.sender !== username)
+        prevRequests.filter((request) => request.sender.username !== username)
       );
       setFriends((prevFriends) => [...prevFriends, { username, avatar }]);
     } catch (err) {
@@ -85,7 +94,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
         type: 'info',
       });
       setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.sender !== username)
+        prevRequests.filter((request) => request.sender.username !== username)
       );
     } catch (err) {
       console.error('Error declining friend request', err);
@@ -150,8 +159,8 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
               <Card key={request.id} sx={{ maxWidth: '100%', my: 1 }}>
                 <UserHeader
                   id={request.id}
-                  username={request.sender}
-                  avatar={request.avatar}
+                  username={request.sender.username}
+                  avatar={request.sender.avatar}
                   actions="request"
                   onAccept={handleAcceptRequest}
                   onDecline={handleDeclineRequest}
