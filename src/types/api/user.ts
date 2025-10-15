@@ -7,5 +7,9 @@ export type UserData = {
   weight: number | null;
   height: number | null;
   exercise: Exercise | null;
-  avatar: string;
+  avatar: string | null;
+};
+
+export type PlainUserData = Omit<UserData, 'username' | 'exercise'> & {
+  exercise: string | null;
 };

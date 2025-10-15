@@ -22,7 +22,7 @@ import { LoginSchema, LoginDefaultValues } from '@/schemas/forms/LoginSchema';
 import Link from 'next/link';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-// import { stringToColor } from '@/utils/avatar';
+import { stringToColor } from '@/utils/avatar';
 import { signIn, getSession } from 'next-auth/react';
 import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 import type { LoginForm } from '@/types/forms/LoginForm';
@@ -98,13 +98,16 @@ const LoginContent = ({
           throw new Error('Missing session');
         }
 
-        const { username, avatar: _avatar } = session.user;
+        const { username, avatar: avatar } = session.user;
 
         if (!username) {
           throw new Error('Missing username');
         }
-        // localStorage.setItem('username', username);
-        // localStorage.setItem('avatar', avatar ? avatar : stringToColor(username));
+        localStorage.setItem('username', username);
+        localStorage.setItem(
+          'avatar',
+          avatar ? avatar : stringToColor(username)
+        );
         router.push(
           `/user/${username}/posts?message=Logged in successfully&type=success`
         );
