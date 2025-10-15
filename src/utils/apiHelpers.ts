@@ -3,11 +3,11 @@ import authOptions from '@/lib/auth';
 import { NextResponse } from 'next/server';
 import { AnyObjectSchema, InferType, ValidationError } from 'yup';
 
-export type Params = Promise<{
-  id: string;
-}>;
+export type Params<K extends string = 'id'> = Promise<Record<K, string>>;
 
-export type ParamsProp = { params: Params };
+export type ParamsProp<K extends string = 'id'> = {
+  params: Params<K>;
+};
 
 export class ApiError extends Error {
   statusCode: number;
@@ -84,13 +84,34 @@ export async function validateBody<T extends AnyObjectSchema>(
   });
 }
 
-export async function getParamId(params: Params) {
-  const { id } = await params;
+export async function getParamString<K extends string>(
+  params: Params<K>,
+  key: K
+): Promise<string> {
+  const obj = await params;
+  const value = obj[key];
 
-  const parsedId = parseInt(id, 10);
-  if (isNaN(parsedId)) {
-    throw new ApiError('Invalid workout ID', 400);
+  if (!value) {
+    throw new ApiError(`${key} is required`, 400);
   }
 
-  return parsedId;
+  return value;
+}
+
+export async function getParamInt<K extends string>(
+  params: Params<K>,
+  key: K
+): Promise<number> {
+  const string = await getParamString(params, key);
+  const parsed = parseInt(string, 10);
+
+  if (Number.isNaN(parsed)) {
+    throw new ApiError(`Invalid ${key}`, 400);
+  }
+
+  return parsed;
+}
+
+export async function getParamId(params: Params) {
+  return getParamInt(params, 'id');
 }
