@@ -5,42 +5,52 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const { pathname } = request.nextUrl;
 
-  const userMatch = pathname.match(/^\/user\/([^/]+)(\/.*)?$/);
-  const requestedUser = userMatch?.[1] ?? null;
+  const match = pathname.match(/^\/user\/([^/]+)(?:\/.*)?$/);
+  const requestedUser = match ? decodeURIComponent(match[1]) : null;
 
-  if (
-    token &&
-    (pathname === '/login' ||
-      pathname === '/register' ||
-      pathname.startsWith('/auth'))
-  ) {
+  const isAuthPage =
+    pathname === '/login' ||
+    pathname === '/register' ||
+    /^\/auth(\/|$)/.test(pathname);
+
+  const isUserSection = /^\/user(\/|$)/.test(pathname);
+
+  if (token && isAuthPage) {
     const username = token.username;
-    return NextResponse.redirect(
-      new URL(
-        `/user/${username}/posts?message=You are already signed in`,
-        request.url
-      )
-    );
+    if (username) {
+      return NextResponse.redirect(
+        new URL(
+          `/user/${username}/posts?message=You are already signed in`,
+          request.url
+        )
+      );
+    }
   }
 
-  if (!token && pathname.startsWith('/user')) {
+  if (!token && isUserSection) {
     return NextResponse.redirect(
       new URL('/login?message=You have to sign in first', request.url)
     );
   }
 
-  if (
-    token &&
-    requestedUser &&
-    pathname.startsWith(`/user/${requestedUser}/`)
-  ) {
+  if (token && requestedUser) {
     const username = token.username;
-    if (username !== requestedUser) {
+
+    if (
+      pathname.startsWith(`/user/${requestedUser}/`) &&
+      username !== requestedUser
+    ) {
       return NextResponse.redirect(
         new URL(
           `/user/${username}/posts?message=You cannot access this page`,
           request.url
         )
+      );
+    }
+
+    if (pathname === `/user/${requestedUser}` && username === requestedUser) {
+      return NextResponse.redirect(
+        new URL(`/user/${username}/account`, request.url)
       );
     }
   }
