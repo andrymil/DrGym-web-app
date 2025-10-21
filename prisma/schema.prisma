@@ -56,7 +56,7 @@ model FriendshipInvitation {
   receiverUser User      @relation("friendship_invitations_who_receive_usernameTousers", fields: [receiver], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_receive")
   senderUser   User      @relation("friendship_invitations_who_send_usernameTousers", fields: [sender], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_who_send")
 
-  @@unique([sender, receiver], map: "unique_friendship_invitation")
+  @@unique([sender, receiver], name: "sender_receiver", map: "unique_friendship_invitation")
   @@map("friendship_invitations")
 }
 

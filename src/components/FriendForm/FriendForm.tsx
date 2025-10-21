@@ -12,7 +12,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
-import api from '@/utils/axiosInstance';
+import api, { handleAxiosError } from '@/utils/axiosInstance';
 import FriendFormTitle from './FriendFormTitle';
 import CustomInput from '@/components/CustomInput';
 import {
@@ -46,49 +46,34 @@ export default function FriendForm({
     form: FormikHelpers<FriendFormValues>
   ) => {
     try {
-      if (formData.username === username) {
+      if (username && formData.username === username) {
         form.setFieldError('username', 'it is you');
         showAppMessage({
           status: true,
-          text: 'You cannot add yourself as a friend.',
+          text: 'You cannot invite yourself.',
           type: 'error',
         });
         return;
       }
+
       setLoading(true);
-      const response = await api.post(`/api/friends/sendRequest`, {
-        sender: username,
+      await api.post(`/api/me/friends/invitations`, {
         receiver: formData.username,
       });
-      if (response.data === 'Request sent') {
-        showAppMessage({
-          status: true,
-          text: `Friend request to ${formData.username} has been sent.`,
-          type: 'success',
-        });
-        handleClose();
-      } else if (
-        response.data === 'There is no account associated with this username.'
-      ) {
-        form.setFieldError('username', 'no account found');
-        showAppMessage({
-          status: true,
-          text: response.data as string,
-          type: 'error',
-        });
-      } else {
-        showAppMessage({
-          status: true,
-          text: response.data as string,
-          type: 'info',
-        });
-        handleClose();
-      }
-    } catch (error) {
-      console.error('Error sending friend request:', error);
+
       showAppMessage({
         status: true,
-        text: 'Something went wrong.',
+        text: `Invitation to ${formData.username} has been sent.`,
+        type: 'success',
+      });
+      handleClose();
+    } catch (error) {
+      console.error('Error sending friend invitation:', error);
+
+      const { message } = handleAxiosError(error);
+      showAppMessage({
+        status: true,
+        text: message,
         type: 'error',
       });
     } finally {
@@ -169,7 +154,7 @@ export default function FriendForm({
                         )
                       }
                     >
-                      Send friend request
+                      Send friend invitation
                     </Button>
                   </Grid>
                 </Grid>

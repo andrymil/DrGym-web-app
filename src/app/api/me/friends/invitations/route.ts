@@ -1,11 +1,20 @@
 import prisma from '@prisma';
-import { getSessionUsername, handleApiError } from '@/utils/apiHelpers';
+import {
+  getSessionUsername,
+  handleApiError,
+  ApiError,
+  validateBody,
+} from '@/utils/apiHelpers';
 import { NextResponse } from 'next/server';
 import type {
   ReceivedInvitation,
   SentInvitation,
   GetInvitationsResponse,
 } from '@/types/api/friends';
+import {
+  SendInvitationSchema,
+  type SendInvitationRequest,
+} from '@/schemas/api/FriendsSchema';
 
 export async function GET(): Promise<Response> {
   try {
@@ -51,6 +60,75 @@ export async function GET(): Promise<Response> {
     );
   } catch (error) {
     console.error('Error fetching invitations:', error);
+    return handleApiError(error);
+  }
+}
+
+export async function POST(request: Request): Promise<Response> {
+  try {
+    const sender = await getSessionUsername();
+
+    const body: SendInvitationRequest = await validateBody(
+      SendInvitationSchema,
+      await request.json()
+    );
+
+    const receiver = body.receiver;
+
+    if (receiver === sender) {
+      throw new ApiError('You cannot invite yourself', 400);
+    }
+
+    const receiverExists = await prisma.user.findUnique({
+      where: { username: receiver },
+      select: { username: true },
+    });
+    if (!receiverExists) {
+      throw new ApiError('User not found', 404);
+    }
+
+    const friendship = await prisma.friendship.findFirst({
+      where: {
+        OR: [
+          { friend1: sender, friend2: receiver },
+          { friend1: receiver, friend2: sender },
+        ],
+      },
+      select: { id: true },
+    });
+    if (friendship) {
+      throw new ApiError('You are already friends', 409);
+    }
+
+    const existingOutgoing = await prisma.friendshipInvitation.findUnique({
+      where: { sender_receiver: { sender, receiver } },
+      select: { id: true },
+    });
+    if (existingOutgoing) {
+      throw new ApiError('Invitation already sent', 409);
+    }
+
+    const existingIncoming = await prisma.friendshipInvitation.findUnique({
+      where: { sender_receiver: { sender: receiver, receiver: sender } },
+      select: { id: true },
+    });
+    if (existingIncoming) {
+      throw new ApiError('This user has already invited you', 409);
+    }
+
+    const invitation = await prisma.friendshipInvitation.create({
+      data: { sender, receiver },
+      select: {
+        id: true,
+        sender: true,
+        receiver: true,
+        sendTime: true,
+      },
+    });
+
+    return NextResponse.json({ invitation }, { status: 201 });
+  } catch (error) {
+    console.error('Send invitation error:', error);
     return handleApiError(error);
   }
 }
