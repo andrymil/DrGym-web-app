@@ -24,7 +24,7 @@ export async function getSessionUsername() {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
-    const error = new ApiError('Unauthorized', 401);
+    const error = new ApiError('Unauthenticated', 401);
     throw error;
   }
 

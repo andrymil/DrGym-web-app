@@ -8,4 +8,18 @@ export const SendInvitationSchema = yup.object({
     .trim(),
 });
 
+export const PatchInvitationSchema = yup.object({
+  decision: yup
+    .string<'accepted' | 'rejected'>()
+    .required('Decision is required')
+    .oneOf(
+      ['accepted', 'rejected'] as const,
+      'Decision must be either accepted or rejected'
+    ),
+});
+
 export type SendInvitationRequest = { receiver: string };
+
+export type PatchInvitationRequest = yup.InferType<
+  typeof PatchInvitationSchema
+>;
