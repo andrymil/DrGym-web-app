@@ -87,13 +87,10 @@ export async function POST(request: Request): Promise<Response> {
       throw new ApiError('User not found', 404);
     }
 
-    const friendship = await prisma.friendship.findFirst({
-      where: {
-        OR: [
-          { friend1: sender, friend2: receiver },
-          { friend1: receiver, friend2: sender },
-        ],
-      },
+    const [friend1, friend2] = [sender, receiver].sort();
+
+    const friendship = await prisma.friendship.findUnique({
+      where: { friend1_friend2: { friend1, friend2 } },
       select: { id: true },
     });
     if (friendship) {

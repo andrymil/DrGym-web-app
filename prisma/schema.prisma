@@ -68,7 +68,7 @@ model Friendship {
   friend1User User      @relation("friendships_friend1_usernameTousers", fields: [friend1], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user1")
   friend2User User      @relation("friendships_friend2_usernameTousers", fields: [friend2], references: [username], onDelete: Cascade, onUpdate: NoAction, map: "fk_user2")
 
-  @@unique([friend1, friend2], map: "friendship_unique_pair1")
+  @@unique([friend1, friend2], name: "friend1_friend2", map: "friendship_unique_pair1")
   @@map("friendships")
 }
 

@@ -17,13 +17,10 @@ export async function GET(
     const myUsername = await getSessionUsername();
     const username = await getParamString(params, 'username');
 
-    const friendship = await prisma.friendship.findFirst({
-      where: {
-        OR: [
-          { friend1: myUsername, friend2: username },
-          { friend1: username, friend2: myUsername },
-        ],
-      },
+    const [friend1, friend2] = [myUsername, username].sort();
+
+    const friendship = await prisma.friendship.findUnique({
+      where: { friend1_friend2: { friend1, friend2 } },
       select: { id: true },
     });
 
