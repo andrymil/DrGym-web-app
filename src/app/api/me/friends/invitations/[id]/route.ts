@@ -8,6 +8,7 @@ import {
   getParamId,
   getSessionUsername,
   handleApiError,
+  normalizeUserPair,
   ParamsProp,
   validateBody,
 } from '@/utils/apiHelpers';
@@ -43,10 +44,10 @@ export async function PATCH(
       }
 
       if (decision === 'accepted') {
-        const [friend1, friend2] = [
+        const [friend1, friend2] = normalizeUserPair(
           invitation.sender,
-          invitation.receiver,
-        ].sort();
+          invitation.receiver
+        );
         await tx.friendship.upsert({
           where: { friend1_friend2: { friend1, friend2 } },
           update: {},

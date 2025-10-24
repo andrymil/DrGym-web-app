@@ -4,6 +4,7 @@ import {
   handleApiError,
   ApiError,
   validateBody,
+  normalizeUserPair,
 } from '@/utils/apiHelpers';
 import { NextResponse } from 'next/server';
 import type {
@@ -87,7 +88,7 @@ export async function POST(request: Request): Promise<Response> {
       throw new ApiError('User not found', 404);
     }
 
-    const [friend1, friend2] = [sender, receiver].sort();
+    const [friend1, friend2] = normalizeUserPair(sender, receiver);
 
     const friendship = await prisma.friendship.findUnique({
       where: { friend1_friend2: { friend1, friend2 } },

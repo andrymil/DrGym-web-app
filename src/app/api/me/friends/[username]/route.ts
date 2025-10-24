@@ -5,6 +5,7 @@ import {
   getParamString,
   getSessionUsername,
   handleApiError,
+  normalizeUserPair,
   type ParamsProp,
 } from '@/utils/apiHelpers';
 import type { PlainUserData } from '@/types/api/user';
@@ -17,7 +18,7 @@ export async function GET(
     const myUsername = await getSessionUsername();
     const username = await getParamString(params, 'username');
 
-    const [friend1, friend2] = [myUsername, username].sort();
+    const [friend1, friend2] = normalizeUserPair(myUsername, username);
 
     const friendship = await prisma.friendship.findUnique({
       where: { friend1_friend2: { friend1, friend2 } },

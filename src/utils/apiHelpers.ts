@@ -115,3 +115,13 @@ export async function getParamInt<K extends string>(
 export async function getParamId(params: Params) {
   return getParamInt(params, 'id');
 }
+
+export function normalizeUserPair(
+  usernameA: string,
+  usernameB: string
+): [string, string] {
+  const a = usernameA.toLowerCase();
+  const b = usernameB.toLowerCase();
+
+  return a < b ? [a, b] : [b, a];
+}
