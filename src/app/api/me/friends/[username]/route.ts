@@ -71,3 +71,26 @@ export async function GET(
     return handleApiError(error);
   }
 }
+
+export async function DELETE(
+  _request: Request,
+  { params }: ParamsProp<'username'>
+) {
+  try {
+    const myUsername = await getSessionUsername();
+    const friendUsername = await getParamString(params, 'username');
+
+    if (myUsername.toLowerCase() === friendUsername.toLowerCase()) {
+      throw new ApiError('You are not your own friend', 400);
+    }
+
+    const [friend1, friend2] = normalizeUserPair(myUsername, friendUsername);
+
+    await prisma.friendship.deleteMany({ where: { friend1, friend2 } });
+
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    console.error('Error deleting friend:', error);
+    return handleApiError(error);
+  }
+}
