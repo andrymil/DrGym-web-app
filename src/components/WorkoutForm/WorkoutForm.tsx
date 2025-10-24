@@ -39,7 +39,6 @@ import {
   cardioActivitySchema,
 } from '@/schemas/forms/WorkoutSchema';
 import { formatDate } from '@/utils/dateUtils';
-import { getUsername } from '@/utils/localStorage';
 import CustomInput from '@/components/CustomInput';
 import { ValidationError } from 'yup';
 import type { Workout } from '@/types/api/workout';
@@ -47,15 +46,18 @@ import type { WithAppMessage } from '@/types/general';
 import type { WorkoutFormValues } from '@/types/forms/WorkoutForm';
 import type { Activity } from '@/types/api/activity';
 import type { Exercises } from '@/types/api/exercise';
+import type {
+  CreateWorkoutRequest,
+  EditWorkoutRequest,
+} from '@/schemas/api/WorkoutSchema';
 
 type WorkoutFormProps = WithAppMessage & {
   dialogTitle: string;
-  popupType: string;
+  popupType: 'new' | 'edit' | 'copy';
   popupStatus: boolean;
   togglePopup: () => void;
   workout?: Workout;
-  onAddWorkout?: () => Promise<void>;
-  onEditWorkout?: () => Promise<void>;
+  onChange: () => Promise<void>;
 };
 
 export default function WorkoutForm({
@@ -64,12 +66,14 @@ export default function WorkoutForm({
   popupStatus,
   togglePopup,
   workout,
-  onAddWorkout,
-  onEditWorkout,
+  onChange,
   showAppMessage,
 }: WorkoutFormProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [isRegular, setIsRegular] = useState<boolean>(
+    (workout?.schedule ?? 0) > 0
+  );
   const [activityList, setActivityList] = useState<Activity[]>([]);
   const [activitiesToDelete, setActivitiesToDelete] = useState<number[]>([]);
   const [exercises, setExercises] = useState<Exercises>({
@@ -77,7 +81,6 @@ export default function WorkoutForm({
     cardio: [],
     crossfit: [],
   });
-  const username = getUsername();
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -135,12 +138,13 @@ export default function WorkoutForm({
       .then(() => {
         const newActivity: Activity = {
           exercise: values.exercise!,
-          reps: values.reps || 0,
-          weight: values.weight || 0,
+          reps: values.reps || null,
+          weight: values.weight || null,
           duration: values.duration
             ? formatDate(values.duration, 'HH:mm:ss')
-            : '00:00:00',
+            : null,
         };
+
         setActivityList((prev) => [...prev, newActivity]);
         void setFieldValue('exerciseType', '');
         void setFieldValue('exercise', '');
@@ -164,13 +168,6 @@ export default function WorkoutForm({
       });
   };
 
-  const handleDeleteActivity = (activityId: number, index: number) => {
-    setActivityList((prev) => prev.filter((_, i) => i !== index));
-    if (activityId) {
-      setActivitiesToDelete((prev) => [...prev, activityId]);
-    }
-  };
-
   const handleAddWorkout = async (
     values: WorkoutFormValues,
     actions: FormikHelpers<WorkoutFormValues>
@@ -186,27 +183,18 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      let activities: Activity[];
-      if (popupType === 'new') {
-        activities = activityList;
-      } else {
-        activities = activityList.map(({ id: _, ...activity }) => activity);
-      }
 
-      await api.post(`/api/workouts/create`, {
-        username: username,
+      const payload: CreateWorkoutRequest = {
+        startDate: values.startDate!,
+        endDate: values.endDate!,
         description: values.description,
-        startDate: values.startDate!.toISOString(),
-        endDate: values.endDate!.toISOString(),
-        activities: activities,
-        schedule: values.isRegular ? values.interval : 0,
-      });
+        schedule: isRegular && values.interval ? values.interval : 0,
+        activities: activityList,
+      };
 
-      if (popupType === 'new' && onAddWorkout) {
-        void onAddWorkout();
-      } else if (onEditWorkout) {
-        void onEditWorkout();
-      }
+      await api.post<Workout>(`/api/me/workouts`, payload);
+
+      void onChange();
       handleClose();
       showAppMessage({
         status: true,
@@ -240,20 +228,18 @@ export default function WorkoutForm({
     }
     try {
       actions.setSubmitting(true);
-      await api.put(`/api/workouts/update`, {
-        id: workout?.id,
-        username: username,
+      const newWorkout: EditWorkoutRequest = {
+        startDate: values.startDate!,
+        endDate: values.endDate!,
         description: values.description,
-        startDate: values.startDate!.toISOString(),
-        endDate: values.endDate!.toISOString(),
-        schedule: values.isRegular ? values.interval : 0,
+        schedule: isRegular && values.interval ? values.interval : 0,
         activitiesToAdd: activityList.filter((activity) => !activity.id),
-        activitiesToRemove: activitiesToDelete,
-      });
+        activitiesToDelete: activitiesToDelete,
+      };
 
-      if (onEditWorkout) {
-        void onEditWorkout();
-      }
+      await api.patch<Workout>(`/api/me/workouts/${workout?.id}`, newWorkout);
+
+      void onChange();
       handleClose();
       showAppMessage({
         status: true,
@@ -272,12 +258,22 @@ export default function WorkoutForm({
     }
   };
 
+  const handleDeleteActivity = (
+    activityId: number | undefined,
+    index: number
+  ) => {
+    setActivityList((prev) => prev.filter((_, i) => i !== index));
+    if (activityId) {
+      setActivitiesToDelete((prev) => [...prev, activityId]);
+    }
+  };
+
   const handleRegularChange = (
     values: WorkoutFormValues,
     setFieldValue: FormikHelpers<WorkoutFormValues>['setFieldValue']
   ) => {
     if (
-      !values.isRegular &&
+      !isRegular &&
       (values.startDate || values.endDate) &&
       (values.startDate! < new Date() || values.endDate! < new Date())
     ) {
@@ -290,7 +286,7 @@ export default function WorkoutForm({
       });
     }
     void setFieldValue('interval', '');
-    void setFieldValue('isRegular', !values.isRegular);
+    setIsRegular((prev) => !prev);
   };
 
   const handleClose = () => {
@@ -308,12 +304,11 @@ export default function WorkoutForm({
       <WorkoutFormTitle onClose={togglePopup}>{dialogTitle}</WorkoutFormTitle>
       <Formik<WorkoutFormValues>
         initialValues={
-          popupType === 'edit' && workout
+          popupType !== 'new' && workout
             ? {
                 startDate: new Date(workout.startDate),
                 endDate: new Date(workout.endDate),
                 description: workout.description || '',
-                isRegular: workout.schedule > 0,
                 interval: workout.schedule,
                 exerciseType: '',
                 exercise: null,
@@ -325,8 +320,7 @@ export default function WorkoutForm({
                 startDate: null,
                 endDate: null,
                 description: '',
-                isRegular: false,
-                interval: 0,
+                interval: 1,
                 exerciseType: '',
                 exercise: null,
                 reps: null,
@@ -339,7 +333,7 @@ export default function WorkoutForm({
             ? handleEditWorkout(values, actions)
             : handleAddWorkout(values, actions)
         }
-        validationSchema={schema}
+        validationSchema={schema(isRegular)}
       >
         {({
           values,
@@ -357,7 +351,7 @@ export default function WorkoutForm({
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={values.isRegular}
+                      checked={isRegular}
                       onChange={() =>
                         handleRegularChange(values, setFieldValue)
                       }
@@ -367,21 +361,21 @@ export default function WorkoutForm({
                   }
                   label="Repeat this workout"
                 />
-                {values.isRegular && (
+                {isRegular && (
                   <Box sx={{ mt: 2 }}>
                     <NumberField
-                      label={errors.interval || 'Interval (days)'}
+                      label="Interval (days)"
                       name="interval"
-                      type="number"
                       value={values.interval}
+                      errorStr={errors.interval}
+                      touched={!!touched.interval}
                       onBlur={handleBlur}
-                      error={!!errors.interval}
                       handleChange={handleChange}
                     />
                   </Box>
                 )}
               </Box>
-              {values.isRegular && (
+              {isRegular && (
                 <Typography
                   color="textSecondary"
                   variant="body2"
@@ -401,7 +395,7 @@ export default function WorkoutForm({
                     name="startDate"
                     value={values.startDate}
                     maxDateTime={values.endDate || undefined}
-                    disablePast={values.isRegular}
+                    disablePast={isRegular}
                     onChange={(newValue) => {
                       void setFieldValue('startDate', newValue);
                     }}
@@ -430,7 +424,7 @@ export default function WorkoutForm({
                     name="endDate"
                     value={values.endDate}
                     minDateTime={values.startDate || undefined}
-                    disablePast={values.isRegular}
+                    disablePast={isRegular}
                     onChange={(newValue) => {
                       void setFieldValue('endDate', newValue);
                     }}
@@ -641,9 +635,7 @@ export default function WorkoutForm({
                         edge="end"
                         color="error"
                         sx={{ mr: 1 }}
-                        onClick={() =>
-                          handleDeleteActivity(activity.id!, index)
-                        }
+                        onClick={() => handleDeleteActivity(activity.id, index)}
                       >
                         <DeleteIcon />
                       </IconButton>

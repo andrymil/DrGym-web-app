@@ -20,7 +20,7 @@ import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
 import api, { handleAxiosError } from '@/utils/axiosInstance';
 import type { WithAppMessage } from '@/types/general';
-import type { ResetPasswordRequest } from '@/types/api/requests/resetPassword';
+import type { ResetPasswordRequest } from '@/schemas/api/ResetPasswordSchema';
 import type { ResetPasswordValues } from '@/types/forms/ResetPasswordForm';
 
 const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
@@ -65,7 +65,7 @@ const ResetPasswordContent = ({ showAppMessage }: WithAppMessage) => {
         token,
         password: formData.password,
       };
-      await api.post('/api/reset-password', payload);
+      await api.post('/api/auth/reset-password', payload);
       router.push(
         '/login?message=Your password has been successfully changed.&type=success'
       );

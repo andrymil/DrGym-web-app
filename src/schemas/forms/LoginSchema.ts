@@ -18,9 +18,9 @@ const LoginSchema = (loginType: string) => {
     email: EmailSchema,
     username: yup
       .string()
+      .required('Username is required')
       .max(20, 'Username - maximum 20 characters')
-      .min(2, 'Username - minimum 2 characters')
-      .required("it's required"),
+      .min(2, 'Username - minimum 2 characters'),
     password: PasswordSchema,
   });
   return loginType === 'username' ? usernameSchema : emailSchema;

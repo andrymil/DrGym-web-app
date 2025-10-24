@@ -6,7 +6,7 @@ export const VerificationApiSchema = yup.object({
   token: yup
     .string()
     .trim()
-    .min(1, 'Verification token is required')
+    .length(64, 'Invalid or malformed token')
     .required('Verification token is required'),
 });
 

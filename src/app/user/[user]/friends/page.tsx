@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import UserHeader from '@/components/UserHeader';
-import api from '@/utils/axiosInstance';
+import api, { handleAxiosError } from '@/utils/axiosInstance';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import CardHeader from '@mui/material/CardHeader';
@@ -14,14 +14,19 @@ import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Divider } from '@mui/material';
-import { getUsername } from '@/utils/localStorage';
 import type { WithAppMessage } from '@/types/general';
-import type { Friend, Invitation, FriendsInfo } from '@/types/api/friends';
+import type {
+  Friend,
+  ReceivedInvitation,
+  GetFriendsResponse,
+  GetInvitationsResponse,
+} from '@/types/api/friends';
+import type { PatchInvitationRequest } from '@/schemas/api/FriendsSchema';
 
 const Friends = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [friends, setFriends] = useState<Friend[]>([]);
-  const [requests, setRequests] = useState<Invitation[]>([]);
+  const [invitations, setInvitations] = useState<ReceivedInvitation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,18 +34,25 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     const fetchFriends = async () => {
       try {
         setLoading(true);
-        const response = await api.get<FriendsInfo>(
-          `/api/friends/friendsinfo/${getUsername()}`
+
+        const friendsResponse =
+          await api.get<GetFriendsResponse>('/api/me/friends');
+        setFriends(friendsResponse.data.friends);
+
+        const InvitationsResponse = await api.get<GetInvitationsResponse>(
+          '/api/me/friends/invitations'
         );
-        setFriends(response.data.friends);
-        setRequests(response.data.invitations);
-      } catch (err) {
-        console.error('Error fetching friends:', err);
+        setInvitations(InvitationsResponse.data.received);
+      } catch (error) {
+        console.error('Error fetching friends:', error);
+
+        const { message } = handleAxiosError(error);
         showAppMessage({
           status: true,
-          text: 'Something went wrong',
+          text: message,
           type: 'error',
         });
+
         setError('Failed to fetch friends. Please try again later.');
       } finally {
         setLoading(false);
@@ -50,48 +62,63 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     void fetchFriends();
   }, [showAppMessage]);
 
-  const handleAcceptRequest = async (
+  const handleAcceptInvitation = async (
     id: number,
     username: string,
     avatar: string
   ) => {
     try {
-      await api.post(`/api/friends/acceptRequest?invitationId=${id}`);
+      const payload: PatchInvitationRequest = {
+        decision: 'accepted',
+      };
+
+      await api.patch(`/api/me/friends/invitations/${id}`, payload);
+
       showAppMessage({
         status: true,
-        text: `Accepted friend request from ${username}`,
+        text: `Accepted invitation from ${username}`,
         type: 'success',
       });
-      setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.sender !== username)
+
+      setInvitations((previous) =>
+        previous.filter((invitation) => invitation.id !== id)
       );
       setFriends((prevFriends) => [...prevFriends, { username, avatar }]);
-    } catch (err) {
-      console.error('Error accepting friend request:', err);
+    } catch (error) {
+      console.error('Error accepting friend invitation:', error);
+
+      const { message } = handleAxiosError(error);
       showAppMessage({
         status: true,
-        text: 'Something went wrong',
+        text: message,
         type: 'error',
       });
     }
   };
 
-  const handleDeclineRequest = async (id: number, username: string) => {
+  const handleRejectInviation = async (id: number, username: string) => {
     try {
-      await api.post(`/api/friends/rejectRequest?invitationId=${id}`);
+      const payload: PatchInvitationRequest = {
+        decision: 'rejected',
+      };
+
+      await api.patch(`/api/me/friends/invitations/${id}`, payload);
+
       showAppMessage({
         status: true,
-        text: `Declined friend request from ${username}`,
+        text: `Declined invitation from ${username}`,
         type: 'info',
       });
-      setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.sender !== username)
+      setInvitations((previous) =>
+        previous.filter((invitation) => invitation.id !== id)
       );
-    } catch (err) {
-      console.error('Error declining friend request', err);
+    } catch (error) {
+      console.error('Error declining friend invitation', error);
+
+      const { message } = handleAxiosError(error);
       showAppMessage({
         status: true,
-        text: 'Something went wrong',
+        text: message,
         type: 'error',
       });
     }
@@ -99,25 +126,24 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
 
   const handleDeleteFriend = async (username: string) => {
     try {
-      await api.delete(`/api/friends/removeFriend`, {
-        data: {
-          user1: getUsername(),
-          user2: username,
-        },
-      });
+      await api.delete(`/api/me/friends/${username}`);
+
       setFriends((prevFriends) =>
         prevFriends.filter((friend) => friend.username !== username)
       );
+
       showAppMessage({
         status: true,
         text: `Removed ${username} from friends`,
         type: 'success',
       });
-    } catch (err) {
-      console.error('Error removing friend', err);
+    } catch (error) {
+      console.error('Error removing friend', error);
+
+      const { message } = handleAxiosError(error);
       showAppMessage({
         status: true,
-        text: 'Failed to delete friend',
+        text: message,
         type: 'error',
       });
     }
@@ -141,20 +167,20 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
           py: 2,
         }}
       >
-        {requests.length > 0 && !loading && (
+        {invitations.length > 0 && !loading && (
           <>
             <Typography variant="h5" gutterBottom>
-              Friend Requests
+              Friend Invitations
             </Typography>
-            {requests.map((request) => (
-              <Card key={request.id} sx={{ maxWidth: '100%', my: 1 }}>
+            {invitations.map((invitation) => (
+              <Card key={invitation.id} sx={{ maxWidth: '100%', my: 1 }}>
                 <UserHeader
-                  id={request.id}
-                  username={request.sender}
-                  avatar={request.avatar}
-                  actions="request"
-                  onAccept={handleAcceptRequest}
-                  onDecline={handleDeclineRequest}
+                  id={invitation.id}
+                  username={invitation.sender.username}
+                  avatar={invitation.sender.avatar}
+                  actions="invitation"
+                  onAccept={handleAcceptInvitation}
+                  onDecline={handleRejectInviation}
                 />
               </Card>
             ))}

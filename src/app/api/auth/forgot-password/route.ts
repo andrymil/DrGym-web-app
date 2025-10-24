@@ -2,16 +2,18 @@ import prisma from '@prisma';
 import { NextResponse } from 'next/server';
 import { generateToken } from '@/utils/crypto';
 import sendEmail from '@/utils/sendEmail';
-import type { ForgotPasswordRequest } from '@/types/api/requests/forgotPassword';
+import { handleApiError, validateBody } from '@/utils/apiHelpers';
+import { ForgotPasswordApiSchema } from '@/schemas/api/ForgotPasswordSchema';
+import type { ForgotPasswordRequest } from '@/schemas/api/ForgotPasswordSchema';
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
-    const body = (await req.json()) as ForgotPasswordRequest;
-    const email = body.email?.toLowerCase().trim();
+    const body: ForgotPasswordRequest = await validateBody(
+      ForgotPasswordApiSchema,
+      await request.json()
+    );
 
-    if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
-    }
+    const { email } = body;
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -64,9 +66,6 @@ export async function POST(req: Request): Promise<Response> {
     );
   } catch (err) {
     console.error('Forgot Password error:', err);
-    return NextResponse.json(
-      { error: 'Something went wrong' },
-      { status: 500 }
-    );
+    return handleApiError(err);
   }
 }

@@ -16,8 +16,9 @@ import { getUsername } from '@/utils/localStorage';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import { Typography } from '@mui/material';
 import type { WithAppMessage } from '@/types/general';
-import type { UserData } from '@/types/api/user';
+import type { PlainUserData } from '@/types/api/user';
 import type { Usable } from 'react';
+import { AxiosError } from 'axios';
 
 type UserPageProps = WithAppMessage & {
   params: Usable<{ user: string }>;
@@ -26,8 +27,8 @@ type UserPageProps = WithAppMessage & {
 const User = ({ params, showAppMessage }: UserPageProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const { user } = React.use(params);
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [avatar, setAvatar] = useState<string>('');
+  const [userData, setUserData] = useState<PlainUserData | null>(null);
+  const [avatar, setAvatar] = useState<string | null>(null);
   const router = useRouter();
   const username = getUsername();
 
@@ -35,45 +36,32 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await api.get<UserData>(`/api/users/${user}`);
-        setUserData(response?.data);
-        setAvatar(response.data?.avatar);
-      } catch (err) {
-        console.error('Error fetching user data', err);
-        showAppMessage({
-          status: true,
-          text: 'Failed to fetch user data',
-          type: 'error',
-        });
-      }
-    };
 
-    const checkFriendStatus = async () => {
-      try {
-        setLoading(true);
-        if (username === user) {
-          router.replace(`/user/${user}/account`);
-          return;
-        }
-        const response = await api.get(
-          `/api/friends/isFriend/${username}/${user}`
+        const response = await api.get<PlainUserData>(
+          `/api/me/friends/${user}`
         );
-        if (response.data) {
-          void fetchUserData();
-          setLoading(false);
-        } else {
+        const data = response.data;
+
+        setUserData(data);
+        setAvatar(data?.avatar);
+      } catch (error) {
+        console.error('Error fetching user data', error);
+
+        if (error instanceof AxiosError && error.status === 404) {
           router.replace(
             `/user/${username}/posts?message=User ${user} is not your friend&type=warning`
           );
+        } else {
+          router.replace(
+            `/user/${username}/posts?message=An error occurred. Redirected.&type=error`
+          );
         }
-      } catch {
-        router.replace(
-          `/user/${username}/posts?message=An error occurred. Redirected.&type=error`
-        );
+      } finally {
+        setLoading(false);
       }
     };
 
-    void checkFriendStatus();
+    void fetchUserData();
   }, [router, user, username, showAppMessage]);
 
   const handleDeleteFriend = async (username: string) => {
@@ -143,24 +131,25 @@ const User = ({ params, showAppMessage }: UserPageProps) => {
           <Box display="flex" flexDirection="column" alignItems="center">
             {userData && (
               <Grid container justifyContent="center" gap={5} sx={{ mb: 5 }}>
-                {Object.entries(userData).map(
-                  ([key, value]) =>
-                    key !== 'username' &&
-                    !(value instanceof Object) && (
-                      <Grid key={key} size={12}>
-                        <Typography variant="body1" color="textSecondary">
-                          {key.charAt(0).toUpperCase() + key.slice(1)}:
+                {Object.entries(userData).map(([key, value]) => {
+                  if (key === 'avatar') return;
+                  const title = key.charAt(0).toUpperCase() + key.slice(1);
+
+                  return (
+                    <Grid key={key}>
+                      <Typography variant="body1" color="textSecondary">
+                        {title === 'Exercise' ? 'Favourtie Exercise' : title}:
+                      </Typography>
+                      {value ? (
+                        <Typography variant="h6">{value}</Typography>
+                      ) : (
+                        <Typography color="textSecondary" variant="body2">
+                          Not specified
                         </Typography>
-                        {value ? (
-                          <Typography variant="h6">{value}</Typography>
-                        ) : (
-                          <Typography color="textSecondary" variant="body2">
-                            Not specified
-                          </Typography>
-                        )}
-                      </Grid>
-                    )
-                )}
+                      )}
+                    </Grid>
+                  );
+                })}
               </Grid>
             )}
 

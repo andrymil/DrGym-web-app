@@ -22,7 +22,7 @@ import { LoginSchema, LoginDefaultValues } from '@/schemas/forms/LoginSchema';
 import Link from 'next/link';
 import { withSnackbar } from '@/utils/snackbarProvider';
 import CustomInput from '@/components/CustomInput';
-// import { stringToColor } from '@/utils/avatar';
+import { stringToColor } from '@/utils/avatar';
 import { signIn, getSession } from 'next-auth/react';
 import type { WithAppMessage, WithCsrfToken } from '@/types/general';
 import type { LoginForm } from '@/types/forms/LoginForm';
@@ -74,7 +74,7 @@ const LoginContent = ({
     try {
       setLoading(true);
 
-      const res = await signIn('credentials', {
+      const response = await signIn('credentials', {
         identifierType: loginType,
         identifier:
           loginType === 'username' ? formData.username : formData.email,
@@ -82,29 +82,32 @@ const LoginContent = ({
         redirect: false,
       });
 
-      if (res?.error) {
+      if (response?.error) {
         showAppMessage({
           status: true,
-          text: `${res?.error}`,
+          text: `${response?.error}`,
           type: 'error',
         });
 
         void form.setValues({ ...formData, password: '' });
         void form.setTouched({});
-      } else if (res?.ok) {
+      } else if (response?.ok) {
         const session = await getSession();
 
         if (!session) {
           throw new Error('Missing session');
         }
 
-        const { username, avatar: _avatar } = session.user;
+        const { username, avatar: avatar } = session.user;
 
         if (!username) {
           throw new Error('Missing username');
         }
-        // localStorage.setItem('username', username);
-        // localStorage.setItem('avatar', avatar ? avatar : stringToColor(username));
+        localStorage.setItem('username', username);
+        localStorage.setItem(
+          'avatar',
+          avatar ? avatar : stringToColor(username)
+        );
         router.push(
           `/user/${username}/posts?message=Logged in successfully&type=success`
         );
