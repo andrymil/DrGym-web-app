@@ -62,7 +62,7 @@ export default function UserHeader({
     setDeleteDialogOpen(false);
   };
 
-  const handleAcceptRequest = () => {
+  const handleAcceptInvitation = () => {
     if (!onAccept || !id || !avatar) return;
 
     try {
@@ -73,7 +73,7 @@ export default function UserHeader({
     }
   };
 
-  const handleDeclineRequest = () => {
+  const handleDeclineInvitation = () => {
     if (!onDecline || !id) return;
 
     try {
@@ -124,26 +124,26 @@ export default function UserHeader({
                 </IconButton>
               </Tooltip>
             )}
-            {actions === 'request' && (
+            {actions === 'invitation' && (
               <Box>
                 {loading ? (
                   <CircularProgress size={24} sx={{ mr: 4 }} />
                 ) : (
                   <>
-                    <Tooltip title="Accept request">
+                    <Tooltip title="Accept invitation">
                       <IconButton
                         disabled={loading}
-                        aria-label="accept request"
-                        onClick={handleAcceptRequest}
+                        aria-label="accept invitation"
+                        onClick={handleAcceptInvitation}
                       >
                         <CheckIcon color="success" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Decline request">
+                    <Tooltip title="Decline invitation">
                       <IconButton
                         disabled={loading}
-                        aria-label="decline request"
-                        onClick={handleDeclineRequest}
+                        aria-label="decline invitation"
+                        onClick={handleDeclineInvitation}
                       >
                         <CloseIcon color="error" />
                       </IconButton>

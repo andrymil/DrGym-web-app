@@ -26,7 +26,7 @@ import type {
 const Friends = ({ showAppMessage }: WithAppMessage) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [friends, setFriends] = useState<Friend[]>([]);
-  const [requests, setRequests] = useState<ReceivedInvitation[]>([]);
+  const [invitations, setInvitations] = useState<ReceivedInvitation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +42,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
         const InvitationsResponse = await api.get<GetInvitationsResponse>(
           '/api/me/friends/invitations'
         );
-        setRequests(InvitationsResponse.data.received);
+        setInvitations(InvitationsResponse.data.received);
       } catch (err) {
         console.error('Error fetching friends:', err);
         showAppMessage({
@@ -59,7 +59,7 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     void fetchFriends();
   }, [showAppMessage]);
 
-  const handleAcceptRequest = async (
+  const handleAcceptInvitation = async (
     id: number,
     username: string,
     avatar: string
@@ -68,15 +68,15 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
       await api.post(`/api/friends/acceptRequest?invitationId=${id}`);
       showAppMessage({
         status: true,
-        text: `Accepted friend request from ${username}`,
+        text: `Accepted invitation from ${username}`,
         type: 'success',
       });
-      setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.sender.username !== username)
+      setInvitations((previos) =>
+        previos.filter((invitation) => invitation.sender.username !== username)
       );
       setFriends((prevFriends) => [...prevFriends, { username, avatar }]);
     } catch (err) {
-      console.error('Error accepting friend request:', err);
+      console.error('Error accepting friend invitation:', err);
       showAppMessage({
         status: true,
         text: 'Something went wrong',
@@ -85,19 +85,19 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
     }
   };
 
-  const handleDeclineRequest = async (id: number, username: string) => {
+  const handleRejectInviation = async (id: number, username: string) => {
     try {
       await api.post(`/api/friends/rejectRequest?invitationId=${id}`);
       showAppMessage({
         status: true,
-        text: `Declined friend request from ${username}`,
+        text: `Declined invitation from ${username}`,
         type: 'info',
       });
-      setRequests((prevRequests) =>
-        prevRequests.filter((request) => request.sender.username !== username)
+      setInvitations((previous) =>
+        previous.filter((invitation) => invitation.sender.username !== username)
       );
     } catch (err) {
-      console.error('Error declining friend request', err);
+      console.error('Error declining friend invitation', err);
       showAppMessage({
         status: true,
         text: 'Something went wrong',
@@ -150,20 +150,20 @@ const Friends = ({ showAppMessage }: WithAppMessage) => {
           py: 2,
         }}
       >
-        {requests.length > 0 && !loading && (
+        {invitations.length > 0 && !loading && (
           <>
             <Typography variant="h5" gutterBottom>
-              Friend Requests
+              Friend Invitations
             </Typography>
-            {requests.map((request) => (
-              <Card key={request.id} sx={{ maxWidth: '100%', my: 1 }}>
+            {invitations.map((invitation) => (
+              <Card key={invitation.id} sx={{ maxWidth: '100%', my: 1 }}>
                 <UserHeader
-                  id={request.id}
-                  username={request.sender.username}
-                  avatar={request.sender.avatar}
-                  actions="request"
-                  onAccept={handleAcceptRequest}
-                  onDecline={handleDeclineRequest}
+                  id={invitation.id}
+                  username={invitation.sender.username}
+                  avatar={invitation.sender.avatar}
+                  actions="invitation"
+                  onAccept={handleAcceptInvitation}
+                  onDecline={handleRejectInviation}
                 />
               </Card>
             ))}
